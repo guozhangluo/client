@@ -38,7 +38,6 @@ export default class WltPackCaseCheckProperties extends EntityDoubleScanProperti
     }
 
     queryData = (whereClause) => {
-      debugger;
       const self = this;
       let reloadTableData = false;
       let firstQueryField = self.form.state.queryFields[0];

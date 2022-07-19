@@ -174,7 +174,7 @@ export default class RwMLotManagerRequest {
     }
 
     static sendRWPrintParameterRequest = (object) => {
-        let requestBody = RwMLotManagerRequestBody.buildRWBoxPrintParameter(object.materialLotRrn, object.printCount);
+        let requestBody = RwMLotManagerRequestBody.buildRWBoxPrintParameter(object.materialLotId, object.printCount);
         let requestHeader = new RwMLotManagerRequestHeader();
         let request = new Request(requestHeader, requestBody, UrlConstant.GCRwMaterialLotManageUrl);
         let requestObject = {
@@ -185,7 +185,7 @@ export default class RwMLotManagerRequest {
     }
 
     static sendRWStockOutPrintRequest = (object) => {
-        let requestBody = RwMLotManagerRequestBody.buildRWStockOutPrintParameter(object.materialLotRrn);
+        let requestBody = RwMLotManagerRequestBody.buildRWStockOutPrintParameter(object.materialLotId);
         let requestHeader = new RwMLotManagerRequestHeader();
         let request = new Request(requestHeader, requestBody, UrlConstant.GCRwMaterialLotManageUrl);
         let requestObject = {

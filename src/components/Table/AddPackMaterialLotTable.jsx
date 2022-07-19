@@ -58,9 +58,9 @@ export default class AddPackMaterialLotTable extends EntityScanViewTable {
         }
     };
 
-    handlePrint = (materialLot) => {
+    handlePrint = (packedMaterialLotId) => {
         let requestObject = {
-            materialLotRrn : materialLot.objectRrn,    
+            packedMaterialLotId : packedMaterialLotId,    
             success: function(responseBody) {
             }
         }
@@ -98,10 +98,10 @@ export default class AddPackMaterialLotTable extends EntityScanViewTable {
                 if (self.props.resetData) {
                     self.props.resetData();
                 }
-                let materialLotId = responseBody.materialLot.materialLotId;
+                let materialLotId = responseBody.packedMaterialLotId;
                 let message = I18NUtils.getClientMessage(i18NCode.OperationSucceed) + `:${materialLotId}`;
                 MessageUtils.showOperationSuccess(message);
-                self.handlePrint(responseBody.materialLot);
+                self.handlePrint(materialLotId);
             }
         }
         AppendPackageMaterialLotRequest.sendAppendPackMaterialLotsRequest(requestObject)

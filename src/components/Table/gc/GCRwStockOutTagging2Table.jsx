@@ -83,7 +83,7 @@ export default class GCRwStockOutTagging2Table extends EntityScanViewTable {
         
         if (data && data.length > 0) {
             let requestObject = {
-                materialLotRrn : data[0].objectRrn,
+                materialLotId : data[0].parentMaterialLotId,
                 success: function(responseBody) {
                     MessageUtils.showOperationSuccess();
                 }

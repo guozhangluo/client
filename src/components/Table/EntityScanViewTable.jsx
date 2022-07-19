@@ -33,6 +33,12 @@ export default class EntityScanViewTable extends EntityListTable {
     createStatistic = () => {
         return <Tag color="#2db7f5">{this.state.data.length}</Tag>
     }
+
+    queryNodeFocus = () => {
+        if (this.form.state.queryFields[0]) {
+          this.form.state.queryFields[0].node.focus();
+        }
+    }
     
     handleDelete = (record) => {
         this.refreshDelete(record);

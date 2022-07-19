@@ -5,8 +5,6 @@ import { i18NCode } from '../../../api/const/i18n';
 import MessageUtils from '../../../api/utils/MessageUtils';
 import { Notification } from '../../notice/Notice';
 import WeightManagerRequest from '../../../api/gc/weight-manager/WeightManagerRequest';
-import EventUtils from '../../../api/utils/EventUtils';
-
 
 /**
  * 称重
@@ -42,31 +40,6 @@ export default class MaterialLotWeighTable extends EntityScanViewTable {
     createStatistic = () => {
         return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{this.state.data.length}</Tag>
     }
-    // componentWillReceiveProps = (props) => {
-    //     // TODO 此处存在刷新多次问题
-    //     let {selectedRowKeys, selectedRows} = this.state;
-    //     let columnData = this.buildColumn(props.table);
-        
-    //     let stateSeletcedRowKeys = selectedRowKeys.merge(props.selectedRowKeys);
-    //     let stateSelectedRows = selectedRows.merge(props.selectedRows, this.props.rowKey);
-    //     if (props.resetFlag) {
-    //         stateSeletcedRowKeys = [];
-    //         stateSelectedRows = [];
-    //     }
-        
-    //     this.setState({
-    //         data: props.data,
-    //         table: props.table,
-    //         columns: columnData.columns,
-    //         scrollX: columnData.scrollX,
-    //         selectedRowKeys: stateSeletcedRowKeys || [],
-    //         selectedRows: stateSelectedRows || [],
-    //         pagination: props.pagination != undefined ? props.pagination : Application.table.pagination
-    //     })
-    //     if(props.data.length != 0){
-    //         this.weight();
-    //     }
-    // }
 
     weight = () => {
         const {data} = this.state;

@@ -54,9 +54,9 @@ export default class COBPackMaterialLotTable extends EntityScanViewTable {
         return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
     }
 
-    handlePrint = (materialLot) => {
+    handlePrint = (materialLotId) => {
         let requestObject = {
-            materialLot : materialLot,    
+            materialLotId : materialLotId,    
             success: function(responseBody) {
                 MessageUtils.showOperationSuccess();
             }
@@ -78,10 +78,10 @@ export default class COBPackMaterialLotTable extends EntityScanViewTable {
                 if (self.props.resetData) {
                     self.props.resetData();
                 }
-                let materialLotId = responseBody.materialLot.materialLotId;
+                let materialLotId = responseBody.materialLotId;
                 let message = I18NUtils.getClientMessage(i18NCode.OperationSucceed) + `:${materialLotId}`;
                 MessageUtils.showOperationSuccess(message);
-                self.handlePrint(responseBody.materialLot);
+                self.handlePrint(materialLotId);
             }
         }
         PackageMaterialLotRequest.sendPackMaterialLotsRequest(requestObject)

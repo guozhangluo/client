@@ -72,10 +72,12 @@ export default class GCRelayBoxChangeStorageIdProperties extends EntityScanPrope
                 materialLotId: data,
                 tableRrn: this.state.tableRrn,
                 success: function(responseBody) {
-                    let materialLot = responseBody.materialLot;
-                    if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                        tableData.unshift(materialLot);
-                    }
+                    let materialLots = responseBody.materialLots;
+                    materialLots.forEach((materialLot) => {
+                        if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                            tableData.unshift(materialLot);
+                        }
+                    });
                     self.setState({ 
                         tableData: tableData,
                         loading: false,

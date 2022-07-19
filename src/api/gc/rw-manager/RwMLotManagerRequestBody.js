@@ -191,16 +191,16 @@ export default class RwMLotManagerRequestBody {
     }
 
 
-    static buildRWBoxPrintParameter(materialLotRrn, printCount) {
+    static buildRWBoxPrintParameter(materialLotId, printCount) {
         let body = new RwMLotManagerRequestBody(ActionType.RWBoxPrint);
-        body.materialLotRrn = materialLotRrn;
+        body.materialLotId = materialLotId;
         body.printCount = printCount;
         return body;
     }
 
-    static buildRWStockOutPrintParameter(materialLotRrn) {
+    static buildRWStockOutPrintParameter(materialLotId) {
         let body = new RwMLotManagerRequestBody(ActionType.RWStockOutPrint);
-        body.materialLotRrn = materialLotRrn;
+        body.materialLotId = materialLotId;
         return body;
     }
 

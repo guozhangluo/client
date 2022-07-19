@@ -1,15 +1,15 @@
 export default class GetPrintCOBboxParameterRequestBody {
 
-    materialLot;
+    materialLotId;
     printCount;
 
-    constructor(materialLot, printCount){
-        this.materialLot = materialLot;
+    constructor(materialLotId, printCount){
+        this.materialLotId = materialLotId;
         this.printCount = printCount;
     }
 
-    static buildQuery(materialLot, printCount) {
-        return new GetPrintCOBboxParameterRequestBody(materialLot, printCount);
+    static buildQuery(materialLotId, printCount) {
+        return new GetPrintCOBboxParameterRequestBody(materialLotId, printCount);
     }
 
 }

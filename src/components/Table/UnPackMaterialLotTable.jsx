@@ -44,9 +44,9 @@ export default class UnPackMaterialLotTable extends EntityScanViewTable {
         this.unPackage(selectedRows);
     }
 
-    handlePrint = (materialLot) => {
+    handlePrint = (materialLotId) => {
         let requestObject = {
-            materialLotRrn : materialLot.objectRrn,    
+            materialLotId : materialLotId,    
             success: function(responseBody) {
 
             }
@@ -72,19 +72,19 @@ export default class UnPackMaterialLotTable extends EntityScanViewTable {
             actionReason: "",
             actionComment: "",
             success: function(responseBody) {
-                let unpackedMainMaterialLot = responseBody.materialLots[0];
+                let materialLots = responseBody.materialLots;
                 if (self.props.resetData) {
                     self.props.resetData();
                 }
                 self.setState({
                     loading: false
                 }); 
-                let materialLotId = unpackedMainMaterialLot.materialLotId;
+                let materialLotId = packedLotDetails[0].parentMaterialLotId;
                 let message = I18NUtils.getClientMessage(i18NCode.OperationSucceed) + `:${materialLotId}`;
                 MessageUtils.showOperationSuccess(message);
                 // 全拆了则不进行打印标签
-                if (unpackedMainMaterialLot.statusCategory != 'Fin') {
-                    self.handlePrint(unpackedMainMaterialLot);
+                if (materialLots && materialLots.length > 0) {
+                    self.handlePrint(materialLotId);
                 }
             }
         }

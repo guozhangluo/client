@@ -29,6 +29,11 @@ export default class GcCogReceiveMLotScanTable extends EntityScanViewTable {
         
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {...this.state, ...{formTable: {fields: []}},...{checked:true},...{value: "receiveWithDoc"}};
+    }
+
     createButtonGroup = () => {
         let buttons = [];
         buttons.push(this.createReceive());
