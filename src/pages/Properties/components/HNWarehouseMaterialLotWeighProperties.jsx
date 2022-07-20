@@ -15,7 +15,6 @@ export default class HNWarehouseMaterialLotWeighProperties extends EntityScanPro
       }
 
       handleSearch = () => {
-          debugger;
         let self = this;
         const{table} = this.state;
         let {rowKey, tableData, currentHandleMLots} = this.state;
@@ -30,18 +29,32 @@ export default class HNWarehouseMaterialLotWeighProperties extends EntityScanPro
                 tableData: tableData,
                 loading: false
             });
-           // 如果扫描的是数字，则更新当前列表中没有添加重量的箱号，存在多箱没有重量时，给多箱称重标记
-        } else if (data != undefined && !isNaN(parseInt(data)) && parseFloat(data).toString() != "NaN") {
+            return;
+        }
+        // 如果扫描的是数字，则更新当前列表中没有添加重量的箱号，存在多箱没有重量时，给多箱称重标记
+        if (data != undefined &&  data.startsWith("0000")  && parseFloat(data).toString() != "NaN") {
             if (tableData.length == 0){
                 Notification.showInfo(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
+                self.setState({ 
+                    tableData: tableData,
+                    loading: false
+                });
+                return;
             }
             currentHandleMLots = this.getNotScanWeightMaterialLots(tableData);
-            let boxsWeightSeq = this.getBoxsScanWeightSeq(tableData);
             if(currentHandleMLots.length == 0){
                 Notification.showInfo(I18NUtils.getClientMessage(i18NCode.AddOneRowPlease));
-            } else if(currentHandleMLots.length >= 2){
-                // let boxsWeight = parseInt(data,10)/10000;
-                let boxsWeight = parseFloat(data);
+                self.setState({ 
+                    tableData: tableData,
+                    loading: false
+                });
+                return;
+            } 
+
+            let boxsFlag = this.validateMLotsIsMultipleBoxes(currentHandleMLots);
+            let boxsWeightSeq = this.getBoxsScanWeightSeq(tableData);
+            if(boxsFlag){
+                let boxsWeight = parseInt(data,10)/10000;
                 tableData.forEach((materialLot) => {
                     currentHandleMLots.map((data, index) => {
                         if (data[rowKey] == materialLot[rowKey]) {
@@ -61,7 +74,7 @@ export default class HNWarehouseMaterialLotWeighProperties extends EntityScanPro
                     });
                 });
             } else {
-                // data = parseInt(data,10)/10000;
+                data = parseInt(data,10)/10000;
                 currentHandleMLots.forEach((materialLot) => {
                     tableData.map((data, index) => {
                         if (data[rowKey] == materialLot[rowKey]) {
@@ -69,8 +82,7 @@ export default class HNWarehouseMaterialLotWeighProperties extends EntityScanPro
                         }
                     });
                     if(!materialLot.weight){
-                        // materialLot["weight"] = data.toFixed(3);
-                        materialLot["weight"] = data;
+                        materialLot["weight"] = data.toFixed(3);
                         if(materialLot.theoryWeight){
                             let floatValue = materialLot.floatValue;
                             let disWeight = Math.abs(materialLot.weight - materialLot.theoryWeight);
@@ -92,17 +104,19 @@ export default class HNWarehouseMaterialLotWeighProperties extends EntityScanPro
                 materialLotId: data,
                 tableRrn: table.objectRrn,
                 success: function(responseBody) {
-                    let materialLot = responseBody.materialLot;
-                    if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                        let size = tableData.length;
-                        let productType = materialLot.reserved7;
-                        let scanSeq = size + 1;
-                        materialLot["scanSeq"] = scanSeq;
-                        if(productType == "COM" && (materialLot.theoryWeight == null || materialLot.theoryWeight == undefined || materialLot.theoryWeight == "")){
-                            materialLot.errorFlag = true;
+                    let materialLotList = responseBody.materialLotList;
+                    let size = tableData.length;
+                    let scanSeq = size + 1;
+                    materialLotList.forEach(materialLot => {
+                        if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                            let productType = materialLot.reserved7;
+                            materialLot["scanSeq"] = scanSeq;
+                            if(productType == "COM" && (materialLot.theoryWeight == null || materialLot.theoryWeight == undefined || materialLot.theoryWeight == "")){
+                                materialLot.errorFlag = true;
+                            }
+                            tableData.unshift(materialLot);
                         }
-                        tableData.unshift(materialLot);
-                    }
+                    });
                     self.setState({ 
                         tableData: tableData,
                         loading: false,
@@ -119,6 +133,20 @@ export default class HNWarehouseMaterialLotWeighProperties extends EntityScanPro
             }
             WeightManagerRequest.sendQueryRequest(requestObject);
         }
+    }
+
+    validateMLotsIsMultipleBoxes(materialLotList){
+        let multipleBoxFlag = false;
+        let materialLotIdList = [];
+        materialLotList.forEach((materialLot) => {
+            if (materialLotIdList.indexOf(materialLot.parentMaterialLotId) == -1) {
+                materialLotIdList.push(materialLot.parentMaterialLotId);
+            }
+        });
+        if(materialLotIdList.length > 1){
+            multipleBoxFlag = true;
+        }
+        return multipleBoxFlag;
     }
 
     getNotScanWeightMaterialLots(tableData){
