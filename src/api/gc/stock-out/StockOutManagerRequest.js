@@ -6,6 +6,19 @@ import Request from '../../Request';
 
 export default class StockOutManagerRequest {
 
+
+    static sendGetDataByRrnRequest = (object) => {
+        let {tableRrn, materialLotId} = object;
+        let requestBody = StockOutManagerRequestBody.buildQueryMLots(tableRrn, materialLotId);
+        let requestHeader = new StockOutManagerRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.GCStockOutUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
     static sendStockOutRequest = (object) => {
         let {documentLineList, materialLots} = object;
         let requestBody = StockOutManagerRequestBody.buildStockOut(documentLineList, materialLots);
@@ -19,8 +32,8 @@ export default class StockOutManagerRequest {
     }
 
     static sendValidationRequest = (object) => {
-        let {queryMaterialLot, materialLots} = object;
-        let requestBody = StockOutManagerRequestBody.buildValidateMaterial(queryMaterialLot, materialLots);
+        let {materialLotList} = object;
+        let requestBody = StockOutManagerRequestBody.buildValidateMaterial(materialLotList);
         let requestHeader = new StockOutManagerRequestHeader();
         let request = new Request(requestHeader, requestBody, UrlConstant.GCStockOutUrl);
         let requestObject = {

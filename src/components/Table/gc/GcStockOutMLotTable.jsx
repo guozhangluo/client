@@ -29,54 +29,17 @@ export default class GcStockOutMLotTable extends EntityScanViewTable {
 
     createButtonGroup = () => {
         let buttons = [];
-        // buttons.push(this.createStockOut());
         buttons.push(this.createSaleShip());
         return buttons;
     }
 
     createTagGroup = () => {
         let tagList = [];
-        tagList.push(this.createStatistic());
+        tagList.push(this.createBBoxQty());
+        tagList.push(this.createTotalVboxQty());
         tagList.push(this.createTotalNumber());
         tagList.push(this.createErrorNumberStatistic());
         return tagList;
-    }
-
-    stockOut = () => {
-        let self = this;
-        if (this.getErrorCount() > 0) {
-            Notification.showError(I18NUtils.getClientMessage(i18NCode.ErrorNumberMoreThanZero));
-            return;
-        }
-        let documentLineList = this.props.orderTable.state.data;
-        if (documentLineList.length === 0) {
-            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.SelectOneRow));
-            return;
-        }
-        let materialLots = this.state.data;
-        if (materialLots.length === 0 ) {
-            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
-            return;
-        }
-
-        self.setState({
-            loading: true
-        });
-        EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => self.setState({loading: false}));
-
-        let requestObj = {
-            documentLineList : documentLineList,
-            materialLots : materialLots,
-            success: function(responseBody) {
-                if (self.props.resetData) {
-                    self.props.onSearch();
-                    self.props.resetData();
-                }
-                MessageUtils.showOperationSuccess();
-            }
-        }
-
-        StockOutManagerRequest.sendStockOutRequest(requestObj);
     }
 
     /**
@@ -121,6 +84,33 @@ export default class GcStockOutMLotTable extends EntityScanViewTable {
         StockOutManagerRequest.sendSaleShipRequest(requestObj);
     } 
 
+    refreshDelete = (record) => {
+        let datas = this.state.data;
+        let recordList = [];
+        let parentMaterialLotId = record.parentMaterialLotId;
+        if(parentMaterialLotId == "" || parentMaterialLotId == null || parentMaterialLotId == undefined){
+            recordList.push(record);
+        } else {
+            datas.forEach((item) => {
+                if(item.parentMaterialLotId == parentMaterialLotId){
+                    recordList.push(item);
+                }
+            });
+        }
+        recordList.forEach((item) => {
+            let dataIndex = datas.indexOf(item);
+            if (dataIndex > -1 ) {
+                datas.splice(dataIndex, 1);
+            }
+        });
+        this.setState({
+            data: datas,
+            selectedRows: [],
+            selectedRowKeys: []
+        })
+        MessageUtils.showOperationSuccess();
+    }
+
     getErrorCount = () => {
         let materialLots = this.state.data;
         let count = 0;
@@ -134,29 +124,12 @@ export default class GcStockOutMLotTable extends EntityScanViewTable {
         return count;
     }
 
-    createTotalNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                count = count + data.currentQty;
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
-    }
-
-    createStatistic = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{this.state.data.length}</Tag>
+    createTotalVboxQty = () => {
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PackageQty)}：{this.state.data.length}</Tag>
     }
 
     createErrorNumberStatistic = () => {
         return <Tag color="#D2480A">{I18NUtils.getClientMessage(i18NCode.ErrorNumber)}：{this.getErrorCount()}</Tag>
-    }
-
-    createStockOut = () => {
-        return <Button key="stockOut" type="primary" style={styles.tableButton} loading={this.state.loading} icon="file-excel" onClick={this.stockOut}>
-                        发货
-                    </Button>
     }
 
     createSaleShip = () => {

@@ -18,62 +18,66 @@ export default class GCMobileMLotShipScanProperties extends MobileProperties{
     }
 
     queryData = (whereClause) => {
-        const self = this;
-        let {rowKey,tableData} = this.state;
-        let requestObject = {
-          tableRrn: this.state.tableRrn,
-          whereClause: whereClause,
-          success: function(responseBody) {
-            let queryDatas = responseBody.dataList;
-            let data = undefined;
-            if (queryDatas && queryDatas.length > 0) {
-              let materialLot = queryDatas[0];
-              let trueData = [];
-              tableData.forEach(data => {
-                if(!data.errorFlag){
-                  trueData.push(data);
-                }
-            });
-              self.validationMaterialLot(materialLot, trueData);
-            } else {
-              data = new MaterialLot();
-              let materialLotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
-              data[rowKey] = materialLotId;
-              data.setMaterialLotId(materialLotId);
-              data.errorFlag = true;
-              if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
-                tableData.unshift(data);
-              }
-            }
-            self.setState({ 
-              tableData: tableData,
-              loading: false
-            });
-            self.form.resetFormFileds();  
-          }
-        }
-        TableManagerRequest.sendGetDataByRrnRequest(requestObject);
-    }
-
-    validationMaterialLot = (materialLot, materialLots) => {
-      let self = this;
+      const self = this;
+      let materialLotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
       let {rowKey,tableData} = this.state;
       let requestObject = {
-        queryMaterialLot : materialLot,
-        materialLots: materialLots,
+        tableRrn: this.state.tableRrn,
+        materialLotId: materialLotId,
         success: function(responseBody) {
-            if(responseBody.falg){
-              let errorData = [];
-              let trueData = [];
-              tableData.forEach(data => {
-                if(data.errorFlag){
-                  errorData.push(data);
-                } else {
-                  trueData.push(data);
-                }
+          let materialLotList = responseBody.materialLotList;
+          if (materialLotList && materialLotList.length > 0) {
+            self.validationMaterialLot(materialLotList);
+          } else {
+            let data = new MaterialLot();
+            let materialLotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
+            data[rowKey] = materialLotId;
+            data.setMaterialLotId(materialLotId);
+            data.errorFlag = true;
+            if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
+              tableData.unshift(data);
+            }
+          }
+          self.setState({ 
+            tableData: tableData,
+            loading: false
+          });
+          self.form.resetFormFileds();  
+        }
+      }
+      StockOutManagerRequest.sendGetDataByRrnRequest(requestObject);
+  }
+
+  validationMaterialLot = (materialLotList) => {
+    let self = this;
+    let {rowKey,tableData} = this.state;
+    let requestObject = {
+      materialLotList: materialLotList,
+      success: function(responseBody) {
+          if(responseBody.falg){
+            let errorData = [];
+            let trueData = [];
+            tableData.forEach(data => {
+              if(data.errorFlag){
+                errorData.push(data);
+              } else {
+                trueData.push(data);
+              }
             });
-            if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-              trueData.unshift(materialLot);
+            if(trueData.length == 0){
+              materialLotList.forEach(materialLot => {
+                trueData.unshift(materialLot);
+             });
+            } else {
+              materialLotList.forEach(materialLot => {
+                trueData.forEach(mLot => {
+                    if(mLot[rowKey] === materialLot[rowKey]){
+                      if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                          trueData.unshift(materialLot);
+                      }
+                    }
+                });
+             });
             }
             tableData = [];
             errorData.forEach(data => {
@@ -82,22 +86,25 @@ export default class GCMobileMLotShipScanProperties extends MobileProperties{
             trueData.forEach(data => {
               tableData.push(data);
             });
-          } else {
+
+        } else {
+          materialLotList.forEach(materialLot => {
             if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
               materialLot.errorFlag = true;
               tableData.unshift(materialLot);
             }
-          }
-          
-          self.setState({ 
-            tableData: tableData,
-            loading: false
           });
-          self.form.resetFormFileds();
         }
+        
+        self.setState({ 
+          tableData: tableData,
+          loading: false
+        });
+        self.form.resetFormFileds();
       }
-      StockOutManagerRequest.sendValidationRequest(requestObject);
     }
+    StockOutManagerRequest.sendValidationRequest(requestObject);
+  }
     
     handleSubmit = () => {
         const {tableData} = this.state;

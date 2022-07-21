@@ -2,6 +2,7 @@ import MaterialLotAction from "../../dto/mms/MaterialLotAction";
 
 const actionType = {
     StockOut: "StockOut",
+    QueryMLot: "QueryMLot",
     Validation: "validation",
     SaleShip: "SaleShip",
     TransferShip: "TransferShip",
@@ -21,6 +22,13 @@ export default class StockOutManagerRequestBody {
         this.queryMaterialLot = queryMaterialLot;
     }
     
+    static buildQueryMLots(tableRrn, materialLotId) {
+        let body = new StockOutManagerRequestBody(actionType.QueryMLot);
+        body.tableRrn = tableRrn;
+        body.materialLotId = materialLotId;
+        return body;
+    }
+
     static buildStockOut(documentLineList, materialLots) {
         let materialLotActions = [];
         materialLots.forEach(materialLot => {
@@ -47,14 +55,14 @@ export default class StockOutManagerRequestBody {
         return body;
     }
 
-    static buildValidateMaterial(queryMaterialLot, materialLots) {
+    static buildValidateMaterial(materialLotList) {
         let materialLotActions = [];
-        materialLots.forEach(materialLot => {
+        materialLotList.forEach(materialLot => {
             let materialLotAction = new MaterialLotAction();
             materialLotAction.setMaterialLotId(materialLot.materialLotId);
             materialLotActions.push(materialLotAction)
         });
-        return new StockOutManagerRequestBody(actionType.Validation, undefined, materialLotActions, queryMaterialLot);
+        return new StockOutManagerRequestBody(actionType.Validation, undefined, materialLotActions);
     }
 
     static buildTransferShip(documentLineList, materialLots, warehouseId) {
