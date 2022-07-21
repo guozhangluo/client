@@ -91,6 +91,7 @@ export default class WltStockOutManagerRequest {
     }
 
     static sendValidationRequest = (object) => {
+        debugger;
         let {queryMaterialLot, materialLots} = object;
         let requestBody = WltStockOutManagerRequestBody.buildValidateMLot(queryMaterialLot, materialLots);
         let requestHeader = new WltStockOutManagerRequestHeader();

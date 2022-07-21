@@ -36,7 +36,6 @@ export default class GcWltStockOutMLotScanTable extends EntityScanViewTable {
     createButtonGroup = () => {
         let buttons = [];
         buttons.push(this.createStockOut());
-        // buttons.push(this.createThreeSideShip());
         buttons.push(this.createOtherShip());
         return buttons;
     }
@@ -44,7 +43,7 @@ export default class GcWltStockOutMLotScanTable extends EntityScanViewTable {
     createTagGroup = () => {
         let tagList = [];
         tagList.push(this.createCheckSubcodeFlag());
-        tagList.push(this.createStatistic());
+        tagList.push(this.createBBoxQty());
         tagList.push(this.createWaferNumber());
         tagList.push(this.createTotalNumber());
         tagList.push(this.createErrorNumberStatistic());
@@ -168,49 +167,6 @@ export default class GcWltStockOutMLotScanTable extends EntityScanViewTable {
         WltStockOutManagerRequest.sendSaleAndthreeSideStockOutRequest(requestObj);
     }
 
-    //三方销售
-    threeSideShip = () => {
-        let self = this;
-        if (this.getErrorCount() > 0) {
-            Notification.showError(I18NUtils.getClientMessage(i18NCode.ErrorNumberMoreThanZero));
-            return;
-        }
-        let documentLine = this.props.orderTable.getSingleSelectedRow();
-        if (!documentLine) {
-            self.setState({ 
-                loading: false
-            });
-            return;
-        } else if(documentLine.reserved31 != 'ERP_SOA'){
-            Notification.showError(I18NUtils.getClientMessage(i18NCode.ChooseThreeSideShipOrderPlease));
-            return;
-        }
-
-        let materialLots = this.state.data;
-        if (materialLots.length === 0 ) {
-            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
-            return;
-        }
-
-        self.setState({
-            loading: true
-        });
-        EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => self.setState({loading: false}));
-
-        let requestObj = {
-            documentLine : documentLine,
-            materialLots : materialLots,
-            success: function(responseBody) {
-                if (self.props.resetData) {
-                    self.props.onSearch();
-                    self.props.resetData();
-                }
-                MessageUtils.showOperationSuccess();
-            }
-        }
-        WltStockOutManagerRequest.sendWltThreeSideShipRequest(requestObj);
-    }
-
     getErrorCount = () => {
         let materialLots = this.state.data;
         let count = 0;
@@ -248,10 +204,6 @@ export default class GcWltStockOutMLotScanTable extends EntityScanViewTable {
         return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}: {count}</Tag>
     }
 
-    createStatistic = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{this.state.data.length}</Tag>
-    }
-
     createErrorNumberStatistic = () => {
         return <Tag color="#D2480A">{I18NUtils.getClientMessage(i18NCode.ErrorNumber)}：{this.getErrorCount()}</Tag>
     }
@@ -259,12 +211,6 @@ export default class GcWltStockOutMLotScanTable extends EntityScanViewTable {
     createStockOut = () => {
         return <Button key="stockOut" type="primary" style={styles.tableButton} loading={this.state.loading} icon="file-excel" onClick={this.stockOut}>
                         材料/其他出
-                    </Button>
-    }
-
-    createThreeSideShip = () => {
-        return <Button key="threeSideShip" type="primary" style={styles.tableButton} loading={this.state.loading} icon="inbox" onClick={this.threeSideShip}>
-                       {I18NUtils.getClientMessage(i18NCode.BtnThreeSideShip)}
                     </Button>
     }
 

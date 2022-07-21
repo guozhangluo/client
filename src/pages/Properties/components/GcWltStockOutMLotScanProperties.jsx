@@ -23,65 +23,25 @@ export default class GcWltStockOutMLotScanProperties extends EntityScanPropertie
     }
 
     queryData = (whereClause) => {
-        const self = this;
-        let {rowKey,tableData} = this.state;
-        let orders = this.props.orderTable.state.data;
-        if (orders.length == 0) {
-          Notification.showNotice(I18NUtils.getClientMessage(i18NCode.SelectAtLeastOneRow));
-          self.setState({ 
-            tableData: tableData,
-            loading: false
-          });
-          return;
-        }
-        let queryFields = this.form.state.queryFields;
-        let queryLotId = "";
-        if (queryFields.length === 1) {
-          queryLotId = this.form.props.form.getFieldValue(queryFields[0].name)
-        }
-        let requestObject = {
-          tableRrn: this.state.tableRrn,
-          queryLotId: queryLotId,
-          success: function(responseBody) {
-            let data = undefined;
-            let materialLot = responseBody.materialLot;
-            let materialLotId = materialLot.materialLotId;
-            if (materialLotId == "" || materialLotId == null || materialLotId == undefined){
-              data = new MaterialLot();
-              data[rowKey] = queryLotId;
-              data.setMaterialLotId(queryLotId);
-              data.errorFlag = true;
-              if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
-                tableData.unshift(data);
-              }
-            } else {
-              let trueData = [];
-              tableData.forEach(data => {
-                if(!data.errorFlag){
-                  trueData.push(data);
-                }
-            });
-              //验证箱中的产品、等级等信息是否一致
-              self.validationWltMLot(materialLot, trueData);
-            }
-            self.setState({ 
-              tableData: tableData,
-              loading: false
-            });
-            self.form.resetFormFileds();  
-          }
-        }
-        WltStockOutManagerRequest.sendGetMaterialLotByRrnRequest(requestObject);
-    }
-
-    validationWltMLot = (materialLot, materialLots) => {
-      let self = this;
+      const self = this;
       let {rowKey,tableData} = this.state;
+      let orders = this.props.orderTable.state.data;
+      if (orders.length == 0) {
+        Notification.showNotice(I18NUtils.getClientMessage(i18NCode.SelectAtLeastOneRow));
+        self.setState({ 
+          tableData: tableData,
+          loading: false
+        });
+        return;
+      }
+      let queryFields = this.form.state.queryFields;
+      let queryLotId = this.form.props.form.getFieldValue(queryFields[0].name);
       let requestObject = {
-        queryMaterialLot : materialLot,
-        materialLots: materialLots,
+        tableRrn: this.state.tableRrn,
+        queryLotId: queryLotId,
         success: function(responseBody) {
-            if(responseBody.falg){
+          let materialLotList = responseBody.materialLotList;
+          if (materialLotList && materialLotList.length > 0){
               let errorData = [];
               let trueData = [];
               tableData.forEach(data => {
@@ -90,33 +50,91 @@ export default class GcWltStockOutMLotScanProperties extends EntityScanPropertie
                 } else {
                   trueData.push(data);
                 }
-            });
-            if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-              trueData.unshift(materialLot);
-            }
-            tableData = [];
-            errorData.forEach(data => {
-              tableData.push(data);
-            });
-            trueData.forEach(data => {
-              tableData.push(data);
-            });
+              });
+              if(trueData && trueData.length == 0){
+                materialLotList.forEach(materialLot => {
+                  trueData.push(materialLot);
+                });
+                tableData = [];
+                errorData.forEach(data => {
+                  tableData.push(data);
+                });
+                trueData.forEach(data => {
+                  tableData.push(data);
+                });
+                self.setState({ 
+                  tableData: tableData,
+                  loading: false
+                });
+                self.form.resetFormFileds();  
+              } else {
+                self.validationWltMLot(materialLotList, trueData[0]);
+              }
           } else {
-            if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-              materialLot.errorFlag = true;
-              tableData.unshift(materialLot);
+            let data = new MaterialLot();
+            data[rowKey] = queryLotId;
+            data.setMaterialLotId(queryLotId);
+            data.errorFlag = true;
+            if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
+              tableData.unshift(data);
             }
+            self.setState({ 
+              tableData: tableData,
+              loading: false
+            });
+            self.form.resetFormFileds();  
           }
-          
-          self.setState({ 
-            tableData: tableData,
-            loading: false
-          });
-          self.form.resetFormFileds();
         }
       }
-      WltStockOutManagerRequest.sendValidationRequest(requestObject);
+      WltStockOutManagerRequest.sendGetMaterialLotByRrnRequest(requestObject);
+  }
+
+  validationWltMLot = (materialLots, materialLot) => {
+    let self = this;
+    let {rowKey,tableData} = this.state;
+    let requestObject = {
+      queryMaterialLot : materialLot,
+      materialLots: materialLots,
+      success: function(responseBody) {
+          if(responseBody.falg){
+            let errorData = [];
+            let trueData = [];
+            tableData.forEach(data => {
+              if(data.errorFlag){
+                errorData.push(data);
+              } else {
+                trueData.push(data);
+              }
+          });
+          materialLots.forEach(mLot =>{
+            if (tableData.filter(d => d[rowKey] === mLot[rowKey]).length === 0) {
+              trueData.unshift(mLot);
+            }
+          });
+          tableData = [];
+          errorData.forEach(data => {
+            tableData.push(data);
+          });
+          trueData.forEach(data => {
+            tableData.push(data);
+          });
+        } else {
+          materialLots.forEach(mLot =>{
+            if (tableData.filter(d => d[rowKey] === mLot[rowKey]).length === 0) {
+              mLot.errorFlag = true;
+              tableData.unshift(mLot);
+            }
+          });
+        }
+        self.setState({ 
+          tableData: tableData,
+          loading: false
+        });
+        self.form.resetFormFileds();
+      }
     }
+    WltStockOutManagerRequest.sendValidationRequest(requestObject);
+  }
 
     buildTable = () => {
         return <GcWltStockOutMLotScanTable 
