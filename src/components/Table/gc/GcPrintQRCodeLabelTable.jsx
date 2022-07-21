@@ -38,19 +38,19 @@ export default class GcPrintQRCodeLabelTable extends EntityScanViewTable {
         if(data.length == 0){
             Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
             return;
-        } else {
-            self.setState({
-                loading: true
-            });
-            EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => this.setState({loading: false}));    
-            let requestObject = {
-                materialLot : data[0],   
-                success: function(responseBody) {
-                    MessageUtils.showOperationSuccess();
-                }
-            }
-            GetPrintBoxQRCodeParameterRequest.sendGetBoxLabelPrintParamaterRequest(requestObject);
         }
+
+        self.setState({
+            loading: true
+        });
+        EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => this.setState({loading: false}));    
+        let requestObject = {
+            materialLotList : data,   
+            success: function(responseBody) {
+                MessageUtils.showOperationSuccess();
+            }
+        }
+        GetPrintBoxQRCodeParameterRequest.sendGetBoxLabelPrintParamaterRequest(requestObject);
     }
 
     handlePrintQRCodeLable = () => {
@@ -60,20 +60,19 @@ export default class GcPrintQRCodeLabelTable extends EntityScanViewTable {
         if(data.length == 0){
             Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
             return;
-        } else {
-            self.setState({
-                loading: true
-            });
-            EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => this.setState({loading: false}));    
-            let requestObject = {
-                materialLot : data[0],   
-                printVboxLabelFlag: printVboxLabelFlag,
-                success: function(responseBody) {
-                    MessageUtils.showOperationSuccess();
-                }
-            }
-            GetPrintBoxQRCodeParameterRequest.sendGetBoxQRCodeLabelPrintParamaterRequest(requestObject);
         }
+        self.setState({
+            loading: true
+        });
+        EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => this.setState({loading: false}));    
+        let requestObject = {
+            materialLotList : data,   
+            printVboxLabelFlag: printVboxLabelFlag,
+            success: function(responseBody) {
+                MessageUtils.showOperationSuccess();
+            }
+        }
+        GetPrintBoxQRCodeParameterRequest.sendGetBoxQRCodeLabelPrintParamaterRequest(requestObject);
     }
 
     createPrintLabelButton = () => {
@@ -112,6 +111,10 @@ export default class GcPrintQRCodeLabelTable extends EntityScanViewTable {
                 checked: false
             });
         }
+    }
+
+    buildOperationColumn = () =>{
+
     }
 
 }

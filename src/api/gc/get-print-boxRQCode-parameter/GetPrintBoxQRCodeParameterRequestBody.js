@@ -6,21 +6,21 @@ const ActionType={
 export default class GetPrintBoxQRCodeParameterRequestBody {
 
     actionType;
-    materialLot;
+    materialLotList;
     printVboxLabelFlag;
 
-    constructor(actionType, materialLot, printVboxLabelFlag){
+    constructor(actionType, materialLotList, printVboxLabelFlag){
         this.actionType = actionType;
-        this.materialLot = materialLot;
+        this.materialLotList = materialLotList;
         this.printVboxLabelFlag = printVboxLabelFlag;
     }
 
-    static buildGetBoxPrintLabelParamater(materialLot) {
-        return new GetPrintBoxQRCodeParameterRequestBody(ActionType.PrintCOBLabel, materialLot);
+    static buildGetBoxPrintLabelParamater(materialLotList) {
+        return new GetPrintBoxQRCodeParameterRequestBody(ActionType.PrintCOBLabel, materialLotList);
     }
 
-    static buildGetBoxPrintQRCodeLabelParamater(materialLot, printVboxLabelFlag) {
-        return new GetPrintBoxQRCodeParameterRequestBody(ActionType.PrintQRCodeLabel, materialLot, printVboxLabelFlag);
+    static buildGetBoxPrintQRCodeLabelParamater(materialLotList, printVboxLabelFlag) {
+        return new GetPrintBoxQRCodeParameterRequestBody(ActionType.PrintQRCodeLabel, materialLotList, printVboxLabelFlag);
     }
 
 }

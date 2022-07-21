@@ -7,7 +7,7 @@ import Request from '../../Request';
 export default class GetPrintBoxQRCodeParameterRequest {
 
     static sendGetBoxLabelPrintParamaterRequest = (object) => {
-        let requestBody = GetPrintBoxQRCodeParameterRequestBody.buildGetBoxPrintLabelParamater(object.materialLot);
+        let requestBody = GetPrintBoxQRCodeParameterRequestBody.buildGetBoxPrintLabelParamater(object.materialLotList);
         let requestHeader = new GetPrintBoxQRCodeParameterRequestHeader();
         let request = new Request(requestHeader, requestBody, UrlConstant.GCGetPrintBoxQRCodeParameterUrl);
         let requestObject = {
@@ -19,7 +19,7 @@ export default class GetPrintBoxQRCodeParameterRequest {
     }
 
     static sendGetBoxQRCodeLabelPrintParamaterRequest = (object) => {
-        let requestBody = GetPrintBoxQRCodeParameterRequestBody.buildGetBoxPrintQRCodeLabelParamater(object.materialLot, object.printVboxLabelFlag);
+        let requestBody = GetPrintBoxQRCodeParameterRequestBody.buildGetBoxPrintQRCodeLabelParamater(object.materialLotList, object.printVboxLabelFlag);
         let requestHeader = new GetPrintBoxQRCodeParameterRequestHeader();
         let request = new Request(requestHeader, requestBody, UrlConstant.GCGetPrintBoxQRCodeParameterUrl);
         let requestObject = {
