@@ -26,10 +26,8 @@ export default class GcGcTransferShipMLotProperties extends EntityScanProperties
           tableRrn: this.state.tableRrn,
           whereClause: whereClause,
           success: function(responseBody) {
-            let queryDatas = responseBody.dataList;
-            let data = undefined;
+            let materialLotList = responseBody.dataList;
             if (queryDatas && queryDatas.length > 0) {
-              let materialLot = queryDatas[0];
               let errorData = [];
               let trueData = [];
               tableData.forEach(data => {
@@ -39,9 +37,11 @@ export default class GcGcTransferShipMLotProperties extends EntityScanProperties
                   trueData.push(data);
                 }
               });
-              if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                trueData.unshift(materialLot);
-              }
+              materialLotList.forEach(materialLot => {
+                if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                  trueData.unshift(materialLot);
+                }
+              });
               tableData = [];
               errorData.forEach(data => {
                 tableData.push(data);
@@ -50,7 +50,7 @@ export default class GcGcTransferShipMLotProperties extends EntityScanProperties
                 tableData.push(data);
               });
             } else {
-              data = new MaterialLot();
+              let data = new MaterialLot();
               let materialLotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
               data[rowKey] = materialLotId;
               data.setMaterialLotId(materialLotId);
