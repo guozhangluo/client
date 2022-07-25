@@ -43,9 +43,8 @@ export default class GcFTStockOutMLotScanProperties extends EntityScanProperties
           tableRrn: this.state.tableRrn,
           whereClause: whereClause,
           success: function(responseBody) {
-            let queryDatas = responseBody.dataList;
+            let materialLotList = responseBody.dataList;
             if (queryDatas && queryDatas.length > 0) {
-              let materialLot = queryDatas[0];
               let errorData = [];
               let trueData = [];
               tableData.forEach(data => {
@@ -55,9 +54,11 @@ export default class GcFTStockOutMLotScanProperties extends EntityScanProperties
                   trueData.push(data);
                 }
               });
-              if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                trueData.unshift(materialLot);
-              }
+              materialLotList.forEach(materialLot => {
+                if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                  trueData.unshift(materialLot);
+                }
+              });
               tableData = [];
               errorData.forEach(data => {
                 tableData.push(data);

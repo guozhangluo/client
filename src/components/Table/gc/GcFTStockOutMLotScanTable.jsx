@@ -28,7 +28,6 @@ export default class GcFTStockOutMLotScanTable extends EntityScanViewTable {
 
     createButtonGroup = () => {
         let buttons = [];
-        // buttons.push(this.createStockOut());
         buttons.push(this.createSaleShip());
         return buttons;
     }
@@ -39,45 +38,6 @@ export default class GcFTStockOutMLotScanTable extends EntityScanViewTable {
         tagList.push(this.createTotalNumber());
         tagList.push(this.createErrorNumberStatistic());
         return tagList;
-    }
-
-    stockOut = () => {
-        let self = this;
-        if (this.getErrorCount() > 0) {
-            Notification.showError(I18NUtils.getClientMessage(i18NCode.ErrorNumberMoreThanZero));
-            return;
-        }
-
-        let orderTable = this.props.orderTable;
-        let orders = orderTable.state.data;
-        if (orders.length === 0) {
-            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.SelectOneRow));
-            return;
-        }
-
-        let materialLots = this.state.data;
-        if (materialLots.length === 0 ) {
-            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
-            return;
-        }
-
-        self.setState({
-            loading: true
-        });
-        EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => self.setState({loading: false}));
-
-        let requestObj = {
-            documentLines : orders,
-            materialLots : materialLots,
-            success: function(responseBody) {
-                if (self.props.resetData) {
-                    self.props.onSearch();
-                    self.props.resetData();
-                }
-                MessageUtils.showOperationSuccess();
-            }
-        }
-        FtMLotManagerRequest.sendFTStockOutRequest(requestObj);
     }
 
     /**
