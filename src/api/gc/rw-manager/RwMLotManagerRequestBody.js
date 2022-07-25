@@ -204,9 +204,9 @@ export default class RwMLotManagerRequestBody {
         return body;
     }
 
-    static buildRWBoxLabelPrintParameter(materialLotRrn) {
+    static buildRWBoxLabelPrintParameter(materialLotList) {
         let body = new RwMLotManagerRequestBody(ActionType.RWBoxLabelPrint);
-        body.materialLotRrn = materialLotRrn;
+        body.materialLotList = materialLotList;
         return body;
     }
 

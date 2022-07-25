@@ -83,7 +83,7 @@ export default class GCRWBoxLabelPrintTable extends EntityScanViewTable {
         
         if (data && data.length > 0) {
             let requestObject = {
-                materialLotRrn : data[0].objectRrn,
+                materialLotList : data,
                 success: function(responseBody) {
                     MessageUtils.showOperationSuccess();
                 }
