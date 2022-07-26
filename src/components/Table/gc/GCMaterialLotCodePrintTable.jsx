@@ -96,7 +96,7 @@ export default class GCMaterialLotCodePrintTable extends EntityListTable {
 
             let requestObject = {
                 printType: printType,
-                materialLot : data[0],
+                materialLotList : data,
                 success: function(responseBody) {
                     MessageUtils.showOperationSuccess();
                 }

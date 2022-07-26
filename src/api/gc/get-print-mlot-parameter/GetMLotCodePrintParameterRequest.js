@@ -11,7 +11,7 @@ export default class GetMLotCodePrintParameterRequest {
      * @param {*} object 
      */
     static sendGetPrintParameterRequest = (object) => {
-        let requestBody = GetMLotCodePrintParameterRequestBody.buildGetPrintParameter(object.printType ,object.materialLot);
+        let requestBody = GetMLotCodePrintParameterRequestBody.buildGetPrintParameter(object.printType ,object.materialLotList);
         let requestHeader = new GetMLotCodePrintParameterRequestHeader();
         let request = new Request(requestHeader, requestBody, UrlConstant.GCGetMLotCodePrintParameterUrl);
         let requestObject = {

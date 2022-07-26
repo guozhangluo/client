@@ -40,21 +40,20 @@ export default class GCCOGDetialDeleteTable extends EntityListTable {
         const {data,table} = this.state;
         let self = this;
         let deleteNote = this.input.state.value;
-
+        if(data.length == 0){
+            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
+            return;
+        }
+        if(deleteNote == "" || deleteNote == undefined){
+            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.DeleteNoteCannotEmpty));
+            return;
+        }
         Modal.confirm({
             title: 'Confirm',
             content: I18NUtils.getClientMessage(i18NCode.ConfirmDelete),
             okText: '确认',
             cancelText: '取消',
             onOk:() => {
-                if(data.length == 0){
-                    Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
-                    return;
-                }
-                if(deleteNote == "" || deleteNote == undefined){
-                    Notification.showNotice(I18NUtils.getClientMessage(i18NCode.DeleteNoteCannotEmpty));
-                    return;
-                }
                 self.setState({
                     loading: true
                 });

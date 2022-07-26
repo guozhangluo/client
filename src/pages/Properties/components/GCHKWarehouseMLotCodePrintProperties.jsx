@@ -1,6 +1,6 @@
 import EntityScanProperties from "./entityProperties/EntityScanProperties";
 import GCHKWarehouseMLotCodePrintTable from "../../../components/Table/gc/GCHKWarehouseMLotCodePrintTable";
-import TableManagerRequest from "../../../api/table-manager/TableManagerRequest";
+import WltStockOutManagerRequest from "../../../api/gc/wlt-stock-out/WltStockOutManagerRequest";
 
 
 export default class GCHKWarehouseMLotCodePrintProperties extends EntityScanProperties{
@@ -20,21 +20,27 @@ export default class GCHKWarehouseMLotCodePrintProperties extends EntityScanProp
       });
   }
 
-  queryData = (whereClause) => {
-    const self = this;
-    let requestObject = {
-      tableRrn: this.state.tableRrn,
-      whereClause: whereClause,
-      success: function(responseBody) {
-        self.setState({
-          tableData: responseBody.dataList,
-          loading: false
-        });
-        self.form.resetFormFileds();  
+    queryData = (whereClause) => {
+      const self = this;
+      let queryLotId = this.form.props.form.getFieldValue(this.form.state.queryFields[0].name);
+      let requestObject = {
+        tableRrn: this.state.tableRrn,
+        queryLotId: queryLotId,
+        success: function(responseBody) {
+          let materialLotList = responseBody.materialLotList;
+          if (materialLotList && materialLotList.length > 0){
+            self.setState({
+              tableData: materialLotList,
+              loading: false
+            });
+            self.form.resetFormFileds();  
+          } else {
+            self.showDataNotFound();
+          }
+        }
       }
+      WltStockOutManagerRequest.sendGetMaterialLotByRrnRequest(requestObject);
     }
-    TableManagerRequest.sendGetDataByRrnRequest(requestObject);
-  }
 
     buildTable = () => {
         return <GCHKWarehouseMLotCodePrintTable pagination={false} 

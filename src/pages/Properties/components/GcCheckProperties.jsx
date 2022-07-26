@@ -28,8 +28,8 @@ export default class GcCheckProperties extends EntityScanProperties{
           queryLotId: data,
           tableRrn: this.state.tableRrn,
           success: function(responseBody) {
-            let materialLot = responseBody.materialLot;
-            if(materialLot && materialLot.materialLotId != null && materialLot.materialLotId != ""){
+            let materialLotList = responseBody.materialLotList;
+            if(materialLotList && materialLotList.length > 0){
               let errorData = [];
               let trueData = [];
               tableData.forEach(data =>{
@@ -39,11 +39,14 @@ export default class GcCheckProperties extends EntityScanProperties{
                   trueData.push(data);
                 }
               });
-              if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                trueData.unshift(materialLot);
-              } else {
-                self.showDataAlreadyExists();
-              }
+              materialLotList.forEach(materialLot => {
+                if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                  trueData.unshift(materialLot);
+                } else {
+                  self.showDataAlreadyExists();
+                }
+              });
+              
               tableData = [];
               errorData.forEach(data => {
                 tableData.push(data);

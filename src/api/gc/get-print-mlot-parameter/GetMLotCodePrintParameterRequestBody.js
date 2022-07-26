@@ -1,15 +1,15 @@
 export default class GetMLotCodePrintParameterRequestBody {
     
     printType;
-    materialLot;
+    materialLotList;
 
-    constructor(printType, materialLot){
+    constructor(printType, materialLotList){
         this.printType = printType;
-        this.materialLot = materialLot;
+        this.materialLotList = materialLotList;
     }
 
-    static buildGetPrintParameter(printType, materialLot) {
-        return new GetMLotCodePrintParameterRequestBody(printType, materialLot);
+    static buildGetPrintParameter(printType, materialLotList) {
+        return new GetMLotCodePrintParameterRequestBody(printType, materialLotList);
     }
 }
 
