@@ -56,23 +56,20 @@ export default class MesReceiveFGScanTable extends EntityScanViewTable {
         });
         EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => this.setState({loading: false}));
         
-        if (data && data.length > 0) {
-            let self = this;
-            let requestObject = {
-                mesPackedLots: data,
-                success: function(responseBody) {
-                    if (self.props.resetData) {
-                        self.props.onSearch();
-                        self.props.resetData();
-                    }
-                    self.setState({
-                        loading: false
-                    }); 
-                    MessageUtils.showOperationSuccess();
+        let requestObject = {
+            mesPackedLots: data,
+            success: function(responseBody) {
+                if (self.props.resetData) {
+                    self.props.onSearch();
+                    self.props.resetData();
                 }
+                self.setState({
+                    loading: false
+                }); 
+                MessageUtils.showOperationSuccess();
             }
-            FinishGoodInvManagerRequest.sendReceiveRequest(requestObject);
         }
+        FinishGoodInvManagerRequest.sendReceiveRequest(requestObject);
     }
 
     LSGradeQuery = () => {
@@ -96,6 +93,7 @@ export default class MesReceiveFGScanTable extends EntityScanViewTable {
                         data: packedLotList,
                         loading: false
                     }); 
+                    self.props.data = packedLotList;
                     MessageUtils.showOperationSuccess();
                 } else {
                     Notification.showInfo(I18NUtils.getClientMessage(i18NCode.DataNotFound));
@@ -110,6 +108,14 @@ export default class MesReceiveFGScanTable extends EntityScanViewTable {
     LSGradeReceive = () => {
         const {data} = this.state;
         let self = this;
+        if(data.length == 0){
+            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
+            return;
+        }
+        if (this.getErrorCount() > 0) {
+            Notification.showError(I18NUtils.getClientMessage(i18NCode.ErrorNumberMoreThanZero));
+            return;
+        }
         if (self.validateMLotExistUnLSGrade()) {
             Notification.showError(I18NUtils.getClientMessage(i18NCode.LSGradeVBoxCanDoLSReceive));
             return;
@@ -119,23 +125,20 @@ export default class MesReceiveFGScanTable extends EntityScanViewTable {
         });
         EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => this.setState({loading: false}));
         
-        if (data && data.length > 0) {
-            let self = this;
-            let requestObject = {
-                mesPackedLots: data,
-                success: function(responseBody) {
-                    if (self.props.resetData) {
-                        self.props.onSearch();
-                        self.props.resetData();
-                    }
-                    self.setState({
-                        loading: false
-                    }); 
-                    MessageUtils.showOperationSuccess();
+        let requestObject = {
+            mesPackedLots: data,
+            success: function(responseBody) {
+                if (self.props.resetData) {
+                    self.props.onSearch();
+                    self.props.resetData();
                 }
+                self.setState({
+                    loading: false
+                }); 
+                MessageUtils.showOperationSuccess();
             }
-            FinishGoodInvManagerRequest.sendLSGeadeReceiveRequest(requestObject);
         }
+        FinishGoodInvManagerRequest.sendLSGeadeReceiveRequest(requestObject);
     }
 
     validateMLotExistLSGrade(){

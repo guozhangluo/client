@@ -43,25 +43,44 @@ export default class HKStockOutMLotScanProperties extends EntityScanProperties{
           tableRrn: this.state.tableRrn,
           queryLotId: queryLotId,
           success: function(responseBody) {
-            let data = undefined;
-            let materialLot = responseBody.materialLot;
-            let materialLotId = materialLot.materialLotId;
-            if (materialLotId == "" || materialLotId == null || materialLotId == undefined){
-              data = new MaterialLot();
+            let materialLotList = responseBody.materialLotList;
+            if (materialLotList && materialLotList.length > 0){
+              let errorData = [];
+              let trueData = [];
+              tableData.forEach(data => {
+                if(data.errorFlag){
+                  errorData.push(data);
+                } else {
+                  trueData.push(data);
+                }
+              });
+              if(trueData && trueData.length == 0){
+                materialLotList.forEach(materialLot => {
+                  trueData.push(materialLot);
+                });
+                tableData = [];
+                errorData.forEach(data => {
+                  tableData.push(data);
+                });
+                trueData.forEach(data => {
+                  tableData.push(data);
+                });
+                self.setState({ 
+                  tableData: tableData,
+                  loading: false
+                });
+                self.form.resetFormFileds();  
+              } else {
+                self.validationWltMLot(materialLotList, trueData[0]);
+              }
+            } else {
+              let data = new MaterialLot();
               data[rowKey] = queryLotId;
               data.setMaterialLotId(queryLotId);
               data.errorFlag = true;
               if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
                 tableData.unshift(data);
               }
-            } else {
-              let trueData = [];
-              tableData.forEach(data => {
-                if(!data.errorFlag){
-                  trueData.push(data);
-                }
-            });
-              self.validationWltMLot(materialLot, trueData);
             }
             self.setState({ 
               tableData: tableData,
@@ -73,7 +92,7 @@ export default class HKStockOutMLotScanProperties extends EntityScanProperties{
         HKWarehouseManagerRequest.sendGetMaterialLotByRrnRequest(requestObject);
     }
 
-    validationWltMLot = (materialLot, materialLots) => {
+    validationWltMLot = (materialLots, materialLot) => {
       let self = this;
       let {rowKey,tableData} = this.state;
       let requestObject = {
@@ -90,9 +109,11 @@ export default class HKStockOutMLotScanProperties extends EntityScanProperties{
                   trueData.push(data);
                 }
             });
-            if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-              trueData.unshift(materialLot);
-            }
+            materialLots.forEach(mLot =>{
+              if (tableData.filter(d => d[rowKey] === mLot[rowKey]).length === 0) {
+                trueData.unshift(mLot);
+              }
+            });
             tableData = [];
             errorData.forEach(data => {
               tableData.push(data);
@@ -101,12 +122,13 @@ export default class HKStockOutMLotScanProperties extends EntityScanProperties{
               tableData.push(data);
             });
           } else {
-            if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-              materialLot.errorFlag = true;
-              tableData.unshift(materialLot);
-            }
+            materialLots.forEach(mLot =>{
+              if (tableData.filter(d => d[rowKey] === mLot[rowKey]).length === 0) {
+                mLot.errorFlag = true;
+                tableData.unshift(mLot);
+              }
+            });
           }
-          
           self.setState({ 
             tableData: tableData,
             loading: false
