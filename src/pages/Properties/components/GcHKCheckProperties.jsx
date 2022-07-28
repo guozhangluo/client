@@ -11,61 +11,64 @@ export default class GcHKCheckProperties extends EntityScanProperties{
     static displayName = 'GcHKCheckProperties';
     
     queryData = (whereClause) => {
-        const self = this;
-        let {rowKey,tableData} = this.state;
-        let data = "";
-        let queryFields = this.form.state.queryFields;
-        if (queryFields.length === 1) {
-            data = this.form.props.form.getFieldValue(queryFields[0].name)
-        }
-        let requestObject = {
-          queryLotId: data,
-          tableRrn: this.state.tableRrn,
-          success: function(responseBody) {
-            let materialLot = responseBody.materialLot;
-            if(materialLot && materialLot.materialLotId != null && materialLot.materialLotId != ""){
-              let errorData = [];
-              let trueData = [];
-              tableData.forEach(data =>{
-                if(data.errorFlag){
-                  errorData.push(data);
-                } else {
-                  trueData.push(data);
-                }
-              });
+      const self = this;
+      let {rowKey,tableData} = this.state;
+      let data = "";
+      let queryFields = this.form.state.queryFields;
+      if (queryFields.length === 1) {
+          data = this.form.props.form.getFieldValue(queryFields[0].name)
+      }
+      let requestObject = {
+        queryLotId: data,
+        tableRrn: this.state.tableRrn,
+        success: function(responseBody) {
+          let materialLotList = responseBody.materialLotList;
+          if(materialLotList && materialLotList.length > 0){
+            let errorData = [];
+            let trueData = [];
+            tableData.forEach(data =>{
+              if(data.errorFlag){
+                errorData.push(data);
+              } else {
+                trueData.push(data);
+              }
+            });
+            materialLotList.forEach(materialLot => {
               if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
                 trueData.unshift(materialLot);
               } else {
                 self.showDataAlreadyExists();
               }
-              tableData = [];
-              errorData.forEach(data => {
-                tableData.push(data);
-              });
-              trueData.forEach(data => {
-                tableData.push(data);
-              });
-            } else {
-              let errorData = new MaterialLot();
-              errorData[rowKey] = data;
-              errorData.setLotId(data);
-              errorData.setMaterialLotId(data);
-              errorData.errorFlag = true;
-              if (tableData.filter(d => d[rowKey] === errorData[rowKey]).length === 0) {
-                tableData.unshift(errorData);
-              }else {
-                self.showDataAlreadyExists();
-              }
-            }
-            self.setState({ 
-              tableData: tableData,
-              loading: false
             });
-            self.form.resetFormFileds();
+            
+            tableData = [];
+            errorData.forEach(data => {
+              tableData.push(data);
+            });
+            trueData.forEach(data => {
+              tableData.push(data);
+            });
+          } else {
+            let errorData = new MaterialLot();
+            errorData[rowKey] = data;
+            errorData.setLotId(data);
+            errorData.setMaterialLotId(data);
+            errorData.errorFlag = true;
+            if (tableData.filter(d => d[rowKey] === errorData[rowKey]).length === 0) {
+              tableData.unshift(errorData);
+            }else {
+              self.showDataAlreadyExists();
+            }
           }
+          self.setState({ 
+            tableData: tableData,
+            loading: false
+          });
+          self.form.resetFormFileds();
         }
-        CheckInventoryManagerRequest.queryCheckMaterialLot(requestObject);
-    }
+      }
+      CheckInventoryManagerRequest.queryCheckMaterialLot(requestObject);
+  }
 
     showDataAlreadyExists = () => {
       // 如果只有一个条件，则提示具体条件
