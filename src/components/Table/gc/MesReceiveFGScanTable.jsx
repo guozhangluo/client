@@ -43,6 +43,10 @@ export default class MesReceiveFGScanTable extends EntityScanViewTable {
     receive = () => {
         const {data} = this.state;
         let self = this;
+        if(data.length == 0){
+            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
+            return;
+        }
         if (this.getErrorCount() > 0) {
             Notification.showError(I18NUtils.getClientMessage(i18NCode.ErrorNumberMoreThanZero));
             return;
