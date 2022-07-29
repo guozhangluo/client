@@ -102,7 +102,6 @@ import GcErpDocLineMergeProperties from './pages/Properties/components/GcErpDocL
 import GcRwMLotLabelPrintProperties from './pages/Properties/components/GcRwMLotLabelPrintProperties';
 import GCRwFinishGoodProperties from './pages/Properties/components/GCRwFinishGoodProperties';
 import MobileHome from './pages/Mobile/MobileHome';
-import MobileProperties from './pages/Properties/components/mobile/MobileProperties';
 import GCRwPrintLotLabelProperties from './pages/Properties/components/GCRwPrintLotLabelProperties';
 import GCMobileReceiveFGProperties from './pages/Properties/components/gc/wafer-issue/GCMobileReceiveFGProperties';
 import GCRwStockOutTagProperties from './pages/Properties/components/GCRwStockOutTagProperties';
@@ -123,7 +122,6 @@ import GCMobileMLotStockInProperties from './pages/Properties/components/gc/wafe
 import GCRawMaterialInventoryProperties from './pages/Properties/components/GCRawMaterialInventoryProperties';
 import GCMobileMLotCheckProperties from './pages/Properties/components/gc/wafer-issue/GCMobileMLotCheckProperties';
 import GCMobileMLotReceiveOrderProperties from './pages/Properties/components/gc/wafer-issue/GCMobileMLotReceiveOrderProperties';
-import GCMobileMLotIssueOrderProperties from './pages/Properties/components/gc/wafer-issue/GCMobileMLotIssueOrderProperties';
 import GCMobileMLotShipOrderProperties from './pages/Properties/components/gc/wafer-issue/GCMobileMLotShipOrderProperties';
 import GCRwMaterialCancelSpareProperties from './pages/Properties/components/GCRwMaterialCancelSpareProperties';
 import WltLotPackCaseCheckProperties from './pages/Properties/components/WLTLotPackCaseCheckProperties';
@@ -169,7 +167,6 @@ import GCIRAUnPackageProperties from './pages/Properties/components/GCIRAUnPacka
 import GcOtherShipReservedOrderProperties from './pages/Properties/components/GcOtherShipReservedOrderProperties';
 import GCSensorRmaIncomingMLotImportProperties from './pages/Properties/components/GCSensorRmaIncomingMLotImportProperties';
 import HNWarehouseMaterialLotStockInProperties from './pages/Properties/components/HNWarehouseMaterialLotStockInProperties';
-import HNWarehouseMaterialLotWeighProperties from './pages/Properties/components/HNWarehouseMaterialLotWeighProperties';
 import HNWarehouseRecordExpressNumberProperties from './pages/Properties/components/HNWarehouseRecordExpressNumberProperties';
 import HNWarehouseErpDocLineMergeProperties from './pages/Properties/components/HNWarehouseErpDocLineMergeProperties';
 import HNWarehouseWltOtherStockOutOrderProperties from './pages/Properties/components/HNWarehouseWltOtherStockOutOrderProperties';
@@ -1191,7 +1188,7 @@ const routerConfig = [
   {
     path: buildPath('HNWarehouse/MaterialLotWeigh'),
     layout: HeaderAsideFooterResponsiveLayout,
-    component: HNWarehouseMaterialLotWeighProperties,
+    component: GcMaterialLotWeighProperties,
   },
   {
     path: buildPath('HNWarehouse/RecordExpressNumber'),
