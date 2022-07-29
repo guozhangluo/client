@@ -1,7 +1,6 @@
 import StockInModel from "./StockInModel";
 
 const ActionType = {
-    Query: "Query",
     StockIn: "StockIn",
     QueryWafer: "QueryWafer",
     QueryMaterial: "QueryMaterial",
@@ -25,10 +24,6 @@ export default class StockInManagerRequestBody {
     
     setStockInModels(stockInModels) {
         this.stockInModels = stockInModels;
-    }
-
-    static buildQuery(materialLotId, tableRrn) {
-        return new StockInManagerRequestBody(ActionType.Query, materialLotId, undefined, tableRrn);
     }
 
     static buildQueryWafer(lotId, tableRrn) {

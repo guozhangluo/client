@@ -6,6 +6,7 @@ import { i18NCode } from "../../../../../api/const/i18n";
 import MessageUtils from "../../../../../api/utils/MessageUtils";
 import MobileTransferBoxAndStockInTable from "../../../../../components/Table/gc/MobileTransferBoxAndStockInTable";
 import EventUtils from "../../../../../api/utils/EventUtils";
+import RelayBoxStockInManagerRequest from "../../../../../api/gc/relayBox-stock-in/RelayBoxStockInManagerRequest";
 
 export default class GcMobileTransferBoxAndStockInProperties extends MobileProperties{
 
@@ -15,11 +16,11 @@ export default class GcMobileTransferBoxAndStockInProperties extends MobilePrope
         super(props);
         this.state = {...this.state};
     }
-    
+
     queryData = () => {
         let self = this;
         const{table} = this.state;
-        let {rowKey,tableData, scanRelaxBoxOrStorageFlag, currentHandleMLots} = this.state;
+        let {rowKey, tableData} = this.state;
         this.setState({loading: true});
         let data = "";
         let queryFields = this.form.state.queryFields;
@@ -28,24 +29,49 @@ export default class GcMobileTransferBoxAndStockInProperties extends MobilePrope
         }  
          // MB开头的则是中装箱号 扫描到MB开头的，则更新当前操作的物料批次的中装箱号
         let dataIndex = -1;
-        if (data.startsWith("MB") || data.startsWith("TB") || data.startsWith("CM") || data.startsWith("ZTB") || data.startsWith("ZCB")) {
-            // console.log(currentHandleMLots);
-            tableData.forEach((materialLot) => {
-                tableData.map((data, index) => {
-                    if (data[rowKey] == materialLot[rowKey]) {
-                        dataIndex = index;
+        if ((data.startsWith("MB") || data.startsWith("TB") || data.startsWith("CM") || data.startsWith("ZTB") || data.startsWith("ZCB"))  && data.split(".").length == 1) {
+            if(tableData && tableData.length > 0){
+                tableData.forEach((materialLot) => {
+                    tableData.map((data, index) => {
+                        if (data[rowKey] == materialLot[rowKey]) {
+                            dataIndex = index;
+                        }
+                    });
+                    if(!materialLot.relaxBoxId){
+                        materialLot["relaxBoxId"] = data;
+                        tableData.splice(dataIndex, 1, materialLot);
                     }
                 });
-                if(!materialLot.relaxBoxId){
-                    materialLot["relaxBoxId"] = data;
-                    tableData.splice(dataIndex, 1, materialLot);
+                self.setState({ 
+                    tableData: tableData,
+                    loading: false,
+                });
+            } else {
+                let requestObject = {
+                    relayBoxId: data,
+                    success: function(responseBody) {
+                        let materialLots = responseBody.materialLots;
+                        materialLots.forEach((materialLot) => {
+                            if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                                tableData.unshift(materialLot);
+                            }
+                        });
+                        self.setState({ 
+                            tableData: tableData,
+                            loading: false,
+                        });
+                        self.form.resetFormFileds();
+                    },
+                    fail: function() {
+                        self.setState({ 
+                            tableData: tableData,
+                            loading: false
+                        });
+                        self.form.resetFormFileds();
+                    }
                 }
-            });
-            self.setState({ 
-                tableData: tableData,
-                loading: false,
-                // scanRelaxBoxOrStorageFlag: true,
-            });
+                RelayBoxStockInManagerRequest.sendQueryRelayBoxRequest(requestObject);
+            }
             self.form.resetFormFileds();
         } else if (data.startsWith("ZHJ ") || data.startsWith("HJ ") ) {
             // ZHJ/HJ 开头的则是库位号 扫描到ZHJ/HJ开头的，则更新当前操作的物料批次的库位号
@@ -63,7 +89,6 @@ export default class GcMobileTransferBoxAndStockInProperties extends MobilePrope
             self.setState({ 
                 tableData: tableData,
                 loading: false,
-                // scanRelaxBoxOrStorageFlag: true,
             });
             self.form.resetFormFileds();
         } else {
@@ -72,20 +97,15 @@ export default class GcMobileTransferBoxAndStockInProperties extends MobilePrope
                 materialLotId: data,
                 tableRrn: table.objectRrn,
                 success: function(responseBody) {
-                    let materialLot = responseBody.materialLot;
-                    if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                        tableData.unshift(materialLot);
-                    }
-                    // 如果扫描过中装箱号或者库位号，则表示上次操作的批次已经结束，作为新起点继续下次操作
-                    // if (scanRelaxBoxOrStorageFlag) {
-                    //     currentHandleMLots = []; 
-                    // }
-                    // currentHandleMLots.push(materialLot);
+                    let materialLots = responseBody.materialLots;
+                    materialLots.forEach((materialLot) => {
+                        if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                            tableData.unshift(materialLot);
+                        }
+                    });
                     self.setState({ 
                         tableData: tableData,
                         loading: false,
-                        // scanRelaxBoxOrStorageFlag: false,
-                        // currentHandleMLots: currentHandleMLots
                     });
                     self.form.resetFormFileds();
                 },
@@ -97,9 +117,8 @@ export default class GcMobileTransferBoxAndStockInProperties extends MobilePrope
                     self.form.resetFormFileds();
                 }
             }
-            StockInManagerRequest.sendQueryRequest(requestObject);
+            RelayBoxStockInManagerRequest.sendQueryBoxRequest(requestObject);
         }
-       
     }
 
     handleSubmit = () => {
