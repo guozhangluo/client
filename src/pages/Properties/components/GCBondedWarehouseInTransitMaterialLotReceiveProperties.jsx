@@ -1,8 +1,8 @@
 import EntityScanProperties from "./entityProperties/EntityScanProperties";
-import TableManagerRequest from "../../../api/table-manager/TableManagerRequest";
 import MaterialLot from "../../../api/dto/mms/MaterialLot";
 import HKWaitReceiveMLotProperties from "./HKWaitReceiveMLotProperties";
 import GCBondedWarehouseInTransitMaterialLotReceiveTable from "../../../components/Table/gc/GCBondedWarehouseInTransitMaterialLotReceiveTable";
+import HKWarehouseManagerRequest from "../../../api/gc/hongkong-warehouse-manager/HKWarehouseManagerRequest";
 
 /**
  * 保税仓 “成品在途接收”    套用“香港仓在途货物接收”，同“湖南仓接收”功能。
@@ -24,61 +24,58 @@ export default class GCBondedWarehouseInTransitMaterialLotReceiveProperties exte
     }
 
     queryData = (whereClause) => {
-        const self = this;
-        let {rowKey,tableData} = this.state;
-        let waitForReceiveMLotList = this.waitReceiveProperties.state.tableData;
-        let requestObject = {
-          tableRrn: this.state.tableRrn,
-          whereClause: whereClause,
-          success: function(responseBody) {
-            let queryDatas = responseBody.dataList;
-            let data = undefined;
-            if (queryDatas && queryDatas.length > 0) {
-              let errorData = [];
-              let trueData = [];
-              tableData.forEach(data => {
-                if(data.errorFlag){
-                  errorData.push(data);
-                } else {
-                  trueData.push(data);
-                }
-              });
-              tableData = [];
-              queryDatas.forEach(data => {
-                if (waitForReceiveMLotList.filter(d => d[rowKey] === data[rowKey]).length === 0) {
-                  data.errorFlag = true;
-                }
-                if(data.errorFlag){
-                  errorData.unshift(data);
-                } else if(trueData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
-                  trueData.unshift(data);
-                }
-              });
-              errorData.forEach(data => {
-                tableData.push(data);
-              });
-              trueData.forEach(data => {
-                tableData.push(data);
-              });
-            } else {
-              data = new MaterialLot();
-              let lotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
-              data[rowKey] = lotId;
-              data.setLotId(lotId);
-              data.errorFlag = true;
-              if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
-                tableData.unshift(data);
+      const self = this;
+      let {rowKey,tableData} = this.state;
+      let queryFields = this.form.state.queryFields;
+      let queryLotId = "";
+      if (queryFields.length === 1) {
+        queryLotId = this.form.props.form.getFieldValue(queryFields[0].name)
+      }
+      let requestObject = {
+        tableRrn: this.state.tableRrn,
+        queryLotId: queryLotId,
+        success: function(responseBody) {
+          let materialLotList = responseBody.materialLotList;
+          if (materialLotList && materialLotList.length > 0){
+            let errorData = [];
+            let trueData = [];
+            tableData.forEach(data => {
+              if(data.errorFlag){
+                errorData.push(data);
+              } else {
+                trueData.push(data);
               }
-            }
-           
-            self.setState({ 
-              tableData: tableData,
-              loading: false
             });
-            self.form.resetFormFileds();
-          }
+            materialLotList.forEach(mLot =>{
+              if (tableData.filter(d => d[rowKey] === mLot[rowKey]).length === 0) {
+                trueData.unshift(mLot);
+              }
+            });
+            tableData = [];
+            errorData.forEach(data => {
+              tableData.push(data);
+            });
+            trueData.forEach(data => {
+              tableData.push(data);
+            });
+          } else {
+            let data = new MaterialLot();
+            let lotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
+            data[rowKey] = lotId;
+            data.setLotId(lotId);
+            data.errorFlag = true;
+            if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
+              tableData.unshift(data);
+            }
+          } 
+          self.setState({ 
+            tableData: tableData,
+            loading: false
+          });
+          self.form.resetFormFileds();  
         }
-        TableManagerRequest.sendGetDataByRrnRequest(requestObject);
+      }
+      HKWarehouseManagerRequest.sendGetMaterialLotByRrnRequest(requestObject);
     }
 
     buildTable = () => {
