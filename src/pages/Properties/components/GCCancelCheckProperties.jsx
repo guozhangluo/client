@@ -34,16 +34,18 @@ export default class GCCancelCheckProperties  extends EntityScanProperties {
           tableRrn: this.state.tableRrn,
           queryLotId: queryLotId,
           success: function(responseBody) {
-            let materialLot = responseBody.materialLot;
-            if (materialLot && materialLot.objectRrn != null) {
-              if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                tableData.unshift(materialLot);
-              }
-              self.setState({ 
-                tableData: tableData,
-                loading: false
-              });
-              self.form.resetFormFileds();
+            let materialLotList = responseBody.materialLotList;
+            if (materialLotList && materialLotList.length > 0) {
+                materialLotList.forEach(materialLot => {
+                  if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                    tableData.unshift(materialLot);
+                  }
+                });
+                self.setState({ 
+                  tableData: tableData,
+                  loading: false
+                });
+                self.form.resetFormFileds();
             } else {
               self.showDataNotFound();
             }
