@@ -4,7 +4,7 @@ import { Notification } from "../../../components/notice/Notice";
 import I18NUtils from "../../../api/utils/I18NUtils";
 import { i18NCode } from "../../../api/const/i18n";
 import GcFTStockOutMLotScanTable from "../../../components/Table/gc/GcFTStockOutMLotScanTable";
-import TableManagerRequest from "../../../api/table-manager/TableManagerRequest";
+import StockOutManagerRequest from "../../../api/gc/stock-out/StockOutManagerRequest";
 
 export default class GcFTStockOutMLotScanProperties extends EntityScanProperties{
 
@@ -35,16 +35,13 @@ export default class GcFTStockOutMLotScanProperties extends EntityScanProperties
           return;
         }
         let queryFields = this.form.state.queryFields;
-        let materialLotId = "";
-        if (queryFields.length === 1) {
-          materialLotId = this.form.props.form.getFieldValue(queryFields[0].name)
-        }
+        let materialLotId = this.form.props.form.getFieldValue(queryFields[0].name);
         let requestObject = {
           tableRrn: this.state.tableRrn,
-          whereClause: whereClause,
+          materialLotId: materialLotId,
           success: function(responseBody) {
-            let materialLotList = responseBody.dataList;
-            if (queryDatas && queryDatas.length > 0) {
+            let materialLotList = responseBody.materialLotList;
+            if (materialLotList && materialLotList.length > 0) {
               let errorData = [];
               let trueData = [];
               tableData.forEach(data => {
@@ -55,7 +52,7 @@ export default class GcFTStockOutMLotScanProperties extends EntityScanProperties
                 }
               });
               materialLotList.forEach(materialLot => {
-                if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
                   trueData.unshift(materialLot);
                 }
               });
@@ -88,7 +85,7 @@ export default class GcFTStockOutMLotScanProperties extends EntityScanProperties
             }
         }
       }
-      TableManagerRequest.sendGetDataByRrnRequest(requestObject);
+      StockOutManagerRequest.sendGetDataByRrnRequest(requestObject);
     }
 
     buildTable = () => {
