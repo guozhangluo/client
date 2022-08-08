@@ -28,58 +28,49 @@ export default class GcMobileWaferIssueOutProperties extends MobileProperties{
           tableData: tableData,
           loading: false
         });
-      } else if(tableData.length == 10){
-        Notification.showNotice(I18NUtils.getClientMessage(i18NCode.MaterialLotIssueQtyCannotMoreThanTen));
-        self.setState({ 
-          tableData: tableData,
-          loading: false
-        });
-        self.form.resetFormFileds();
-        return;
-      } else {
-        let requestObject = {
-          tableRrn: this.state.tableRrn,
-          lotId: data,
-          success: function(responseBody) {
-            let materialLot = responseBody.materialLot;
-            if(materialLot && materialLot.materialLotId != null && materialLot.materialLotId != ""){
-              let errorData = [];
-              let trueData = [];
-              tableData.forEach(data =>{
-                if(data.errorFlag){
-                  errorData.push(data);
-                } else {
-                  trueData.push(data);
-                }
-              });
-              if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                trueData.unshift(materialLot);
+      } 
+      let requestObject = {
+        tableRrn: this.state.tableRrn,
+        lotId: data,
+        success: function(responseBody) {
+          let materialLot = responseBody.materialLot;
+          if(materialLot && materialLot.materialLotId != null && materialLot.materialLotId != ""){
+            let errorData = [];
+            let trueData = [];
+            tableData.forEach(data =>{
+              if(data.errorFlag){
+                errorData.push(data);
+              } else {
+                trueData.push(data);
               }
-              tableData = [];
-              errorData.forEach(data => {
-                tableData.push(data);
-              });
-              trueData.forEach(data => {
-                tableData.push(data);
-              });
-            } else {
-              let errorData = new MaterialLot();
-              errorData[rowKey] = data;
-              errorData.setLotId(data);
-              errorData.errorFlag = true;
-              if (tableData.filter(d => d[rowKey] === errorData[rowKey]).length === 0) {
-                tableData.unshift(errorData);
-              }
-            }
-            self.setState({ 
-              tableData: tableData,
-              loading: false
             });
-            self.form.resetFormFileds();
+            if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+              trueData.unshift(materialLot);
+            }
+            tableData = [];
+            errorData.forEach(data => {
+              tableData.push(data);
+            });
+            trueData.forEach(data => {
+              tableData.push(data);
+            });
+          } else {
+            let errorData = new MaterialLot();
+            errorData[rowKey] = data;
+            errorData.setLotId(data);
+            errorData.errorFlag = true;
+            if (tableData.filter(d => d[rowKey] === errorData[rowKey]).length === 0) {
+              tableData.unshift(errorData);
+            }
           }
+          self.setState({ 
+            tableData: tableData,
+            loading: false
+          });
+          self.form.resetFormFileds();
         }
-        WaferManagerRequest.sendMobileGetWaferRequest(requestObject);
       }
+      WaferManagerRequest.sendMobileGetWaferRequest(requestObject);
     }
 
     handleSubmit = () => {
