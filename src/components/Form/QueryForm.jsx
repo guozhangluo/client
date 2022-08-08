@@ -156,7 +156,7 @@ class QueryForm extends React.Component {
                             whereClause.append(SqlType.IsNotNull);
                         } else if(fieldValue == "N"){
                             whereClause.append(SqlType.IsNull);
-                        } if(!fieldValue.startsWith(SqlType.toDate) && fieldValue.indexOf(',') != -1){
+                        } else if(!fieldValue.startsWith(SqlType.toDate) && fieldValue.indexOf(',') != -1){
                             whereClause.append(SqlType.In);
                         } else {
                             whereClause.append(SqlType.Eq);
