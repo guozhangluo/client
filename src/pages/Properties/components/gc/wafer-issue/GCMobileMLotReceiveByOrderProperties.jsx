@@ -18,15 +18,16 @@ export default class GCMobileMLotReceiveByOrderProperties extends MobileProperti
     }
     
     queryData = (whereClause) => {
-        const self = this;
-        let {rowKey,tableData} = this.state;
+      const self = this;
+      let {rowKey,tableData} = this.state;
+      let queryFields = this.form.state.queryFields;
+      let lotId = this.form.props.form.getFieldValue(queryFields[0].name);
         let requestObject = {
           tableRrn: this.state.tableRrn,
-          whereClause: whereClause,
+          lotId: lotId,
           success: function(responseBody) {
-            let queryDatas = responseBody.dataList;
-            let data = undefined;
-            if (queryDatas && queryDatas.length > 0) {
+            let materialLot = responseBody.materialLot;
+            if (materialLot && materialLot.objectRrn > 0) {
               let errorData = [];
               let trueData = [];
               tableData.forEach(data => {
@@ -37,11 +38,9 @@ export default class GCMobileMLotReceiveByOrderProperties extends MobileProperti
                 }
               });
               tableData = [];
-              queryDatas.forEach(data => {
-                if(trueData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
-                  trueData.unshift(data);
-                } 
-              });
+             if(trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                trueData.unshift(materialLot);
+              }
               errorData.forEach(data => {
                 tableData.push(data);
               });
@@ -49,8 +48,7 @@ export default class GCMobileMLotReceiveByOrderProperties extends MobileProperti
                 tableData.push(data);
               });
             } else {
-              data = new MaterialLot();
-              let lotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
+              let data = new MaterialLot();
               data[rowKey] = lotId;
               data.setLotId(lotId);
               data.errorFlag = true;
@@ -66,7 +64,7 @@ export default class GCMobileMLotReceiveByOrderProperties extends MobileProperti
             self.form.resetFormFileds();
           }
         }
-        TableManagerRequest.sendGetDataByRrnRequest(requestObject);
+        WaferManagerRequest.sendQueryCOBMaterialLotRequest(requestObject);
     }
 
     handleSubmit = () => {
