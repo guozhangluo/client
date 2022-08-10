@@ -16,7 +16,7 @@ export default class StockOutCheckProperties extends EntityScanProperties{
 
     constructor(props) {
       super(props);
-      this.state = {...this.state, ...{currentHandleMLot: ""}};
+      this.state = {...this.state, ...{currentHandleMLot: []}};
     }
       
     getTableData = () => {
@@ -60,25 +60,23 @@ export default class StockOutCheckProperties extends EntityScanProperties{
         self.setState({ 
           tableData: tableData,
           loading: false,
-          currentHandleMLot: "",
+          currentHandleMLot: [],
         });
         return;
       }
       let checkExpressFlag = this.stockOutCheckTable.state.value;
-      if(currentHandleMLot && checkExpressFlag == "check"){
+      if(currentHandleMLot && currentHandleMLot.length > 0 && checkExpressFlag == "check"){
         tableData.forEach(materialLot => {
-          if(materialLot[rowKey] == currentHandleMLot[rowKey]){
-            if(materialLot.expressNumber == data){
-              materialLot.trueFlag = true;
-            } else{
-              materialLot.errorFlag = true;
-            }
+          if(materialLot.expressNumber == data){
+            materialLot.trueFlag = true;
+          } else{
+            materialLot.errorFlag = true;
           }
         });
         self.setState({ 
           tableData: tableData,
           loading: false,
-          currentHandleMLot: ""
+          currentHandleMLot: []
         });
         self.form.resetFormFileds();
       } else {
@@ -86,25 +84,29 @@ export default class StockOutCheckProperties extends EntityScanProperties{
             tableRrn: this.state.tableRrn,
             queryMLotId: data,
             success: function(responseBody) {
-              let materialLot = responseBody.materialLot;
-              if (materialLot) {
+              let materialLotList = responseBody.materialLotList;
+              if (materialLotList && materialLotList.length > 0) {
                 if(checkExpressFlag == "check"){
-                  if(materialLot.expressNumber == "" || materialLot.expressNumber == null || materialLot.expressNumber == undefined){
-                    if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                      materialLot.errorFlag = true;
-                      tableData.unshift(materialLot);
+                  materialLotList.forEach(materialLot => {
+                    if(materialLot.expressNumber == "" || materialLot.expressNumber == null || materialLot.expressNumber == undefined){
+                      if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                        materialLot.errorFlag = true;
+                        tableData.unshift(materialLot);
+                      }
+                    } else {
+                      if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                        tableData.unshift(materialLot);
+                        currentHandleMLot.push(materialLot);
+                      }
                     }
-                  } else {
-                    if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                      tableData.unshift(materialLot);
-                      currentHandleMLot = materialLot;
-                    }
-                  }
+                  });
                 } else {
-                  if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                    tableData.unshift(materialLot);
-                    currentHandleMLot = materialLot;
-                  }
+                  materialLotList.forEach(materialLot => {
+                    if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                      tableData.unshift(materialLot);
+                      currentHandleMLot.push(materialLot);
+                    }
+                  });
                 }
 
                 self.setState({ 
