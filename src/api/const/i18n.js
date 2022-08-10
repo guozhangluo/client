@@ -248,6 +248,7 @@ const i18NCode = {
     TraferWarehouseId: "TraferWarehouseId",
     CustomerType : "CustomerType",
     TreasuryNote : "TreasuryNote",
+    ThereAreDifferentCustomersInTheBox : "ThereAreDifferentCustomersInTheBox",
 }
 
 const i18Messages = {
@@ -1469,6 +1470,11 @@ const i18Messages = {
     CannotReceiveLSGradeVBox: {
         Chinese: "不能接收LS等级真空包！",
         English: "LSGradeVBoxOnlyLSReceive",
+        Res: ""
+    },
+    ThereAreDifferentCustomersInTheBox:{
+        Chinese: "箱中存在不同客户，请检验",
+        English: "There are different customers in the box",
         Res: ""
     }
 }

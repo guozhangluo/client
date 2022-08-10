@@ -66,6 +66,10 @@ export default class WltPackCaseCheckTable extends EntityScanViewTable {
             Notification.showNotice("数据没有全部扫描");
             return;
         }
+        if(data.length > 1 && this.validationAltek(data)){
+            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.ThereAreDifferentCustomersInTheBox));
+            return;
+        }
         let object = {
             packedLotDetails : selectedRows,
             success: function(responseBody) {
@@ -73,6 +77,23 @@ export default class WltPackCaseCheckTable extends EntityScanViewTable {
             }
         }
         MaterialLotManagerRequest.sendJudgePackedMaterialLotRequest(object);
+    }
+
+    /**
+     * 客户简称是否一致
+     * @param {*} data 
+     * @returns 
+     */
+    validationAltek = (data) =>{
+        let flag = false;
+        var altek = data[0].reserved55;
+        data.forEach((item)=>{
+            if(altek != item.reserved55){
+                flag = true
+                return flag;
+            }
+        });
+        return flag;
     }
 
     judgeNg = () => {
