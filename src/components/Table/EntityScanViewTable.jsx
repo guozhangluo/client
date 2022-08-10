@@ -71,6 +71,14 @@ export default class EntityScanViewTable extends EntityListTable {
         return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
     }
 
+    /**
+     * 包数
+     * @returns 
+     */
+    createPackageQty = () => {
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PackageQty)}：{this.state.data.length}</Tag>
+    }
+
 
     queryNodeFocus = () => {
         if (this.form.state.queryFields[0]) {

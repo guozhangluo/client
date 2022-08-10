@@ -29,6 +29,14 @@ export default class WltPackCaseCheckTable extends EntityScanViewTable {
         return buttons;
     }
 
+    createTagGroup = () => {
+        let tags = [];
+        tags.push(this.createBBoxQty());
+        tags.push(this.createPackageQty());
+        tags.push(this.createTotalNumber());
+        return tags;
+    }
+
     createForm = () => {
         const WrappedAdvancedPackCaseCheckForm = Form.create()(PackCaseCheckForm);
         return  <WrappedAdvancedPackCaseCheckForm checkItemList={this.props.checkItemList} ref={this.formRef} object={this.state.data} visible={this.state.formVisible} 

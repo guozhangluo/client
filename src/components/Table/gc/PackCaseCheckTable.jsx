@@ -47,6 +47,9 @@ export default class PackCaseCheckTable extends EntityScanViewTable {
     createTagGroup = () => {
         let tagList = [];
         tagList.push(this.createQRCodeCheckTag());
+        tagList.push(this.createBBoxQty());
+        tagList.push(this.createPackageQty());
+        tagList.push(this.createTotalNumber());
         return tagList;
     }
 
