@@ -79,7 +79,7 @@ export default class UnPackMaterialLotTable extends EntityScanViewTable {
                 self.setState({
                     loading: false
                 }); 
-                let materialLotId = packedLotDetails[0].parentMaterialLotId;
+                let materialLotId = waitToUnpackDetails[0].parentMaterialLotId;
                 let message = I18NUtils.getClientMessage(i18NCode.OperationSucceed) + `:${materialLotId}`;
                 MessageUtils.showOperationSuccess(message);
                 // 全拆了则不进行打印标签
