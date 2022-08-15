@@ -21,24 +21,6 @@ export default class GcPrintCaseLabelProperties extends EntityScanProperties{
       }
 
     queryData = (whereClause) => {
-        const self = this;
-        let requestObject = {
-          tableRrn: this.state.tableRrn,
-          whereClause: whereClause,
-          success: function(responseBody) { 
-            let queryDatas = responseBody.dataList;
-            if (queryDatas && queryDatas.length > 0) {
-                self.setState({
-                    formObject: queryDatas[0]
-                })  
-                self.form.resetFormFileds();
-            }
-          }
-        }
-        TableManagerRequest.sendGetDataByRrnRequest(requestObject);
-    }
-
-    queryData = (whereClause) => {
       const self = this;
       let requestObject = {
         tableRrn: this.state.tableRrn,

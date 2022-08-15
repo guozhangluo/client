@@ -1,4 +1,4 @@
-import { Button, Col, InputNumber, Row, Tag } from "antd";
+import { Button, Col, Input, Row, Tag } from "antd";
 import I18NUtils from '../../api/utils/I18NUtils';
 import { i18NCode } from '../../api/const/i18n';
 import EntityScanViewTable from './EntityScanViewTable';
@@ -40,8 +40,8 @@ export default class GcPrintCaseLabelTable extends EntityScanViewTable {
                         <Col span={2} >
                             <span>{I18NUtils.getClientMessage(i18NCode.PrintCount)}:</span>
                         </Col>
-                        <Col span={2}>
-                            <InputNumber ref={(printNumber) => { this.printNumber = printNumber }} defaultValue={2} disabled={this.disabled}/>
+                        <Col span={3}>
+                            <Input ref={(printCount) => { this.printCount = printCount }} defaultValue={2} key="printCount" placeholder="打印份数"/>
                         </Col>
                     </Row>
                 </FormItem>
@@ -65,7 +65,7 @@ export default class GcPrintCaseLabelTable extends EntityScanViewTable {
     handlePrint = () => {
         let self = this;
         let materialLotList = self.state.data;
-        let printCount = this.pickQty.inputNumberRef.currentValue;
+        let printCount = this.printCount.state.value;
         if (materialLotList.length == 0) {
             Notification.showNotice(I18NUtils.getClientMessage(i18NCode.SelectAtLeastOneRow));
             return;
@@ -83,7 +83,7 @@ export default class GcPrintCaseLabelTable extends EntityScanViewTable {
             GetPrintWltBboxParameterRequest.sendQueryRequest(requestObject);
         } else if(packageType == "COBPackCase"){
             let requestObject = {
-                materialLotId : materialLotId,   
+                materialLotId : parentMaterialLotId,   
                 printCount: printCount,   
                 success: function(responseBody) {
                     MessageUtils.showOperationSuccess();
