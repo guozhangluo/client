@@ -1,6 +1,6 @@
 import EntityScanProperties from "./entityProperties/EntityScanProperties";
 import GCMaterialLotCodePrintTable from "../../../components/Table/gc/GCMaterialLotCodePrintTable";
-import WltStockOutManagerRequest from "../../../api/gc/wlt-stock-out/WltStockOutManagerRequest";
+import MaterialLotManagerRequest from "../../../api/gc/material-lot-manager/MaterialLotManagerRequest";
 
 
 export default class GCMaterialLotCodePrintProperties extends EntityScanProperties{
@@ -39,7 +39,7 @@ export default class GCMaterialLotCodePrintProperties extends EntityScanProperti
           }
         }
       }
-      WltStockOutManagerRequest.sendGetMaterialLotByRrnRequest(requestObject);
+      MaterialLotManagerRequest.sendQueryMaterialLotIdOrLotIdRequest(requestObject);
   }
 
     buildTable = () => {
