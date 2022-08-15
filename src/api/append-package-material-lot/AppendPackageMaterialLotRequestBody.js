@@ -1,20 +1,15 @@
 import MaterialLotAction from "../dto/mms/MaterialLotAction";
-import MaterialLot from "../dto/mms/MaterialLot";
 
 export default class AppendPackageMaterialLotRequestBody {
-    packedMaterialLot;
+    packedMaterialLotId;
     waitToAppendActions;
 
-    constructor(packedMaterialLot, waitToAppendActions) {
-        this.packedMaterialLot = packedMaterialLot;
+    constructor(packedMaterialLotId, waitToAppendActions) {
+        this.packedMaterialLotId = packedMaterialLotId;
         this.waitToAppendActions = waitToAppendActions;
     }
     
     static buildAppendPackMaterialLots(packedMaterialLotId, waitToPackMaterialLots, actionCode, actionReason, actionComment) {
-
-        let packedMaterialLot = new MaterialLot();
-        packedMaterialLot.setMaterialLotId(packedMaterialLotId);
-
         let waitToPackageActions = [];
         waitToPackMaterialLots.forEach((waitToPackMaterialLot) => {
             let materialLotAction = new MaterialLotAction();
@@ -25,7 +20,7 @@ export default class AppendPackageMaterialLotRequestBody {
             materialLotAction.setActionComment(actionComment);
             waitToPackageActions.push(materialLotAction);
         });
-        return new AppendPackageMaterialLotRequestBody(packedMaterialLot, waitToPackageActions);
+        return new AppendPackageMaterialLotRequestBody(packedMaterialLotId, waitToPackageActions);
     }
 
 }
