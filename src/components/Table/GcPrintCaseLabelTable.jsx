@@ -8,6 +8,7 @@ import GetPrintCOBboxParameterRequest from '../../api/gc/get-print-cobbox-parame
 import RwMLotManagerRequest from '../../api/gc/rw-manager/RwMLotManagerRequest';
 import GetPrintBboxParameterRequest from '../../api/gc/get-print-bbox-parameter/GetPrintBboxParameterRequest';
 import FormItem from 'antd/lib/form/FormItem';
+import MessageUtils from "../../api/utils/MessageUtils";
 
 export default class GcPrintCaseLabelTable extends EntityScanViewTable {
 
