@@ -18,7 +18,8 @@ const ModuleUrlConstant = {
     MMS: ServerAddress.NewbiestUrl + "/mms/",
     KMS: ServerAddress.NewbiestUrl + "/kms/",
     RTM: ServerAddress.NewbiestUrl + "/rtm/",
-    GC: ServerAddress.NewbiestUrl + "/gc/"
+    GC: ServerAddress.NewbiestUrl + "/gc/",
+    LG: ServerAddress.NewbiestUrl + "/lg/"
 }
 
 const DataBaseType = {
@@ -123,6 +124,9 @@ const UrlConstant = {
     GCHNWarehouseImportSaveUrl: ModuleUrlConstant.GC + "HNWarehouseImportSave",
     GCIRAPackageUrl: ModuleUrlConstant.GC + "IRAPackageManager",
     GCGetPrintSamsungParameterUrl: ModuleUrlConstant.GC + "getPrintSamsungParameter",
+
+    //LG
+    LGLotJudgeManagerUrl: ModuleUrlConstant.LG + "LotJudgeManage",
 };
 
 const SystemRefListName = {

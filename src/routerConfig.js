@@ -187,6 +187,8 @@ import GcMobileIRAUnPackageProperties from './pages/Properties/components/gc/waf
 import GcMobileIRAPackingProperties from './pages/Properties/components/gc/wafer-issue/GcMobileIRAPackingProperties';
 import GcHKCheckProperties from './pages/Properties/components/GcHKCheckProperties';
 import GcCancelErpMergeOrderProperties from './pages/Properties/components/GcCancelErpMergeOrderProperties';
+import LotPackCaseCheckProperties from './pages/Properties/components/lg/LotPackCaseCheckProperties';
+import LotShipJudgeProperties from './pages/Properties/components/lg/LotShipJudgeProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -1503,6 +1505,22 @@ const routerConfig = [
     path: buildPath('Mobile/IRAUnPackage'),
     layout: BlankLayout,
     component: GcMobileIRAUnPackageProperties,
+  },
+  //临港模块
+  {
+    path: buildPath('LG/LotPackCaseCheck'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotPackCaseCheckProperties,
+  },
+  {
+    path: buildPath('LG/LotShipJudge'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotShipJudgeProperties,
+  },
+  {
+    path: buildPath('LG/LGCancelLotJudge'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: GCCancelCheckProperties,
   },
   {
     path: '*',
