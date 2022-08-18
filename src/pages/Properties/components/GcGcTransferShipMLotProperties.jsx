@@ -27,7 +27,7 @@ export default class GcGcTransferShipMLotProperties extends EntityScanProperties
           whereClause: whereClause,
           success: function(responseBody) {
             let materialLotList = responseBody.dataList;
-            if (queryDatas && queryDatas.length > 0) {
+            if (materialLotList && materialLotList.length > 0) {
               let errorData = [];
               let trueData = [];
               tableData.forEach(data => {
