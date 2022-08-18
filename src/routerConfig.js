@@ -189,6 +189,7 @@ import GcHKCheckProperties from './pages/Properties/components/GcHKCheckProperti
 import GcCancelErpMergeOrderProperties from './pages/Properties/components/GcCancelErpMergeOrderProperties';
 import LotPackCaseCheckProperties from './pages/Properties/components/lg/LotPackCaseCheckProperties';
 import LotShipJudgeProperties from './pages/Properties/components/lg/LotShipJudgeProperties';
+import LotStockInProperties from './pages/Properties/components/lg/LotStockInProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -1521,6 +1522,11 @@ const routerConfig = [
     path: buildPath('LG/LGCancelLotJudge'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: GCCancelCheckProperties,
+  },
+  {
+    path: buildPath('LG/MaterialLotStockIn'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotStockInProperties,
   },
   {
     path: '*',
