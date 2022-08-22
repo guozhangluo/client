@@ -127,6 +127,8 @@ const UrlConstant = {
 
     //LG
     LGLotJudgeManagerUrl: ModuleUrlConstant.LG + "LotJudgeManage",
+    LGLotImportManagerUrl: ModuleUrlConstant.LG + "LotImportManager",
+    LGLotImportSaveUrl: ModuleUrlConstant.LG + "LotImportSave",
 };
 
 const SystemRefListName = {
