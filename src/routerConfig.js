@@ -192,6 +192,7 @@ import LotShipJudgeProperties from './pages/Properties/components/lg/LotShipJudg
 import LotStockInProperties from './pages/Properties/components/lg/LotStockInProperties';
 import LotImportProperties from './pages/Properties/components/lg/LotImportProperties';
 import LotStorageReceiveProperties from './pages/Properties/components/lg/LotStorageReceiveProperties';
+import LotStockOutTaggingProperties from './pages/Properties/components/lg/LotStockOutTaggingProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -1539,6 +1540,16 @@ const routerConfig = [
     path: buildPath('LG/ReceiveMesStorageLot'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: LotStorageReceiveProperties,
+  },
+  {
+    path: buildPath('LG/LotStockTagging'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotStockOutTaggingProperties,
+  },
+  {
+    path: buildPath('LG/LotCancelStockTagging'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: GCWaferUnStockOutTaggingProperties,
   },
   {
     path: '*',

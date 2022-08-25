@@ -130,6 +130,7 @@ export default class LotImportTable extends EntityListTable {
     }
 
     importData =() => {
+        let self = this;
         const {data} = this.state;
         if(data.length == 0){
             Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
