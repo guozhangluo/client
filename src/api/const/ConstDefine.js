@@ -130,6 +130,7 @@ const UrlConstant = {
     LGLotImportManagerUrl: ModuleUrlConstant.LG + "LotImportManager",
     LGLotImportSaveUrl: ModuleUrlConstant.LG + "LotImportSave",
     LGLotStorageReceiveUrl: ModuleUrlConstant.LG + "LotStorageReceive",
+    LGMaterialLotManagerUrl: ModuleUrlConstant.LG + "MaterialLotManager",
 };
 
 const SystemRefListName = {

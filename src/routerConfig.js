@@ -193,6 +193,8 @@ import LotStockInProperties from './pages/Properties/components/lg/LotStockInPro
 import LotImportProperties from './pages/Properties/components/lg/LotImportProperties';
 import LotStorageReceiveProperties from './pages/Properties/components/lg/LotStorageReceiveProperties';
 import LotStockOutTaggingProperties from './pages/Properties/components/lg/LotStockOutTaggingProperties';
+import LotStockOutProperties from './pages/Properties/components/lg/LotStockOutProperties';
+import LotIssueProperties from './pages/Properties/components/lg/LotIssueProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -1550,6 +1552,16 @@ const routerConfig = [
     path: buildPath('LG/LotCancelStockTagging'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: GCWaferUnStockOutTaggingProperties,
+  },
+  {
+    path: buildPath('LG/MaterialLotShip'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotStockOutProperties,
+  },
+  {
+    path: buildPath('LG/MaterialLotIssue'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotIssueProperties,
   },
   {
     path: '*',
