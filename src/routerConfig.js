@@ -195,6 +195,7 @@ import LotStorageReceiveProperties from './pages/Properties/components/lg/LotSto
 import LotStockOutTaggingProperties from './pages/Properties/components/lg/LotStockOutTaggingProperties';
 import LotStockOutProperties from './pages/Properties/components/lg/LotStockOutProperties';
 import LotIssueProperties from './pages/Properties/components/lg/LotIssueProperties';
+import GCTapeInventoryProperties from './pages/Properties/components/GCTapeInventoryProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -776,12 +777,18 @@ const routerConfig = [
     layout: HeaderAsideFooterResponsiveLayout,
     component: GCRawMaterialImportProperties  ,
   },
-    //原材料盘点
-    {
-      path: buildPath('GC/GCRawMaterialInventoryManager'),
-      layout: HeaderAsideFooterResponsiveLayout,
-      component: GCRawMaterialInventoryProperties,
-    },
+  //原材料盘点
+  {
+    path: buildPath('GC/GCRawMaterialInventoryManager'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: GCRawMaterialInventoryProperties,
+  },
+  //Tape盘点
+  {
+    path: buildPath('GC/GCTapeInventoryManager'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: GCTapeInventoryProperties,
+  },
   //LOT预Hold设置
   {
     path: buildPath('GC/GCLotFutureHoldSetManager'),
