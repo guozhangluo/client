@@ -18,7 +18,7 @@ export default class MaterialLotRequest {
     }
 
     static sendMaterialLotIssueRequest = (object) => {
-        let requestBody = MaterialLotRequestBody.buildMaterialLotIssue(object.lotId, object.fosbId);
+        let requestBody = MaterialLotRequestBody.buildMaterialLotIssue(object.materialLotList);
         let requestHeader = new MaterialLotRequestHeader();
         let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
         let requestObject = {

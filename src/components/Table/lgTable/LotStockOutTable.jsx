@@ -25,6 +25,7 @@ export default class LotStockOutTable extends EntityScanViewTable {
     }
 
     stockOut = () => {
+        let self = this;
         const {data} = this.state;
         if (data.length === 0 ) {
             return;
@@ -38,8 +39,8 @@ export default class LotStockOutTable extends EntityScanViewTable {
         let requestObject = {
             materialLotList: data,
             success: function(responseBody) {
-                if (this.props.resetData) {
-                    this.props.resetData();
+                if (self.props.resetData) {
+                    self.props.resetData();
                 }
                 MessageUtils.showOperationSuccess();
             }
