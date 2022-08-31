@@ -192,6 +192,7 @@ import LotShipJudgeProperties from './pages/Properties/components/lg/LotShipJudg
 import LotStockInProperties from './pages/Properties/components/lg/LotStockInProperties';
 import LotImportProperties from './pages/Properties/components/lg/LotImportProperties';
 import LotStorageReceiveProperties from './pages/Properties/components/lg/LotStorageReceiveProperties';
+import LotWaferReceiveProperties from './pages/Properties/components/lg/LotWaferReceiveProperties';
 import LotStockOutTaggingProperties from './pages/Properties/components/lg/LotStockOutTaggingProperties';
 import LotStockOutProperties from './pages/Properties/components/lg/LotStockOutProperties';
 import LotIssueProperties from './pages/Properties/components/lg/LotIssueProperties';
@@ -1549,6 +1550,11 @@ const routerConfig = [
     path: buildPath('LG/ReceiveMesStorageLot'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: LotStorageReceiveProperties,
+  },
+  {
+    path: buildPath('LG/GCPurchaseOutsoureReceive'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotWaferReceiveProperties,
   },
   {
     path: buildPath('LG/LotStockTagging'),

@@ -11,7 +11,6 @@ export default class GCTapeInventoryProperties  extends EntityScanProperties {
     static displayName = 'GCTapeInventoryProperties';
 
     queryData = (whereClause) => {
-        debugger;
         const self = this;
         let {rowKey,tableData} = this.state;
         let queryFields = this.form.state.queryFields;
