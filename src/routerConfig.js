@@ -197,6 +197,7 @@ import LotStockOutTaggingProperties from './pages/Properties/components/lg/LotSt
 import LotStockOutProperties from './pages/Properties/components/lg/LotStockOutProperties';
 import LotIssueProperties from './pages/Properties/components/lg/LotIssueProperties';
 import GCTapeInventoryProperties from './pages/Properties/components/GCTapeInventoryProperties';
+import LotBoxLabelPrintProperties from './pages/Properties/components/lg/LotBoxLabelPrintProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -1575,6 +1576,11 @@ const routerConfig = [
     path: buildPath('LG/MaterialLotIssue'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: LotIssueProperties,
+  },
+  {
+    path: buildPath('LG/LotBoxLabelPrint'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotBoxLabelPrintProperties,
   },
   {
     path: '*',

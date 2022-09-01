@@ -1,8 +1,10 @@
 import MaterialLotAction from "../../dto/mms/MaterialLotAction";
+
 const ActionType = {
     Ship : "Ship",
     Issue : "Issue",
-    WaferReceive: "WaferReceive"
+    WaferReceive: "WaferReceive",
+    BoxLabelPrint: "BoxLabelPrint"
 }
 
 export default class MaterialLotRequestBody {
@@ -35,6 +37,12 @@ export default class MaterialLotRequestBody {
             materialLotActions.push(materialLotAction)
         });
         return new MaterialLotRequestBody(ActionType.WaferReceive, undefined, materialLotActions);
+    }
+
+    static buildLotBoxLabelPrint(materialLotList, printCount) {
+        let body = new MaterialLotRequestBody(ActionType.BoxLabelPrint, materialLotList);
+        body.printCount = printCount;
+        return body;
     }
 
 }
