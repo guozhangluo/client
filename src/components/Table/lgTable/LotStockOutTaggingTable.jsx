@@ -1,12 +1,12 @@
-import { Button, Input} from 'antd';
+import { Button, Input, Tag} from 'antd';
 import I18NUtils from '../../../api/utils/I18NUtils';
 import { i18NCode } from '../../../api/const/i18n';
 import MessageUtils from '../../../api/utils/MessageUtils';
-import EntityScanViewTable from '../EntityScanViewTable';
 import LotStockOutTagForm from './LotStockOutTagForm';
 import WltStockOutManagerRequest from '../../../api/gc/wlt-stock-out/WltStockOutManagerRequest';
+import EntityListCheckTable from '../EntityListCheckTable';
 
-export default class LotStockOutTaggingTable extends EntityScanViewTable {
+export default class LotStockOutTaggingTable extends EntityListCheckTable {
 
     static displayName = 'LotStockOutTaggingTable';
 
@@ -23,6 +23,38 @@ export default class LotStockOutTaggingTable extends EntityScanViewTable {
         buttons.push(this.createPieceNumber());
         buttons.push(this.createTotalNumber());
         return buttons;
+    }
+
+    createStatistic = () => {
+        return <Tag color="#2db7f5">{this.state.data.length}</Tag>
+    }
+
+    createTotalNumber = () => {
+        let materialLots = this.state.data;
+        let count = 0;
+        if(materialLots && materialLots.length > 0){
+            materialLots.forEach(data => {
+                count = count + data.currentQty;
+            });
+        }
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
+    }
+
+    createPackageQty = () => {
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PackageQty)}：{this.state.data.length}</Tag>
+    }
+
+    createPieceNumber = () => {
+        let qty = 0;
+        let materialLots = this.state.data;
+        if(materialLots && materialLots.length > 0){
+            materialLots.forEach(data => {
+                if (data.currentSubQty != undefined) {
+                    qty = qty + parseInt(data.currentSubQty);
+                }
+            });
+        }
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{qty}</Tag>
     }
 
     createInput = () => {
@@ -61,11 +93,11 @@ export default class LotStockOutTaggingTable extends EntityScanViewTable {
     }
 
     stockOutTag = () => {
-        const {data} = this.state;
-        if (data.length === 0 ) {
+        let materialLots = this.getSelectedRows();
+        if (materialLots.length === 0 ) {
             return;
         }
-        this.validationMLotMaterialName(data);
+        this.validationMLotMaterialName(materialLots);
     }
 
     validationMLotMaterialName = (materialLots) => {
