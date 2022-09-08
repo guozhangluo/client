@@ -14,8 +14,18 @@ export default class LotPackCaseCheckProperties extends EntityScanProperties{
       this.state = {...this.state, ...{checkAllFlag: false}};
     }
 
+    resetData = () => {
+      this.setState({
+        selectedRowKeys: [],
+        selectedRows: [],
+        tableData: [],
+        loading: false,
+        resetFlag: true,
+        checkAllFlag: false
+      });
+    }
+
     queryData = (whereClause) => {
-      debugger;
       const self = this;
       let {tableData, checkAllFlag} = this.state;
       let firstQueryField = self.form.state.queryFields[0];

@@ -123,6 +123,9 @@ export default class LotStockOutTaggingTable extends EntityListCheckTable {
                         {I18NUtils.getClientMessage(i18NCode.BtnTagging)}
                     </Button>
     }
+
+    buildOperationColumn = () => {
+    }
 }
 
 const styles = {
