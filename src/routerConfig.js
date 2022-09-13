@@ -198,6 +198,7 @@ import LotStockOutProperties from './pages/Properties/components/lg/LotStockOutP
 import LotIssueProperties from './pages/Properties/components/lg/LotIssueProperties';
 import GCTapeInventoryProperties from './pages/Properties/components/GCTapeInventoryProperties';
 import LotBoxLabelPrintProperties from './pages/Properties/components/lg/LotBoxLabelPrintProperties';
+import GcMobileFTMaterialReceiveProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTMaterialReceiveProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -1485,6 +1486,11 @@ const routerConfig = [
     path: buildPath('Mobile/WltOrCpWaferReceive'),
     layout: BlankLayout,
     component: GcMobileWltOrCpWaferReceiveProperties,
+  },
+  {
+    path: buildPath('Mobile/MaterialLotWeigh'),
+    layout: BlankLayout,
+    component: GcMobileFTMaterialReceiveProperties,
   },
   {
     path: buildPath('Mobile/MaterialLotWeigh'),
