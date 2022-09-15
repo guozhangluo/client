@@ -28,10 +28,6 @@ export default class LotStockOutTagForm extends EntityForm {
             Notification.showNotice(I18NUtils.getClientMessage(i18NCode.CustomerNameCannotEmpty));
             return;
         }
-        if(stockOutType == "" || stockOutType == null ||  stockOutType == undefined){
-            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.StockOutTypeCannotEmpty));
-            return;
-        }
         let materialLots = this.props.materialLots;
         let stockTagNote = this.props.stockTagNote;
         let requestObj = {

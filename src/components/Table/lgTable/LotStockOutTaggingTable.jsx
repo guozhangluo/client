@@ -22,11 +22,10 @@ export default class LotStockOutTaggingTable extends EntityListCheckTable {
         buttons.push(this.createPackageQty());
         buttons.push(this.createPieceNumber());
         buttons.push(this.createTotalNumber());
+        buttons.push(this.createSelectPackageQty());
+        buttons.push(this.createSelectPieceNumber());
+        buttons.push(this.createSelectTotalNumber());
         return buttons;
-    }
-
-    createStatistic = () => {
-        return <Tag color="#2db7f5">{this.state.data.length}</Tag>
     }
 
     createTotalNumber = () => {
@@ -38,6 +37,34 @@ export default class LotStockOutTaggingTable extends EntityListCheckTable {
             });
         }
         return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
+    }
+
+    createSelectPackageQty = () => {
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.SelectPackageQty)}：{this.state.selectedRows.length}</Tag>
+    }
+
+    createSelectPieceNumber = () => {
+        let qty = 0;
+        let materialLots = this.state.selectedRows;
+        if(materialLots && materialLots.length > 0){
+            materialLots.forEach(data => {
+                if (data.currentSubQty != undefined) {
+                    qty = qty + parseInt(data.currentSubQty);
+                }
+            });
+        }
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.SelectPieceQty)}：{qty}</Tag>
+    }
+
+    createSelectTotalNumber = () => {
+        let materialLots = this.state.selectedRows;
+        let count = 0;
+        if(materialLots && materialLots.length > 0){
+            materialLots.forEach(data => {
+                count = count + data.currentQty;
+            });
+        }
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.SelectTotalQty)}：{count}</Tag>
     }
 
     createPackageQty = () => {
@@ -56,6 +83,7 @@ export default class LotStockOutTaggingTable extends EntityListCheckTable {
         }
         return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{qty}</Tag>
     }
+
 
     createInput = () => {
         return <div style={styles.input}>

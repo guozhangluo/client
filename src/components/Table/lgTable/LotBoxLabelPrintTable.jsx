@@ -2,12 +2,12 @@ import { Button, Col, Input, Row, Tag } from "antd";
 import I18NUtils from '../../../api/utils/I18NUtils';
 import { i18NCode } from '../../../api/const/i18n';
 import MessageUtils from '../../../api/utils/MessageUtils';
-import EntityScanViewTable from '../EntityScanViewTable';
 import EventUtils from '../../../api/utils/EventUtils';
 import MaterialLotRequest from '../../../api/lg/material-lot-manager/MaterialLotRequest';
 import FormItem from "antd/lib/form/FormItem";
+import EntityListCheckTable from "../EntityListCheckTable";
 
-export default class LotBoxLabelPrintTable extends EntityScanViewTable {
+export default class LotBoxLabelPrintTable extends EntityListCheckTable {
 
     static displayName = 'LotBoxLabelPrintTable';
 
@@ -26,6 +26,34 @@ export default class LotBoxLabelPrintTable extends EntityScanViewTable {
         return tags;
     }
 
+    createTotalNumber = () => {
+        let materialLots = this.state.data;
+        let count = 0;
+        if(materialLots && materialLots.length > 0){
+            materialLots.forEach(data => {
+                count = count + data.currentQty;
+            });
+        }
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
+    }
+
+    createPackageQty = () => {
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PackageQty)}：{this.state.data.length}</Tag>
+    }
+
+    createPieceNumber = () => {
+        let qty = 0;
+        let materialLots = this.state.data;
+        if(materialLots && materialLots.length > 0){
+            materialLots.forEach(data => {
+                if (data.currentSubQty != undefined) {
+                    qty = qty + parseInt(data.currentSubQty);
+                }
+            });
+        }
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{qty}</Tag>
+    }
+
     createPrintLabelCount = () => {
         return  <FormItem>
                     <Row gutter={4}>
@@ -41,7 +69,7 @@ export default class LotBoxLabelPrintTable extends EntityScanViewTable {
 
     print = () => {
         let self = this;
-        let materialLotList = self.state.data;
+        let materialLotList = self.state.selectedRows;
         if (materialLotList.length == 0) {
             Notification.showNotice(I18NUtils.getClientMessage(i18NCode.SelectAtLeastOneRow));
             return;

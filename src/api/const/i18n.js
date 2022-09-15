@@ -146,6 +146,9 @@ const i18NCode = {
     BoxQty: "BoxQty",
     PieceQty: "PieceQty",
     TotalQty: "TotalQty",
+    SelectPieceQty: "SelectPieceQty",
+    SelectTotalQty: "SelectTotalQty",
+    SelectPackageQty: "SelectPackageQty",
     PrintLable: "PrintLable",
     TreasuryNoteCannotEmpty: "TreasuryNoteCannotEmpty",
     PleaseChooseLocation: "PleaseChooseLocation",
@@ -1476,7 +1479,22 @@ const i18Messages = {
         Chinese: "箱中存在不同客户，请检验",
         English: "There are different customers in the box",
         Res: ""
-    }
+    },
+    SelectPieceQty:{
+        Chinese: "已选片数",
+        English: "Select PieceQty",
+        Res: ""
+    },
+    SelectTotalQty:{
+        Chinese: "已选颗数",
+        English: "Select TotalQty",
+        Res: ""
+    },
+    SelectPackageQty:{
+        Chinese: "已选包数",
+        English: "Select PackageQty",
+        Res: ""
+    },
 }
 
 export {i18Messages, i18NCode};
