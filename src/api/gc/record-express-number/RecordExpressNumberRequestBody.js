@@ -9,6 +9,7 @@ const ActionType = {
     BatchCancelOrder: "BatchCancelOrder",
     QueryOrderInfo: "QueryOrderInfo",
     SamsungOuterBoxLabelPrint: "SamsungOuterBoxLabelPrint",
+    QueryMLotList: "QueryMLotList",
 }
 
 export default class RecordExpressNumberRequestBody {
@@ -83,6 +84,13 @@ export default class RecordExpressNumberRequestBody {
     static buildBatchCancelExpress(orderList){
         let body = new RecordExpressNumberRequestBody(ActionType.BatchCancelOrder);
         body.orderList = orderList;
+        return body;
+    }
+
+    static buildQueryMaterialLotList(tableRrn, whereClause){
+        let body = new RecordExpressNumberRequestBody(ActionType.QueryMLotList);
+        body.tableRrn = tableRrn;
+        body.whereClause = whereClause;
         return body;
     }
 }   

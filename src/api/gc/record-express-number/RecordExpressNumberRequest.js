@@ -3,7 +3,6 @@ import RecordExpressNumberRequestBody from './RecordExpressNumberRequestBody';
 import {UrlConstant} from '../../const/ConstDefine';
 import MessageUtils from '../../utils/MessageUtils';
 import Request from '../../Request';
-import { object } from 'prop-types';
 
 export default class RecordExpressNumberRequest {
 
@@ -96,6 +95,17 @@ export default class RecordExpressNumberRequest {
 
     static sendBatchCancelExpressNumber = (object) => {
         let requestBody = RecordExpressNumberRequestBody.buildBatchCancelExpress(object.orderList);
+        let requestHeader = new RecordExpressNumberRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.GCRecordExpressUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendQueryMaterLotList = (object) => {
+        let requestBody = RecordExpressNumberRequestBody.buildQueryMaterialLotList(object.tableRrn, object.whereClause);
         let requestHeader = new RecordExpressNumberRequestHeader();
         let request = new Request(requestHeader, requestBody, UrlConstant.GCRecordExpressUrl);
         let requestObject = {

@@ -1,8 +1,8 @@
-import EntityProperties from "./entityProperties/EntityProperties";
-import TableManagerRequest from "../../../api/table-manager/TableManagerRequest";
 import HNWarehouseRecordExpressNumberTable from "../../../components/Table/gc/HNWarehouseRecordExpressNumberTable";
+import RecordExpressNumberRequest from "../../../api/gc/record-express-number/RecordExpressNumberRequest";
+import EntityScanProperties from "./entityProperties/EntityScanProperties";
 
-export default class HNWarehouseRecordExpressNumberProperties extends EntityProperties{
+export default class HNWarehouseRecordExpressNumberProperties extends EntityScanProperties{
 
     static displayName = 'HNWarehouseRecordExpressNumberProperties';
     
@@ -17,21 +17,28 @@ export default class HNWarehouseRecordExpressNumberProperties extends EntityProp
       });
     }
 
-    getTableData = () => {
-        const self = this;
-        let requestObject = {
-          tableRrn: this.state.tableRrn,
-          success: function(responseBody) {
+    queryData = (whereClause) => {
+      const self = this;
+      let requestObject = {
+        tableRrn: this.state.tableRrn,
+        whereClause: whereClause,
+        success: function(responseBody) {
+          let materialLots = responseBody.materialLots;
+          if (materialLots && materialLots.length > 0) {
             self.setState({
-              tableData: responseBody.dataList,
-              table: responseBody.table,
+              tableData: materialLots,
               loading: false
-            }); 
-            self.form.handleSearch();
+            });
+          } else {
+            self.setState({
+              tableData: [],
+              loading: false
+            });
           }
         }
-        TableManagerRequest.sendGetDataByRrnRequest(requestObject);
-    }
+      }
+      RecordExpressNumberRequest.sendQueryMaterLotList(requestObject);
+  }
 
     buildTable = () => {
         return <HNWarehouseRecordExpressNumberTable 
