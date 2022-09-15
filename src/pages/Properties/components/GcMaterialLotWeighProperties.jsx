@@ -17,7 +17,7 @@ export default class GcMaterialLotWeighProperties extends EntityScanProperties {
       handleSearch = () => {
         let self = this;
         const{table} = this.state;
-        let {rowKey, tableData, currentHandleMLots} = this.state;
+        let {tableData, currentHandleMLots} = this.state;
         this.setState({loading: true});
         let data = "";
         let queryFields = this.form.state.queryFields;
@@ -57,7 +57,7 @@ export default class GcMaterialLotWeighProperties extends EntityScanProperties {
                 let boxsWeight = parseInt(data,10)/10000;
                 tableData.forEach((materialLot) => {
                     currentHandleMLots.map((data, index) => {
-                        if (data[rowKey] == materialLot[rowKey]) {
+                        if (data.materialLotId == materialLot.materialLotId) {
                             dataIndex = index;
                             materialLot["weight"] = boxsWeight.toFixed(3);
                             materialLot.boxsScanSeq = boxsWeightSeq;
@@ -77,7 +77,7 @@ export default class GcMaterialLotWeighProperties extends EntityScanProperties {
                 data = parseInt(data,10)/10000;
                 currentHandleMLots.forEach((materialLot) => {
                     tableData.map((data, index) => {
-                        if (data[rowKey] == materialLot[rowKey]) {
+                        if (data.materialLotId == materialLot.materialLotId) {
                             dataIndex = index;
                         }
                     });
@@ -108,7 +108,7 @@ export default class GcMaterialLotWeighProperties extends EntityScanProperties {
                     let size = tableData.length;
                     let scanSeq = size + 1;
                     materialLotList.forEach(materialLot => {
-                        if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                        if (tableData.filter(d => d.materialLotId === data.materialLotId).length === 0) {
                             let productType = materialLot.reserved7;
                             materialLot["scanSeq"] = scanSeq;
                             if(productType == "COM" && (materialLot.theoryWeight == null || materialLot.theoryWeight == undefined || materialLot.theoryWeight == "")){
