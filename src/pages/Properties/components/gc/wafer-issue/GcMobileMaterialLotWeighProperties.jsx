@@ -109,7 +109,7 @@ export default class GcMobileMaterialLotWeighProperties extends MobileProperties
                     let size = tableData.length;
                     let scanSeq = size + 1;
                     materialLotList.forEach(materialLot => {
-                        if (tableData.filter(d => d.materialLotId === data.materialLotId).length === 0) {
+                        if (tableData.filter(d => d.materialLotId === materialLot.materialLotId).length === 0) {
                             let productType = materialLot.reserved7;
                             materialLot["scanSeq"] = scanSeq;
                             if(productType == "COM" && (materialLot.theoryWeight == null || materialLot.theoryWeight == undefined || materialLot.theoryWeight == "")){
