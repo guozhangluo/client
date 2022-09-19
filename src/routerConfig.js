@@ -199,6 +199,7 @@ import LotIssueProperties from './pages/Properties/components/lg/LotIssuePropert
 import GCTapeInventoryProperties from './pages/Properties/components/GCTapeInventoryProperties';
 import LotBoxLabelPrintProperties from './pages/Properties/components/lg/LotBoxLabelPrintProperties';
 import GcMobileFTMaterialReceiveProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTMaterialReceiveProperties';
+import HNWarehouseMaterialLotWeighProperties from './pages/Properties/components/HNWarehouseMaterialLotWeighProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -1206,7 +1207,7 @@ const routerConfig = [
   {
     path: buildPath('HNWarehouse/MaterialLotWeigh'),
     layout: HeaderAsideFooterResponsiveLayout,
-    component: GcMaterialLotWeighProperties,
+    component: HNWarehouseMaterialLotWeighProperties,
   },
   {
     path: buildPath('HNWarehouse/RecordExpressNumber'),

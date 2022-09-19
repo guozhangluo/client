@@ -138,12 +138,19 @@ export default class GcMaterialLotWeighProperties extends EntityScanProperties {
     validateMLotsIsMultipleBoxes(materialLotList){
         let multipleBoxFlag = false;
         let materialLotIdList = [];
+        let lotIdList = [];
         materialLotList.forEach((materialLot) => {
-            if (materialLotIdList.indexOf(materialLot.parentMaterialLotId) == -1) {
-                materialLotIdList.push(materialLot.parentMaterialLotId);
+            if(materialLot.parentMaterialLotId == null || materialLot.parentMaterialLotId == undefined || materialLot.parentMaterialLotId == ""){
+                if(lotIdList.indexOf(materialLot.lotId) == -1){
+                    lotIdList.push(materialLot.lotId);
+                }
+            } else {
+                if (materialLotIdList.indexOf(materialLot.parentMaterialLotId) == -1) {
+                    materialLotIdList.push(materialLot.parentMaterialLotId);
+                }
             }
         });
-        if(materialLotIdList.length > 1){
+        if(materialLotIdList.length > 1 || lotIdList.length > 1){
             multipleBoxFlag = true;
         }
         return multipleBoxFlag;

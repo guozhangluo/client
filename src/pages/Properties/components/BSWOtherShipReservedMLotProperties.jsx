@@ -19,7 +19,7 @@ export default class BSWOtherShipReservedMLotProperties extends EntityScanProper
 
     buildTable = () => {
         return <BSWCOMReservedMLotTable 
-                            pagination={false}
+                            pagination={true}
                             rowKey={this.state.rowKey} 
                             orderTable={this.props.orderTable} 
                             table={this.state.table} 

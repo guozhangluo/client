@@ -1,21 +1,20 @@
-import MobileProperties from "../../mobile/MobileProperties";
-import { Notification } from "../../../../../components/notice/Notice";
-import I18NUtils from "../../../../../api/utils/I18NUtils";
-import { i18NCode } from "../../../../../api/const/i18n";
-import MessageUtils from "../../../../../api/utils/MessageUtils";
-import MobileMaterialLotWeighTable from "../../../../../components/Table/gc/MobileMaterialLotWeighTable";
-import WeightManagerRequest from "../../../../../api/gc/weight-manager/WeightManagerRequest";
+import EntityScanProperties from "./entityProperties/EntityScanProperties";
+import MaterialLotWeighTable from "../../../components/Table/gc/MaterialLotWeighTable";
+import { Notification } from "../../../components/notice/Notice";
+import I18NUtils from "../../../api/utils/I18NUtils";
+import { i18NCode } from "../../../api/const/i18n";
+import WeightManagerRequest from "../../../api/gc/weight-manager/WeightManagerRequest";
 
-export default class GcMobileMaterialLotWeighProperties extends MobileProperties{
+export default class HNWarehouseMaterialLotWeighProperties extends EntityScanProperties {
 
-    static displayName = 'GcMobileMaterialLotWeighProperties';
-    
+    static displayName = 'HNWarehouseMaterialLotWeighProperties';
+
     constructor(props) {
         super(props);
-        this.state = {...this.state};
-    }
+        this.state = {...this.state, ...{currentHandleMLots:[]}};
+      }
 
-    queryData = () => {
+      handleSearch = () => {
         let self = this;
         const{table} = this.state;
         let {tableData, currentHandleMLots} = this.state;
@@ -30,32 +29,17 @@ export default class GcMobileMaterialLotWeighProperties extends MobileProperties
                 tableData: tableData,
                 loading: false
             });
-            return;
-        }
-        // 如果扫描的是数字，则更新当前列表中没有添加重量的箱号，存在多箱没有重量时，给多箱称重标记
-        if (data != undefined &&  data.startsWith("0000")  && parseFloat(data).toString() != "NaN") {
+           // 如果扫描的是数字，则更新当前列表中没有添加重量的箱号，存在多箱没有重量时，给多箱称重标记
+        } else if (data != undefined && !isNaN(parseInt(data)) && parseFloat(data).toString() != "NaN") {
             if (tableData.length == 0){
                 Notification.showInfo(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
-                self.setState({ 
-                    tableData: tableData,
-                    loading: false
-                });
-                return;
             }
             currentHandleMLots = this.getNotScanWeightMaterialLots(tableData);
+            let boxsWeightSeq = this.getBoxsScanWeightSeq(tableData);
             if(currentHandleMLots.length == 0){
                 Notification.showInfo(I18NUtils.getClientMessage(i18NCode.AddOneRowPlease));
-                self.setState({ 
-                    tableData: tableData,
-                    loading: false
-                });
-                return;
-            } 
-
-            let boxsFlag = this.validateMLotsIsMultipleBoxes(currentHandleMLots);
-            let boxsWeightSeq = this.getBoxsScanWeightSeq(tableData);
-            if(boxsFlag){
-                let boxsWeight = parseInt(data,10)/10000;
+            } else if(currentHandleMLots.length >= 2){
+                let boxsWeight = parseFloat(data);
                 tableData.forEach((materialLot) => {
                     currentHandleMLots.map((data, index) => {
                         if (data.materialLotId == materialLot.materialLotId) {
@@ -75,7 +59,6 @@ export default class GcMobileMaterialLotWeighProperties extends MobileProperties
                     });
                 });
             } else {
-                data = parseInt(data,10)/10000;
                 currentHandleMLots.forEach((materialLot) => {
                     tableData.map((data, index) => {
                         if (data.materialLotId == materialLot.materialLotId) {
@@ -83,7 +66,7 @@ export default class GcMobileMaterialLotWeighProperties extends MobileProperties
                         }
                     });
                     if(!materialLot.weight){
-                        materialLot["weight"] = data.toFixed(3);
+                        materialLot["weight"] = data;
                         if(materialLot.theoryWeight){
                             let floatValue = materialLot.floatValue;
                             let disWeight = Math.abs(materialLot.weight - materialLot.theoryWeight);
@@ -136,79 +119,37 @@ export default class GcMobileMaterialLotWeighProperties extends MobileProperties
         }
     }
 
-    validateMLotsIsMultipleBoxes(materialLotList){
-        let multipleBoxFlag = false;
-        let materialLotIdList = [];
-        let lotIdList = [];
-        materialLotList.forEach((materialLot) => {
-            if(materialLot.parentMaterialLotId == null || materialLot.parentMaterialLotId == undefined || materialLot.parentMaterialLotId == ""){
-                if(lotIdList.indexOf(materialLot.lotId) == -1){
-                    lotIdList.push(materialLot.lotId);
-                }
-            } else {
-                if (materialLotIdList.indexOf(materialLot.parentMaterialLotId) == -1) {
-                    materialLotIdList.push(materialLot.parentMaterialLotId);
-                }
+    getNotScanWeightMaterialLots(tableData){
+        let materialLots = [];
+        tableData.forEach((materialLot) => {
+            if(!materialLot.weight){
+                materialLots.push(materialLot);
             }
         });
-        if(materialLotIdList.length > 1 || lotIdList.length > 1){
-            multipleBoxFlag = true;
-        }
-        return multipleBoxFlag;
-    }
-
-    getNotScanWeightMaterialLots(tableData){
-      let materialLots = [];
-      tableData.forEach((materialLot) => {
-          if(!materialLot.weight){
-              materialLots.push(materialLot);
-          }
-      });
-      return materialLots;
+        return materialLots;
     }
 
     getBoxsScanWeightSeq(tableData){
-      let boxsWeightSeq = 0;
-      tableData.forEach((materialLot) => {
-          if(materialLot.boxsScanSeq && materialLot.boxsScanSeq > boxsWeightSeq){
-              boxsWeightSeq = materialLot.boxsScanSeq;
-          }
-      });
-      return boxsWeightSeq + 1;
-    }
-
-    handleSubmit = () => {
-      const {data} = this.orderTable.state;
-      let self = this;
-      if (!data || data.length == 0) {
-          Notification.showNotice(I18NUtils.getClientMessage(i18NCode.SelectAtLeastOneRow));
-          return;
-      }
-      if(self.getNotScanWeightMaterialLots(data).length > 0 ){
-          Notification.showNotice(I18NUtils.getClientMessage(i18NCode.BoxWeightCannotEmpty));
-          return;
-      }
-
-      let requestObject = {
-          materialLots: data,
-          success: function(responseBody) {
-              self.resetData();
-              MessageUtils.showOperationSuccess();
-          }
-      }
-      WeightManagerRequest.sendWeightRequest(requestObject);
+        let boxsWeightSeq = 0;
+        tableData.forEach((materialLot) => {
+            if(materialLot.boxsScanSeq && materialLot.boxsScanSeq > boxsWeightSeq){
+                boxsWeightSeq = materialLot.boxsScanSeq;
+            }
+        });
+        return boxsWeightSeq + 1;
     }
 
     buildTable = () => {
-        return <MobileMaterialLotWeighTable
-                                  pagination={false} 
-                                  ref={(orderTable) => { this.orderTable = orderTable }} 
-                                  table={this.state.table} 
-                                  data={this.state.tableData} 
-                                  loading={this.state.loading} 
-                                  resetData={this.resetData.bind(this)}
-                                  resetFlag={this.state.resetFlag}
-                                  />
+        return <MaterialLotWeighTable 
+                                    pagination={false} 
+                                    rowKey={this.state.rowKey} 
+                                    selectedRowKeys={this.state.selectedRowKeys} 
+                                    selectedRows={this.state.selectedRows} 
+                                    table={this.state.table} 
+                                    data={this.state.tableData} 
+                                    loading={this.state.loading} 
+                                    resetData={this.resetData.bind(this)}/>
     }
+
 
 }
