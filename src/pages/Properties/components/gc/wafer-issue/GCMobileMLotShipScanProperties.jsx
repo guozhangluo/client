@@ -64,21 +64,11 @@ export default class GCMobileMLotShipScanProperties extends MobileProperties{
                 trueData.push(data);
               }
             });
-            if(trueData.length == 0){
-              materialLotList.forEach(materialLot => {
+            materialLotList.forEach(materialLot => {
+              if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
                 trueData.unshift(materialLot);
-             });
-            } else {
-              materialLotList.forEach(materialLot => {
-                trueData.forEach(mLot => {
-                    if(mLot[rowKey] === materialLot[rowKey]){
-                      if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                          trueData.unshift(materialLot);
-                      }
-                    }
-                });
-             });
             }
+           });
             tableData = [];
             errorData.forEach(data => {
               tableData.push(data);

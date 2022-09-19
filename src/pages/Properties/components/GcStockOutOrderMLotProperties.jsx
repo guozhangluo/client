@@ -23,6 +23,7 @@ export default class GcStockOutOrderMLotProperties extends EntityScanProperties{
     }
 
     queryData = (whereClause) => {
+      debugger;
         const self = this;
         let materialLotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
         let {rowKey,tableData} = this.state;
@@ -69,21 +70,11 @@ export default class GcStockOutOrderMLotProperties extends EntityScanProperties{
                   trueData.push(data);
                 }
               });
-              if(trueData.length == 0){
-                materialLotList.forEach(materialLot => {
-                  trueData.unshift(materialLot);
-               });
-              } else {
-                materialLotList.forEach(materialLot => {
-                  trueData.forEach(mLot => {
-                      if(mLot[rowKey] === materialLot[rowKey]){
-                        if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                            trueData.unshift(materialLot);
-                        }
-                      }
-                  });
-               });
-              }
+              materialLotList.forEach(materialLot => {
+                if (trueData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                    trueData.unshift(materialLot);
+                }
+              });
               tableData = [];
               errorData.forEach(data => {
                 tableData.push(data);
