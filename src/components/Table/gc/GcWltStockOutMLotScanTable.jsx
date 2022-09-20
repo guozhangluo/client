@@ -44,6 +44,7 @@ export default class GcWltStockOutMLotScanTable extends EntityScanViewTable {
         let tagList = [];
         tagList.push(this.createCheckSubcodeFlag());
         tagList.push(this.createBBoxQty());
+        tagList.push(this.createPackageQty())
         tagList.push(this.createWaferNumber());
         tagList.push(this.createTotalNumber());
         tagList.push(this.createErrorNumberStatistic());
