@@ -2,10 +2,10 @@ import EntityScanViewTable from '../EntityScanViewTable';
 import { Button} from 'antd';
 import I18NUtils from '../../../api/utils/I18NUtils';
 import { i18NCode } from '../../../api/const/i18n';
-import StockInManagerRequest from '../../../api/gc/stock-in/StockInManagerRequest';
 import MessageUtils from '../../../api/utils/MessageUtils';
 import { Notification } from '../../notice/Notice';
 import EventUtils from '../../../api/utils/EventUtils';
+import RelayBoxStockInManagerRequest from '../../../api/gc/relayBox-stock-in/RelayBoxStockInManagerRequest';
 
 export default class LotStockInStorageTable extends EntityScanViewTable {
 
@@ -44,7 +44,7 @@ export default class LotStockInStorageTable extends EntityScanViewTable {
                 MessageUtils.showOperationSuccess();
             }
         }
-        StockInManagerRequest.sendStockInRequest(requestObject);
+        RelayBoxStockInManagerRequest.sendGCStockInRequest(requestObject);
     }
     
     validationStorageId = (data) =>{

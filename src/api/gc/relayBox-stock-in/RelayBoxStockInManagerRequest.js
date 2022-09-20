@@ -42,4 +42,16 @@ export default class RelayBoxStockInManagerRequest {
         MessageUtils.sendRequest(requestObject);
     }
 
+    static sendGCStockInRequest = (object) => {
+        let requestBody = RelayBoxStockInManagerRequestBody.buildGCStockIn(object.materialLots);
+        let requestHeader = new RelayBoxStockInManagerRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.GCRelayBoxStockInUrl);
+        let requestObject = {
+            request: request,
+            success: object.success,
+            fail: object.fail
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
 }

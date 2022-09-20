@@ -7,6 +7,7 @@ import StockInManagerRequest from '../../../api/gc/stock-in/StockInManagerReques
 import MessageUtils from '../../../api/utils/MessageUtils';
 import { Notification } from '../../notice/Notice';
 import EventUtils from '../../../api/utils/EventUtils';
+import RelayBoxStockInManagerRequest from '../../../api/gc/relayBox-stock-in/RelayBoxStockInManagerRequest';
 
 /**
  * 入库
@@ -51,7 +52,7 @@ export default class StockInStorageTable extends EntityScanViewTable {
                 MessageUtils.showOperationSuccess();
             }
         }
-        StockInManagerRequest.sendStockInRequest(requestObject);
+        RelayBoxStockInManagerRequest.sendGCStockInRequest(requestObject);
     }
     
     validationStorageId = (data) =>{

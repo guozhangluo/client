@@ -1,9 +1,11 @@
+import StockInModel from "../stock-in/StockInModel";
 import RelayBoxStockInModel from "./RelayBoxStockInModel";
 
 const ActionType = {
     QueryRelayBox: "QueryRelayBox",
     QueryBox: "QueryBox",
     RelayBoxStockIn: "RelayBoxStockIn",
+    StockIn: "StockIn",
 }
 
 export default class RelayBoxStockInManagerRequestBody {
@@ -13,6 +15,7 @@ export default class RelayBoxStockInManagerRequestBody {
     relayBoxStockInModels;
     relayBoxId;
     tableRrn;
+    stockInModels;
 
     constructor(actionType, materialLotId, relayBoxId, tableRrn){
         this.actionType = actionType;
@@ -23,6 +26,10 @@ export default class RelayBoxStockInManagerRequestBody {
 
     setRelayBoxStockInModels(relayBoxStockInModels) {
         this.relayBoxStockInModels = relayBoxStockInModels;
+    }
+
+    setStockInModels(stockInModels) {
+        this.stockInModels = stockInModels;
     }
 
     static buildQueryBox(materialLotId, tableRrn) {
@@ -37,7 +44,7 @@ export default class RelayBoxStockInManagerRequestBody {
     static buildRelayBoxChangeStorage(materialLots) {
         let relayBoxStockInModels = [];
         materialLots.forEach(materialLot => {
-            let relayBoxStockInModel = new RelayBoxStockInModel(materialLot.materialLotId, materialLot.storageId);
+            let relayBoxStockInModel = new RelayBoxStockInModel(materialLot.materialLotId, materialLot.storageId, materialLot.parentMaterialLotId);
             relayBoxStockInModels.push(relayBoxStockInModel);
         });
 
@@ -46,5 +53,16 @@ export default class RelayBoxStockInManagerRequestBody {
         return requestBody;
     }
 
+    static buildGCStockIn(materialLots) {
+        let stockInModels = [];
+        materialLots.forEach(materialLot => {
+            let stockInModel = new StockInModel(materialLot.materialLotId, materialLot.relaxBoxId, materialLot.storageId, materialLot.parentMaterialLotId);
+            stockInModels.push(stockInModel);
+        });
+
+        let requestBody = new RelayBoxStockInManagerRequestBody(ActionType.StockIn);
+        requestBody.setStockInModels(stockInModels);
+        return requestBody;
+    }
 
 }

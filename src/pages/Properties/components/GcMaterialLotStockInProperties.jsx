@@ -21,7 +21,7 @@ export default class GcMaterialLotStockInProperties extends EntityScanProperties
     handleSearch = () => {
         let self = this;
         const{table} = this.state;
-        let {rowKey, tableData} = this.state;
+        let {tableData} = this.state;
         this.setState({loading: true});
         let data = "";
         let queryFields = this.form.state.queryFields;
@@ -34,7 +34,7 @@ export default class GcMaterialLotStockInProperties extends EntityScanProperties
             if(tableData && tableData.length > 0){
                 tableData.forEach((materialLot) => {
                     tableData.map((data, index) => {
-                        if (data[rowKey] == materialLot[rowKey]) {
+                        if (data.materialLotId == materialLot.materialLotId) {
                             dataIndex = index;
                         }
                     });
@@ -52,11 +52,15 @@ export default class GcMaterialLotStockInProperties extends EntityScanProperties
                     relayBoxId: data,
                     success: function(responseBody) {
                         let materialLots = responseBody.materialLots;
-                        materialLots.forEach((materialLot) => {
-                            if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                                tableData.unshift(materialLot);
-                            }
-                        });
+                        if(materialLots && materialLots.length > 0){
+                            materialLots.forEach((materialLot) => {
+                                if (tableData.filter(d => d.materialLotId === materialLot.materialLotId).length === 0) {
+                                    tableData.unshift(materialLot);
+                                }
+                            });
+                        } else {
+                            self.showDataNotFound();
+                        }
                         self.setState({ 
                             tableData: tableData,
                             loading: false,
@@ -78,7 +82,7 @@ export default class GcMaterialLotStockInProperties extends EntityScanProperties
             // ZHJ/HJ 开头的则是库位号 扫描到ZHJ/HJ开头的，则更新当前操作的物料批次的库位号
             tableData.forEach((materialLot) => {
                 tableData.map((data, index) => {
-                    if (data[rowKey] == materialLot[rowKey]) {
+                    if (data.materialLotId == materialLot.materialLotId) {
                         dataIndex = index;
                     }
                 });
@@ -98,12 +102,14 @@ export default class GcMaterialLotStockInProperties extends EntityScanProperties
                 materialLotId: data,
                 tableRrn: table.objectRrn,
                 success: function(responseBody) {
-                    let materialLots = responseBody.materialLots;
-                    materialLots.forEach((materialLot) => {
-                        if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                    let materialLot = responseBody.materialLot;
+                    if(materialLot){
+                        if (tableData.filter(d => d.materialLotId === materialLot.materialLotId).length === 0) {
                             tableData.unshift(materialLot);
                         }
-                    });
+                    } else {
+                        self.showDataNotFound();
+                    }
                     self.setState({ 
                         tableData: tableData,
                         loading: false,
