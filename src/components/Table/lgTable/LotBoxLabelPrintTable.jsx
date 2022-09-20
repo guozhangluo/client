@@ -6,6 +6,7 @@ import EventUtils from '../../../api/utils/EventUtils';
 import MaterialLotRequest from '../../../api/lg/material-lot-manager/MaterialLotRequest';
 import FormItem from "antd/lib/form/FormItem";
 import EntityListCheckTable from "../EntityListCheckTable";
+import { Notification } from "../../notice/Notice";
 
 export default class LotBoxLabelPrintTable extends EntityListCheckTable {
 
