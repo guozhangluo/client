@@ -8,6 +8,7 @@ const ActionType = {
     CancelCheck: "CancelCheck",
     QueryMaterialLotIdOrLotId: "QueryMaterialLotIdOrLotId",
     QueryData: "QueryData",
+    QueryMaterialLot: "QueryMaterialLot",
 }
 
 
@@ -80,6 +81,13 @@ export default class MaterialLotManagerRequestBody {
         let body =  new MaterialLotManagerRequestBody(ActionType.QueryData);
         body.queryLotId = queryLotId;
         body.tableRrn = tableRrn;
+        return body;
+    }
+
+    static buildQueryMaterialLot(tableRrn, whereClause) {
+        let body = new MaterialLotManagerRequestBody(ActionType.QueryMaterialLot);
+        body.setTabRrn(tableRrn);
+        body.whereClause = whereClause;
         return body;
     }
 

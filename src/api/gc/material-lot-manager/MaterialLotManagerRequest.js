@@ -107,4 +107,19 @@ export default class MaterialLotManagerRequest {
         MessageUtils.sendRequest(requestObject);
     }
 
+    /**
+     * 查询批次信息，箱号数据则合并为一条
+     * @param {*} object 
+     */
+    static sendQueryMaterialLotRequest = (object) => {
+        let requestBody = MaterialLotManagerRequestBody.buildQueryMaterialLot(object.tableRrn, object.whereClause);
+        let requestHeader = new MaterialLotManagerRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.GCMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
 }

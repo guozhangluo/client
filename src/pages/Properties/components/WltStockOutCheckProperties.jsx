@@ -6,6 +6,7 @@ import I18NUtils from "../../../api/utils/I18NUtils";
 import { i18NCode } from "../../../api/const/i18n";
 import WltStockOutCheckTable from "../../../components/Table/gc/WltStockOutCheckTable";
 import { Notification } from "../../../components/notice/Notice";
+import MaterialLotManagerRequest from "../../../api/gc/material-lot-manager/MaterialLotManagerRequest";
 
 
 /**
@@ -40,7 +41,7 @@ export default class WltStockOutCheckProperties extends EntityScanProperties{
 
     queryData = (whereClause) => {
       const self = this;
-      let {rowKey,tableData} = this.state;
+      let {tableData} = this.state;
       if(whereClause == ''){
         Notification.showInfo(I18NUtils.getClientMessage(i18NCode.SearchFieldCannotEmpty))
         self.setState({ 
@@ -53,13 +54,11 @@ export default class WltStockOutCheckProperties extends EntityScanProperties{
           tableRrn: this.state.tableRrn,
           whereClause: whereClause,
           success: function(responseBody) {
-            let queryDatas = responseBody.dataList;
-            if (queryDatas && queryDatas.length > 0) {
-              queryDatas.forEach(data => {
-                if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
-                  tableData.unshift(data);
-                }
-              });
+            let materialLot = responseBody.materialLot;
+            if (materialLot) {
+              if (tableData.filter(d => d.materialLotId === data.materialLot).length === 0) {
+                tableData.unshift(materialLot);
+              }
               self.setState({ 
                 tableData: tableData,
                 loading: false
@@ -70,7 +69,7 @@ export default class WltStockOutCheckProperties extends EntityScanProperties{
             }
           }
         }
-        TableManagerRequest.sendGetDataByRrnRequest(requestObject);
+        MaterialLotManagerRequest.sendQueryMaterialLotRequest(requestObject);
       }
     }
 

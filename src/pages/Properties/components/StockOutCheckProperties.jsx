@@ -44,7 +44,7 @@ export default class StockOutCheckProperties extends EntityScanProperties{
 
     handleSearch = () => {
       const self = this;
-      let {rowKey,tableData, currentHandleMLot} = this.state;
+      let {tableData, currentHandleMLot} = this.state;
       let queryFields = this.form.state.queryFields;
       let data = this.form.props.form.getFieldValue(queryFields[0].name);
       if(data == undefined || data == "" || data == null){
@@ -84,29 +84,25 @@ export default class StockOutCheckProperties extends EntityScanProperties{
             tableRrn: this.state.tableRrn,
             queryMLotId: data,
             success: function(responseBody) {
-              let materialLotList = responseBody.materialLotList;
-              if (materialLotList && materialLotList.length > 0) {
+              let materialLot = responseBody.materialLot;
+              if (materialLot) {
                 if(checkExpressFlag == "check"){
-                  materialLotList.forEach(materialLot => {
                     if(materialLot.expressNumber == "" || materialLot.expressNumber == null || materialLot.expressNumber == undefined){
-                      if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                      if (tableData.filter(d => d.materialLotId === materialLot.materialLotId).length === 0) {
                         materialLot.errorFlag = true;
                         tableData.unshift(materialLot);
                       }
                     } else {
-                      if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                      if (tableData.filter(d => d.materialLotId === materialLot.materialLotId).length === 0) {
                         tableData.unshift(materialLot);
                         currentHandleMLot.push(materialLot);
                       }
                     }
-                  });
                 } else {
-                  materialLotList.forEach(materialLot => {
-                    if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
+                    if (tableData.filter(d => d.materialLotId === materialLot.materialLotId).length === 0) {
                       tableData.unshift(materialLot);
                       currentHandleMLot.push(materialLot);
                     }
-                  });
                 }
 
                 self.setState({ 
