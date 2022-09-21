@@ -9,6 +9,7 @@ const ActionType = {
     QueryMaterialLotIdOrLotId: "QueryMaterialLotIdOrLotId",
     QueryData: "QueryData",
     QueryMaterialLot: "QueryMaterialLot",
+    QueryMaterialLotInfo: "QueryMaterialLotInfo",
 }
 
 
@@ -88,6 +89,13 @@ export default class MaterialLotManagerRequestBody {
         let body = new MaterialLotManagerRequestBody(ActionType.QueryMaterialLot);
         body.setTabRrn(tableRrn);
         body.whereClause = whereClause;
+        return body;
+    }
+
+    static  buildQueryMLotInfo(tableRrn, queryLotId) {
+        let body = new MaterialLotManagerRequestBody(ActionType.QueryMaterialLotInfo);
+        body.setTabRrn(tableRrn);
+        body.queryLotId = queryLotId;
         return body;
     }
 

@@ -66,7 +66,6 @@ export default class GCCancelCheckTable extends EntityScanViewTable {
         let requestObject = {
             materialLotList: data,
             cancelReason: cancelReason,
-           
             success: function(responseBody) {
                 if (self.props.resetData) {
                     self.props.resetData();

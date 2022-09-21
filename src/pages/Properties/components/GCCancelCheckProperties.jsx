@@ -19,7 +19,7 @@ export default class GCCancelCheckProperties  extends EntityScanProperties {
 
     queryData = (whereClause) => {
       const self = this;
-      let {rowKey,tableData} = this.state;
+      let {tableData} = this.state;
       if(whereClause == ''){
         Notification.showInfo(I18NUtils.getClientMessage(i18NCode.SearchFieldCannotEmpty))
         self.setState({ 
@@ -34,13 +34,11 @@ export default class GCCancelCheckProperties  extends EntityScanProperties {
           tableRrn: this.state.tableRrn,
           queryLotId: queryLotId,
           success: function(responseBody) {
-            let materialLotList = responseBody.materialLotList;
-            if (materialLotList && materialLotList.length > 0) {
-                materialLotList.forEach(materialLot => {
-                  if (tableData.filter(d => d[rowKey] === materialLot[rowKey]).length === 0) {
-                    tableData.unshift(materialLot);
-                  }
-                });
+            let materialLot = responseBody.materialLot;
+            if (materialLot) {
+                if (tableData.filter(d => d.materialLotId === materialLot.materialLotId).length === 0) {
+                  tableData.unshift(materialLot);
+                }
                 self.setState({ 
                   tableData: tableData,
                   loading: false
@@ -51,7 +49,7 @@ export default class GCCancelCheckProperties  extends EntityScanProperties {
             }
           } 
         }
-      MaterialLotManagerRequest.sendQueryMaterialLotIdOrLotIdRequest(requestObject);
+        MaterialLotManagerRequest.sendQueryMLotInfoByRrnRequest(requestObject);
     }
   }
 
