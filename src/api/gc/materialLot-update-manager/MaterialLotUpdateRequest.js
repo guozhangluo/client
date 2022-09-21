@@ -7,7 +7,6 @@ import { UrlConstant } from "../../const/ConstDefine";
 export default class MaterialLotUpdateRequest {
     
     static sendUpdateMRBCommentsRequest = (object) => {
-        debugger;
         let requestBody = MaterialLotUpdateRequestBody.buildUpdateMRBCommentsInfo(object.materialLotList, object.mrbComments);
         let requestHeader = new MaterialLotUpdateRequestHeader();
         let request = new Request(requestHeader, requestBody, UrlConstant.GCUpdateMaterialLotManagerUrl);

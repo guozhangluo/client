@@ -114,7 +114,6 @@ export default class GCMaterialLotHoldTable extends EntityScanViewTable {
     }
 
     hold =() => {
-        debugger;
         const {data,table} = this.state;
         let self = this;
         let remarks = this.remarks.state.value;

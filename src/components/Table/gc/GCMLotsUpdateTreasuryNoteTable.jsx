@@ -99,7 +99,6 @@ export default class GCMLotsUpdateTreasuryNoteTable extends EntityScanViewTable 
     }
 
     UpdateMRBComments = () => {
-        debugger;
         const self =this;
         const {data} = self.state;
         const inputMRB = self.inputMRB.state.value;

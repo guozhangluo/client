@@ -12,14 +12,6 @@ export default class GcRwMaterialIssueScanProperties extends EntityScanPropertie
         super(props);
         this.state = {...this.state, ...{showQueryFormButton: false}};
     }
-    
-    // componentWillReceiveProps = (props) => {
-    //   debugger;
-    //   const {resetFlag} = props;
-    //   if (resetFlag) {
-    //     this.form.handleReset();
-    //   }
-    // }
 
     queryData = (whereClause) => {
         const self = this;

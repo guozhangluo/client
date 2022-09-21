@@ -54,7 +54,6 @@ export default class GcTransferShipMLotTable extends EntityScanViewTable {
     }
 
     stockOut = () => {
-        debugger;
         let self = this;
         if (this.getErrorCount() > 0) {
             Notification.showError(I18NUtils.getClientMessage(i18NCode.ErrorNumberMoreThanZero));

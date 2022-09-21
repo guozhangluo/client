@@ -25,7 +25,6 @@ export default class LotWaferReceiveProperties extends EntityScanProperties{
      * 扫描到的晶圆如果不存在在下面的待接收晶圆，也要异常显示
      */
     queryData = (whereClause) => {
-        debugger;
         const self = this;
         let {rowKey,tableData} = this.state;
         let requestObject = {

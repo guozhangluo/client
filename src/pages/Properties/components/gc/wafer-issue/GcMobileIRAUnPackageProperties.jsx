@@ -19,7 +19,6 @@ export default class GcMobileIRAUnPackageProperties extends MobileProperties{
     }
 
     queryData = (whereClause) => {
-        debugger;
         const self = this;
         let {tableData} = this.state;
         let scanData = "";

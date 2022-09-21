@@ -23,7 +23,6 @@ export default class GcStockOutOrderMLotProperties extends EntityScanProperties{
     }
 
     queryData = (whereClause) => {
-      debugger;
         const self = this;
         let materialLotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
         let {rowKey,tableData} = this.state;
