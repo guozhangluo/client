@@ -56,7 +56,7 @@ export default class WltStockOutCheckProperties extends EntityScanProperties{
           success: function(responseBody) {
             let materialLot = responseBody.materialLot;
             if (materialLot) {
-              if (tableData.filter(d => d.materialLotId === data.materialLot).length === 0) {
+              if (tableData.filter(d => d.materialLotId === materialLot.materialLot).length === 0) {
                 tableData.unshift(materialLot);
               }
               self.setState({ 
