@@ -1,4 +1,4 @@
-import { Button, Col, Input, Row, Tag } from "antd";
+import { Button, Col, Input, Row } from "antd";
 import I18NUtils from '../../api/utils/I18NUtils';
 import { i18NCode } from '../../api/const/i18n';
 import EntityScanViewTable from './EntityScanViewTable';
@@ -29,7 +29,7 @@ export default class GcPrintCaseLabelTable extends EntityScanViewTable {
     createButtonGroup = () => {
         let buttons = [];
         buttons.push(this.createPrintLabelCount());
-        buttons.push(this.createStatistic());
+        buttons.push(this.createPackageQty());
         buttons.push(this.createTotalNumber());
         buttons.push(this.createPrintButton());
         return buttons;
@@ -46,21 +46,6 @@ export default class GcPrintCaseLabelTable extends EntityScanViewTable {
                         </Col>
                     </Row>
                 </FormItem>
-    }
-
-    createTotalNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                count = count + data.currentQty;
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
-    }
-
-    createStatistic = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PackageQty)}：{this.state.data.length}</Tag>
     }
  
     handlePrint = () => {

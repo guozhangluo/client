@@ -23,35 +23,9 @@ export default class COBPackMaterialLotTable extends EntityScanViewTable {
 
     createTagGroup = () => {
         let tags = [];
-        tags.push(this.createWaferNumber());
+        tags.push(this.createPieceNumber());
         tags.push(this.createTotalNumber());
         return tags;
-    }
-
-    createWaferNumber = () => {
-        let materialLotUnits = this.state.data;
-        let count = 0;
-        if(materialLotUnits && materialLotUnits.length > 0){
-            materialLotUnits.forEach(data => {
-                if (data.currentSubQty != undefined) {
-                    count = count + Number(data.currentSubQty);
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{count}</Tag>
-    }
-
-    createTotalNumber = () => {
-        let materialLotUnits = this.state.data;
-        let count = 0;
-        if(materialLotUnits && materialLotUnits.length > 0){
-            materialLotUnits.forEach(data => {
-                if (data.currentQty != undefined) {
-                    count = count + data.currentQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
     }
 
     handlePrint = (materialLotId) => {

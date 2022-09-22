@@ -1,4 +1,4 @@
-import { Button, Col, Input, Row, Tag } from 'antd';
+import { Button, Col, Input, Row } from 'antd';
 import I18NUtils from '../../../api/utils/I18NUtils';
 import { i18NCode } from '../../../api/const/i18n';
 import EntityScanViewTable from '../EntityScanViewTable';
@@ -22,40 +22,10 @@ export default class GCCobRetestLabelAndMakeUpTable extends EntityScanViewTable 
     createTagGroup = () => {
         let tags = [];
         tags.push(this.createPrintCountInput());
-        tags.push(this.createBoxQty());
-        tags.push(this.createPieceQty());
+        tags.push(this.createPackageQty());
+        tags.push(this.createPieceNumber());
         tags.push(this.createTotalNumber());
         return tags;
-    }
-
-    createTotalNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                if (data.currentQty != undefined) {
-                    count = count + data.currentQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
-    }
-
-    createBoxQty = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PackageQty)}：{this.state.data.length}</Tag>
-    }
-
-    createPieceQty = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                if (data.currentSubQty != undefined) {
-                    count = count + data.currentSubQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{count}</Tag>
     }
 
     createPrintCountInput = () => {

@@ -33,6 +33,7 @@ export default class WltPackCaseCheckTable extends EntityScanViewTable {
         let tags = [];
         tags.push(this.createBBoxQty());
         tags.push(this.createPackageQty());
+        tags.push(this.createPieceNumber());
         tags.push(this.createTotalNumber());
         return tags;
     }

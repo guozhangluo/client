@@ -95,19 +95,6 @@ export default class GcWaferUnpackMLotTable extends EntityListCheckTable {
         return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{this.state.data.length}</Tag>
     }
 
-    createTotalNumber = () => {
-        let materialLotUnits = this.state.data;
-        let count = 0;
-        if(materialLotUnits && materialLotUnits.length > 0){
-            materialLotUnits.forEach(data => {
-                if (data.currentQty != undefined) {
-                    count = count + data.currentQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
-    }
-
     deleteAllMaterialLot = () => {
         let self = this;
         if( self.props.data.length == 0){

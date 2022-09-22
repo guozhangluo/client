@@ -1,6 +1,5 @@
 import  React, { Component } from 'react';
-
-import { Table, Popconfirm, Button,Form, Dropdown, Menu, Icon } from 'antd';
+import { Table, Popconfirm, Button,Form, Dropdown, Menu, Icon, Tag} from 'antd';
 import './ListTable.scss';
 import {Application, SessionContext} from '../../api/Application'
 import {DefaultRowKey, Language} from '../../api/const/ConstDefine'
@@ -87,8 +86,67 @@ export default class EntityListTable extends Component {
                 return ''; 
             }
         }
-        
     };
+
+    /**
+     * 物料批次箱数
+     * @returns 
+     */
+     createBBoxQty = () => {
+        let materialLots = this.state.data;
+        let patentMLotIdList = [];
+        if(materialLots && materialLots.length > 0){
+            materialLots.forEach(data => {
+                let parentMaterialLotId = data.parentMaterialLotId;
+                if(parentMaterialLotId != undefined && parentMaterialLotId != "" && parentMaterialLotId != null){
+                    if (patentMLotIdList.indexOf(data.parentMaterialLotId) == -1) {
+                        patentMLotIdList.push(data.parentMaterialLotId);
+                    }
+                }
+            });
+        }
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{patentMLotIdList.length}</Tag>
+    }
+
+    /**
+     * 总颗数
+     * @returns 
+     */
+    createTotalNumber = () => {
+        let materialLots = this.state.data;
+        let count = 0;
+        if(materialLots && materialLots.length > 0){
+            materialLots.forEach(data => {
+                count = count + data.currentQty;
+            });
+        }
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
+    }
+
+    /**
+     * 包数
+     * @returns 
+     */
+    createPackageQty = () => {
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PackageQty)}：{this.state.data.length}</Tag>
+    }
+
+    /**
+     * 
+     * @returns 片数
+     */
+    createPieceNumber = () => {
+        let qty = 0;
+        let materialLots = this.state.data;
+        if(materialLots && materialLots.length > 0){
+            materialLots.forEach(data => {
+                if (data.currentSubQty != undefined) {
+                    qty = qty + parseInt(data.currentSubQty);
+                }
+            });
+        }
+        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{qty}</Tag>
+    }
 
     buildColumn = (table) => {
         let fields = table.fields;

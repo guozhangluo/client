@@ -3,7 +3,6 @@ import I18NUtils from '../../../api/utils/I18NUtils';
 import { i18NCode } from '../../../api/const/i18n';
 import { Notification } from '../../notice/Notice';
 import MessageUtils from '../../../api/utils/MessageUtils';
-import { Tag } from 'antd';
 import PackageMaterialLotRequest from '../../../api/package-material-lot/PackageMaterialLotRequest';
 import EntityScanViewTable from '../EntityScanViewTable';
 import GetPrintBboxParameterRequest from '../../../api/gc/get-print-bbox-parameter/GetPrintBboxParameterRequest';
@@ -23,37 +22,9 @@ export default class LCDPackMaterialLotTable extends EntityScanViewTable {
 
     createTagGroup = () => {
         let tags = [];
-        tags.push(this.createStatistic());
+        tags.push(this.createPackageQty());
         tags.push(this.createTotalNumber());
         return tags;
-    }
-
-    createTotalNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                count = count + data.currentQty;
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
-    }
-
-    createStatistic = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PackageQty)}：{this.state.data.length}</Tag>
-    }
-
-    createTotalNumber = () => {
-        let materialLotUnits = this.state.data;
-        let count = 0;
-        if(materialLotUnits && materialLotUnits.length > 0){
-            materialLotUnits.forEach(data => {
-                if (data.currentQty != undefined) {
-                    count = count + data.currentQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
     }
 
     handlePrint = (materialLotId) => {
