@@ -54,7 +54,7 @@ export default class GCRwStockOutTaggingTable extends EntityListCheckTable {
         let tags = [];
         tags.push(this.createNeedNumberInput());
         tags.push(this.createStatistic());
-        tags.push(this.createWaferNumber());
+        tags.push(this.createPieceNumber());
         tags.push(this.createTotalNumber());
         tags.push(this.createSelectCurrentQty());
         return tags;
@@ -78,32 +78,8 @@ export default class GCRwStockOutTaggingTable extends EntityListCheckTable {
                 </FormItem>
     }
 
-    createTotalNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                count = count + data.currentQty;
-            });
-        }
-        return <Button type="primary" style={styles.tableButton}>{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Button>
-    }
-
     createStatistic = () => {
         return <Button type="primary" style={styles.tableButton}>{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{this.state.data.length}</Button>
-    }
-
-    createWaferNumber = () => {
-        let materialLots = this.state.data;
-        let qty = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                if (data.currentSubQty != undefined) {
-                    qty = qty + parseInt(data.currentSubQty);
-                }
-            });
-        }
-        return <Button type="primary" style={styles.tableButton}>{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{qty}</Button>
     }
 
     createSelectCurrentQty = () => {

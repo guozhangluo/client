@@ -15,7 +15,7 @@ export default class WaferStockOutTaggingTable extends EntityListCheckTable {
     createButtonGroup = () => {
         let buttons = [];
         buttons.push(this.createStatistic());
-        buttons.push(this.createWaferNumber());
+        buttons.push(this.createPieceNumber());
         buttons.push(this.createTotalNumber());
         buttons.push(this.createPackageButton());
         buttons.push(this.createInput());
@@ -28,32 +28,8 @@ export default class WaferStockOutTaggingTable extends EntityListCheckTable {
         </div>
     }
 
-    createTotalNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                count = count + data.currentQty;
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
-    }
-
     createStatistic = () => {
         return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{this.state.data.length}</Tag>
-    }
-
-    createWaferNumber = () => {
-        let materialLots = this.state.data;
-        let qty = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                if (data.currentSubQty != undefined) {
-                    qty = qty + parseInt(data.currentSubQty);
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{qty}</Tag>
     }
 
     createForm = () => {

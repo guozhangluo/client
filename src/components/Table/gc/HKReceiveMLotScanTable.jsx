@@ -28,8 +28,9 @@ export default class HKReceiveMLotScanTable extends EntityScanViewTable {
 
     createButtonGroup = () => {
         let buttons = [];
-        buttons.push(this.createMaterialLotsNumber());
-        buttons.push(this.createStatistic());
+        buttons.push(this.createBBoxQty());
+        buttons.push(this.createPackageQty());
+        buttons.push(this.createPieceNumber());
         buttons.push(this.createTotalNumber());
         buttons.push(this.createErrorNumberStatistic());
         buttons.push(this.createReceive());

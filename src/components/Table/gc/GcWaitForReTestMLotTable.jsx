@@ -13,21 +13,10 @@ export default class GcWaitForReTestMLotTable extends EntityScanViewTable {
 
     createButtonGroup = () => {
         let buttons = [];
-        buttons.push(this.createStatistic());
+        buttons.push(this.createPackageQty());
         buttons.push(this.createTotalNumber());
         buttons.push(this.createExportDataButton());
         return buttons;
-    }
-    
-    createTotalNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                count = count + data.currentQty;
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
     }
 
     /**
@@ -35,10 +24,6 @@ export default class GcWaitForReTestMLotTable extends EntityScanViewTable {
      */
     buildOperationColumn = () => {
         
-    }
-
-    createStatistic = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PackageQty)}：{this.state.data.length}</Tag>
     }
 
 }

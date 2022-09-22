@@ -32,7 +32,7 @@ export default class GcReTestMLotTable extends EntityScanViewTable {
 
     createButtonGroup = () => {
         let buttons = [];
-        buttons.push(this.createStatistic());
+        buttons.push(this.createPackageQty());
         buttons.push(this.createTotalNumber());
         buttons.push(this.createErrorNumberStatistic());
         buttons.push(this.createReTest());
@@ -54,23 +54,6 @@ export default class GcReTestMLotTable extends EntityScanViewTable {
 
     createErrorNumberStatistic = () => {
         return <Tag color="#D2480A">{I18NUtils.getClientMessage(i18NCode.ErrorNumber)}：{this.getErrorCount()}</Tag>
-    }
-
-    createTotalNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                if (data.currentQty != undefined) {
-                    count = count + data.currentQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
-    }
-
-    createStatistic = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{this.state.data.length}</Tag>
     }
 
     reTest = () => {

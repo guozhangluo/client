@@ -39,8 +39,9 @@ export default class GcRwStockOutMLotScanTable extends EntityScanViewTable {
 
     createTagGroup = () => {
         let tagList = [];
-        tagList.push(this.createStatistic());
-        tagList.push(this.createWaferNumber());
+        tagList.push(this.createBBoxQty());
+        tagList.push(this.createPackageQty());
+        tagList.push(this.createPieceNumber());
         tagList.push(this.createTotalNumber());
         tagList.push(this.createErrorNumberStatistic());
         return tagList;
@@ -96,34 +97,6 @@ export default class GcRwStockOutMLotScanTable extends EntityScanViewTable {
             });
         }
         return count;
-    }
-
-    createTotalNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                count = count + data.currentQty;
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}:{count}</Tag>
-    }
-
-    createWaferNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                if(data.currentSubQty){
-                    count = count + data.currentSubQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}: {count}</Tag>
-    }
-
-    createStatistic = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}:{this.state.data.length}</Tag>
     }
 
     createErrorNumberStatistic = () => {

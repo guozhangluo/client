@@ -36,7 +36,7 @@ export default class GcStockOutMLotTable extends EntityScanViewTable {
     createTagGroup = () => {
         let tagList = [];
         tagList.push(this.createBBoxQty());
-        tagList.push(this.createTotalVboxQty());
+        tagList.push(this.createPackageQty());
         tagList.push(this.createTotalNumber());
         tagList.push(this.createErrorNumberStatistic());
         return tagList;
@@ -122,10 +122,6 @@ export default class GcStockOutMLotTable extends EntityScanViewTable {
             });
         }
         return count;
-    }
-
-    createTotalVboxQty = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PackageQty)}：{this.state.data.length}</Tag>
     }
 
     createErrorNumberStatistic = () => {

@@ -27,8 +27,9 @@ export default class GCBondedWarehouseInTransitMaterialLotReceiveTable extends E
 
     createButtonGroup = () => {
         let buttons = [];
-        buttons.push(this.createMaterialLotsNumber());
-        buttons.push(this.createStatistic());
+        buttons.push(this.createBBoxQty());
+        buttons.push(this.createPackageQty());
+        buttons.push(this.createPieceNumber());
         buttons.push(this.createTotalNumber());
         buttons.push(this.createErrorNumberStatistic());
         buttons.push(this.createReceive());
@@ -50,36 +51,6 @@ export default class GCBondedWarehouseInTransitMaterialLotReceiveTable extends E
 
     createErrorNumberStatistic = () => {
         return <Tag color="#D2480A">{I18NUtils.getClientMessage(i18NCode.ErrorNumber)}：{this.getErrorCount()}</Tag>
-    }
-
-    createMaterialLotsNumber = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{this.state.data.length}</Tag>
-    }
-
-    createStatistic = () => {
-        let materialLotUnits = this.state.data;
-        let qty = 0;
-        if(materialLotUnits && materialLotUnits.length > 0){
-            materialLotUnits.forEach(data => {
-                if (data.currentSubQty != undefined) {
-                    qty = qty + parseInt(data.currentSubQty);
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{qty}</Tag>
-    }
-
-    createTotalNumber = () => {
-        let materialLotUnits = this.state.data;
-        let count = 0;
-        if(materialLotUnits && materialLotUnits.length > 0){
-            materialLotUnits.forEach(data => {
-                if (data.currentQty != undefined) {
-                    count = count + data.currentQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
     }
 
     //保税仓成品在途接收

@@ -22,9 +22,9 @@ export default class GCHKWarehouseMLotCodePrintTable extends EntityListTable {
     createTagGroup = () => {
         let tags = [];
         tags.push(this.createExpressInput());
-        tags.push(this.createMLotNumber());
-        tags.push(this.createWaferCount());
-        tags.push(this.createCurrentQty());
+        tags.push(this.createBBoxQty());
+        tags.push(this.createPackageQty());
+        tags.push(this.createTotalNumber());
         return tags;
     }
 
@@ -70,34 +70,6 @@ export default class GCHKWarehouseMLotCodePrintTable extends EntityListTable {
             }
             GetMLotCodePrintParameterRequest.sendGetPrintParameterRequest(requestObject);
         }
-    }
-
-    createMLotNumber = () => {
-        let materialLotList = this.state.data;
-        let materialLotLists = [];
-        if(materialLotList && materialLotList.length > 0){
-            materialLotList.forEach(data => {
-                if (materialLotList.indexOf(data.materialLotId) == -1) {
-                    materialLotLists.push(data.materialLotId);
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{materialLotLists.length}</Tag>
-    }
-
-    createCurrentQty = () => {
-        let materialLotList = this.state.data;
-        let count = 0;
-        if(materialLotList && materialLotList.length > 0){
-            materialLotList.forEach(data => {
-                count = count + data.currentQty;
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
-    }
-
-    createWaferCount = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{this.state.data.length}</Tag>
     }
 
     createPrintButton = () => {
