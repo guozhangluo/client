@@ -79,7 +79,7 @@ export default class HKWarehouseReceiveProperties extends EntityScanProperties{
     }
 
     buildTable = () => {
-        return <HKReceiveMLotScanTable pagination={false} 
+        return <HKReceiveMLotScanTable pagination={true} 
                                     table={this.state.table} 
                                     data={this.state.tableData} 
                                     loading={this.state.loading} 
