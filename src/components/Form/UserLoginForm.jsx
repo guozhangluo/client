@@ -9,6 +9,11 @@ import I18NUtils from '../../api/utils/I18NUtils';
 import {i18NCode} from '../../api/const/i18n';
 import { RefTableName, SystemRefListName } from '../../api/const/ConstDefine';
 import UserManagerRequest from '../../api/user-manager/UserManagerRequest';
+import { Link } from 'react-router-dom';
+import FoundationSymbol from 'foundation-symbol';
+import MessageUtils from '../../api/utils/MessageUtils';
+import ChangeOverduePwdForm from './ChangeOverduePwdForm';
+import { Notification } from '../notice/Notice';
 
 const FormItem = Form.Item;
 
@@ -25,7 +30,43 @@ class UserLoginForm extends Component {
             language: "Chinese",
             org: "1",
             checkbox: false,
+            changePwdVisiable: false,
         };
+    }
+
+    createChangePwdForm = () => {
+      const WrappedChangePwdForm = Form.create()(ChangeOverduePwdForm);
+      return  <WrappedChangePwdForm 
+                            object={{}} 
+                            visible={this.state.changePwdVisiable} 
+                            username={this.state.username}
+                            destroyOnClose
+                            onOk={this.changePwdOk} 
+                            onCancel={this.canelChangePwd}/>
+    }
+
+    changePassword = (e) => {
+      debugger;
+      let self = this;
+      let username = self.username.state.value;
+      if(username == null || username == "" || username == undefined){
+        Notification.showNotice("用户名密码不能为空！");
+          return;
+      }
+      e.preventDefault();
+      this.setState({
+        changePwdVisiable: true,
+        username: username
+      })
+    } 
+
+    changePwdOk = () => {
+      MessageUtils.showOperationSuccess();
+      this.setState({changePwdVisiable: false})
+    }
+    
+    canelChangePwd = () => {
+      this.setState({changePwdVisiable: false})
     }
 
     handleLogin = () => {
@@ -56,7 +97,7 @@ class UserLoginForm extends Component {
                             required: true
                         }]
                     })(
-                        <Input prefix={IconUtils.buildIcon("icon-renyuan")} maxLength={20} />
+                        <Input ref={(username) => { this.username = username }}  prefix={IconUtils.buildIcon("icon-renyuan")} maxLength={20} />
                       )}
                   </FormItem>
                 </Col>
@@ -112,16 +153,13 @@ class UserLoginForm extends Component {
                   {I18NUtils.getClientMessage(i18NCode.Login)}
                 </Button>
               </Row>
-{/*     
+              {
               <Row className="tips" style={styles.tips}>
-                <a href="/" style={styles.link}>
-                    {I18NUtils.getClientMessage(i18NCode.Register)}
-                </a>
-                <span style={styles.line}>|</span>
-                <a href="/" style={styles.link}>
-                    {I18NUtils.getClientMessage(i18NCode.ForgetPwd)}
-                </a>
-              </Row>      */}
+                <Link to="/" onClick={this.changePassword}>
+                  <FoundationSymbol style={styles.link} size="small" />修改密码
+                </Link>
+              </Row>      
+              }
             </div>
             
          </Form> 
@@ -132,6 +170,7 @@ class UserLoginForm extends Component {
         return (
             <div>
                 {this.buildLoginForm()}
+                {this.createChangePwdForm()}
             </div>
         )
     }
