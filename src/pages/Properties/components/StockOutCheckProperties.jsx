@@ -66,11 +66,14 @@ export default class StockOutCheckProperties extends EntityScanProperties{
       }
       let checkExpressFlag = this.stockOutCheckTable.state.value;
       if(currentHandleMLot && currentHandleMLot.length > 0 && checkExpressFlag == "check"){
+        let mLot = currentHandleMLot[0];
         tableData.forEach(materialLot => {
-          if(materialLot.expressNumber == data){
-            materialLot.trueFlag = true;
-          } else{
-            materialLot.errorFlag = true;
+          if(mLot.materialLotId == materialLot.materialLotId){
+            if(materialLot.expressNumber == data){
+              materialLot.trueFlag = true;
+            } else{
+              materialLot.errorFlag = true;
+            }
           }
         });
         self.setState({ 
