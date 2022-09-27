@@ -43,7 +43,8 @@ export default class GcCogReceiveMLotScanTable extends EntityScanViewTable {
     createTagGroup = () => {
         let tagList = [];
         tagList.push(this.createReceiveWithDocFlag());
-        tagList.push(this.createMaterialLotsNumber());
+        tagList.push(this.createBBoxQty());
+        tagList.push(this.createPackageQty());
         tagList.push(this.createTotalNumber());
         tagList.push(this.createErrorNumberStatistic());
         return tagList;
@@ -92,23 +93,6 @@ export default class GcCogReceiveMLotScanTable extends EntityScanViewTable {
 
     createErrorNumberStatistic = () => {
         return <Tag color="#D2480A">{I18NUtils.getClientMessage(i18NCode.ErrorNumber)}：{this.getErrorCount()}</Tag>
-    }
-
-    createMaterialLotsNumber = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{this.state.data.length}</Tag>
-    }
-
-    createTotalNumber = () => {
-        let materialLotUnits = this.state.data;
-        let count = 0;
-        if(materialLotUnits && materialLotUnits.length > 0){
-            materialLotUnits.forEach(data => {
-                if (data.currentQty != undefined) {
-                    count = count + data.currentQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
     }
 
     receive = () => {

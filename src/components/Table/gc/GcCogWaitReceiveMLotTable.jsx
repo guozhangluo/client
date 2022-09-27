@@ -12,26 +12,10 @@ export default class GcCogWaitReceiveMLotTable extends EntityScanViewTable {
 
     createButtonGroup = () => {
         let buttons = [];
-        buttons.push(this.createMaterialLotsNumber());
+        buttons.push(this.createBBoxQty());
+        buttons.push(this.createPackageQty());
         buttons.push(this.createTotalNumber());
         return buttons;
-    }
-    
-    createMaterialLotsNumber = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{this.state.data.length}</Tag>
-    }
-
-    createTotalNumber = () => {
-        let materialLotUnits = this.state.data;
-        let count = 0;
-        if(materialLotUnits && materialLotUnits.length > 0){
-            materialLotUnits.forEach(data => {
-                if (data.currentQty != undefined) {
-                    count = count + data.currentQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
     }
 
     buildOperationColumn = () => {
