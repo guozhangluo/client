@@ -42,6 +42,7 @@ export default class GCRelayBoxChangeStorageIdProperties extends EntityScanPrope
                             loading: false,
                         });
                         self.form.resetFormFileds();
+                        self.queryNodeFocus();
                     },
                 fail: function() {
                     self.setState({ 
@@ -70,6 +71,7 @@ export default class GCRelayBoxChangeStorageIdProperties extends EntityScanPrope
                 loading: false,
             });
             self.form.resetFormFileds();
+            self.queryNodeFocus();
         } else {
             // 物料批次，需要请求后台做查询
             let requestObject = {
@@ -89,6 +91,7 @@ export default class GCRelayBoxChangeStorageIdProperties extends EntityScanPrope
                         loading: false,
                     });
                     self.form.resetFormFileds();
+                    self.queryNodeFocus();
                 },
                 fail: function() {
                     self.setState({ 

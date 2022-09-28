@@ -71,6 +71,7 @@ export default class GcCheckProperties extends EntityScanProperties{
               loading: false
             });
             self.form.resetFormFileds();
+            self.queryNodeFocus();
           }
         }
         CheckInventoryManagerRequest.queryCheckMaterialLot(requestObject);

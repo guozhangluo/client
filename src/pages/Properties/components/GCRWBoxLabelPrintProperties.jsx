@@ -33,10 +33,11 @@ export default class GCRWBoxLabelPrintProperties extends EntityScanProperties{
                 tableData: responseBody.dataList,
                 loading: false
               });
-              self.form.resetFormFileds();  
             } else {
               self.showDataNotFound();
             }
+            self.form.resetFormFileds();
+            self.queryNodeFocus();
           }
         }
         TableManagerRequest.sendGetDataByRrnRequest(requestObject);

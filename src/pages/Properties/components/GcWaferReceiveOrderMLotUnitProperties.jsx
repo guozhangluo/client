@@ -76,6 +76,7 @@ export default class GcWaferReceiveOrderMLotUnitProperties extends EntityScanPro
               loading: false
             });
             self.form.resetFormFileds();
+            self.queryNodeFocus();
           }
         }
         WaferManagerRequest.sendQueryCOBMaterialLotRequest(requestObject);

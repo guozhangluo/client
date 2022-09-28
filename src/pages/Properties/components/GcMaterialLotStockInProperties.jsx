@@ -65,7 +65,6 @@ export default class GcMaterialLotStockInProperties extends EntityScanProperties
                             tableData: tableData,
                             loading: false,
                         });
-                        self.form.resetFormFileds();
                     },
                     fail: function() {
                         self.setState({ 
@@ -78,6 +77,7 @@ export default class GcMaterialLotStockInProperties extends EntityScanProperties
                 RelayBoxStockInManagerRequest.sendQueryRelayBoxRequest(requestObject);
             }
             self.form.resetFormFileds();
+            self.queryNodeFocus();
         } else if (data.startsWith("ZHJ ") || data.startsWith("HJ ") ) {
             // ZHJ/HJ 开头的则是库位号 扫描到ZHJ/HJ开头的，则更新当前操作的物料批次的库位号
             tableData.forEach((materialLot) => {
@@ -96,6 +96,7 @@ export default class GcMaterialLotStockInProperties extends EntityScanProperties
                 loading: false,
             });
             self.form.resetFormFileds();
+            self.queryNodeFocus();
         } else {
             // 物料批次，需要请求后台做查询
             let requestObject = {
@@ -115,6 +116,7 @@ export default class GcMaterialLotStockInProperties extends EntityScanProperties
                         loading: false,
                     });
                     self.form.resetFormFileds();
+                    self.queryNodeFocus();
                 },
                 fail: function() {
                     self.setState({ 

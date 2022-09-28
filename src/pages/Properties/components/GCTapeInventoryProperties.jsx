@@ -67,6 +67,7 @@ export default class GCTapeInventoryProperties  extends EntityScanProperties {
               loading: false
             });
             self.form.resetFormFileds();
+            self.queryNodeFocus();
           }
         }
         GCRawMaterialImportRequest.sendGetDataByLotIdAndTableRrnRequest(requestObject);

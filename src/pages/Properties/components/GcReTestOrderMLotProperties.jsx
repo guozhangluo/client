@@ -80,6 +80,7 @@ export default class GcReTestOrderMLotProperties extends EntityScanProperties{
               loading: false
             });
             self.form.resetFormFileds();
+            self.queryNodeFocus();
           }
         }
         TableManagerRequest.sendGetDataByRrnRequest(requestObject);

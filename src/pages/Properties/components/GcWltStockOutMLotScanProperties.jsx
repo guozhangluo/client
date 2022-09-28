@@ -66,7 +66,6 @@ export default class GcWltStockOutMLotScanProperties extends EntityScanPropertie
                   tableData: tableData,
                   loading: false
                 });
-                self.form.resetFormFileds();  
               } else {
                 self.validationWltMLot(materialLotList, trueData[0]);
               }
@@ -82,8 +81,9 @@ export default class GcWltStockOutMLotScanProperties extends EntityScanPropertie
               tableData: tableData,
               loading: false
             });
-            self.form.resetFormFileds();  
           }
+          self.form.resetFormFileds();  
+          self.queryNodeFocus();
         }
       }
       WltStockOutManagerRequest.sendGetMaterialLotByRrnRequest(requestObject);

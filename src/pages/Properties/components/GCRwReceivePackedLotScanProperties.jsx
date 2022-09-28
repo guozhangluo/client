@@ -84,6 +84,7 @@ export default class GCRwReceivePackedLotScanProperties extends EntityScanProper
             loading: false
           });
           self.form.resetFormFileds();
+          self.queryNodeFocus();
         }
       }
       TableManagerRequest.sendGetDataByRrnRequest(requestObject);

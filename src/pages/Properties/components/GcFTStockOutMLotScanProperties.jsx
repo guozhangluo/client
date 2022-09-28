@@ -68,7 +68,6 @@ export default class GcFTStockOutMLotScanProperties extends EntityScanProperties
                 tableData: tableData,
                 loading: false
               });
-              self.form.resetFormFileds();
             } else {
                 let data = new MaterialLot();
                 data[rowKey] = materialLotId;
@@ -81,8 +80,9 @@ export default class GcFTStockOutMLotScanProperties extends EntityScanProperties
                   tableData: tableData,
                   loading: false
                 });
-                self.form.resetFormFileds();
             }
+            self.form.resetFormFileds();
+            self.queryNodeFocus();
         }
       }
       StockOutManagerRequest.sendGetDataByRrnRequest(requestObject);

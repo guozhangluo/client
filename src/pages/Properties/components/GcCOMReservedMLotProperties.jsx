@@ -71,7 +71,7 @@ export default class GcCOMReservedMLotProperties extends EntityScanProperties{
         selectedRows: selectedRows
       });
       self.form.resetFormFileds();
-      this.form.state.queryFields[0].node.focus();
+      self.queryNodeFocus();
     }
 
     buildTable = () => {

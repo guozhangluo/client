@@ -10,7 +10,7 @@ export default class GcCogReceiveMLotScanProperties extends EntityScanProperties
     
     constructor(props) {
         super(props);
-        this.state = {...this.state, ...{showQueryFormButton: false}};
+        this.state = {...this.state};
     }
     
     componentWillReceiveProps = (props) => {
@@ -73,6 +73,7 @@ export default class GcCogReceiveMLotScanProperties extends EntityScanProperties
               loading: false
             });
             self.form.resetFormFileds();
+            self.queryNodeFocus();
           }
         }
         TableManagerRequest.sendGetDataByRrnRequest(requestObject);

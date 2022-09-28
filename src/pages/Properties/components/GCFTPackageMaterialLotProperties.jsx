@@ -10,6 +10,7 @@ export default class GCFTPackageMaterialLotProperties extends EntityScanProperti
     static displayName = 'GCFTPackageMaterialLotProperties';
       
     queryData = (whereClause) => {
+        debugger;
         const self = this;
         let requestObject = {
           tableRrn: this.state.tableRrn,
@@ -18,10 +19,11 @@ export default class GCFTPackageMaterialLotProperties extends EntityScanProperti
             let queryDatas = responseBody.dataList;
             if (queryDatas && queryDatas.length > 0) {
               self.validationPackgeRule(queryDatas[0]);
-              self.queryNodeFocus();
             } else {
               self.showDataNotFound();
             }
+            self.form.resetFormFileds();
+            self.queryNodeFocus();
           }
         }
         TableManagerRequest.sendGetDataByRrnRequest(requestObject);
