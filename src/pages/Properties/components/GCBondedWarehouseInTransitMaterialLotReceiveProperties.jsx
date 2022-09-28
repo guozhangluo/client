@@ -79,7 +79,7 @@ export default class GCBondedWarehouseInTransitMaterialLotReceiveProperties exte
     }
 
     buildTable = () => {
-        return <GCBondedWarehouseInTransitMaterialLotReceiveTable pagination={false} 
+        return <GCBondedWarehouseInTransitMaterialLotReceiveTable pagination={true} 
                                     table={this.state.table} 
                                     data={this.state.tableData} 
                                     loading={this.state.loading} 
