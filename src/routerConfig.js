@@ -1459,6 +1459,11 @@ const routerConfig = [
     component: GcMobileIRAReceiveStockInProperties,
   },
   {
+    path: buildPath('Mobile/FTMaterialReceive'),
+    layout: BlankLayout,
+    component: GcMobileFTMaterialReceiveProperties,
+  },
+  {
     path: buildPath('Mobile/MobileTransferBoxAndStockIn'),
     layout: BlankLayout,
     component: GcMobileTransferBoxAndStockInProperties,
@@ -1487,11 +1492,6 @@ const routerConfig = [
     path: buildPath('Mobile/WltOrCpWaferReceive'),
     layout: BlankLayout,
     component: GcMobileWltOrCpWaferReceiveProperties,
-  },
-  {
-    path: buildPath('Mobile/MaterialLotWeigh'),
-    layout: BlankLayout,
-    component: GcMobileFTMaterialReceiveProperties,
   },
   {
     path: buildPath('Mobile/MaterialLotWeigh'),
