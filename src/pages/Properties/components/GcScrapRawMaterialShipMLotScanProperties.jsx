@@ -36,7 +36,6 @@ export default class GcScrapRawMaterialShipMLotScanProperties extends EntityScan
           });
           return;
         }
-        let waitShipRawMLotList = this.waitShipMLotProperties.state.tableData;
         let requestObject = {
           tableRrn: this.state.tableRrn,
           queryLotId: queryLotId,
@@ -55,12 +54,7 @@ export default class GcScrapRawMaterialShipMLotScanProperties extends EntityScan
               });
               tableData = [];
               queryDatas.forEach(data => {
-                if (waitShipRawMLotList.filter(d => d[rowKey] === data[rowKey]).length === 0) {
-                  data.errorFlag = true;
-                }
-                if(data.errorFlag){
-                  errorData.unshift(data);
-                } else if(trueData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
+               if(trueData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
                   trueData.unshift(data);
                 }
               });
@@ -72,9 +66,8 @@ export default class GcScrapRawMaterialShipMLotScanProperties extends EntityScan
               });
             } else {
               data = new MaterialLot();
-              let materialLotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
-              data[rowKey] = materialLotId;
-              data.setMaterialLotId(materialLotId);
+              data[rowKey] = queryLotId;
+              data.setMaterialLotId(queryLotId);
               data.errorFlag = true;
               if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
                 tableData.unshift(data);
