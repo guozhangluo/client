@@ -252,6 +252,7 @@ const i18NCode = {
     CustomerType : "CustomerType",
     TreasuryNote : "TreasuryNote",
     ThereAreDifferentCustomersInTheBox : "ThereAreDifferentCustomersInTheBox",
+    SubCode: "SubCode",
 }
 
 const i18Messages = {
@@ -1495,6 +1496,11 @@ const i18Messages = {
         English: "Select PackageQty",
         Res: ""
     },
+    SubCode: {
+        Chinese: "二级代码",
+        English: "SubCode",
+        Res: ""
+    }
 }
 
 export {i18Messages, i18NCode};

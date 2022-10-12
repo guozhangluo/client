@@ -45,7 +45,7 @@ const ImportType = {
     GCMaskFinishProduct: "GCMaskFinishProduct",//Mask成品导入
 }
 
-const ComType = [ImportType.GCCOBFinishProduct, ImportType.GCSOCFinishProduct, ImportType.GCCOBRawMaterialProduct];
+const ComType = [ImportType.GCCOBFinishProduct, ImportType.GCCOBRawMaterialProduct];
 const wltType = [ImportType.GCWLAUnmeasured, ImportType.GCMaskFinishProduct];
 const CpType = [ImportType.GCFabSensor2Unmeasured, ImportType.GCLCDCPUnmeasured25, ImportType.GCFabLCD1UnmeasuredPTC,
                 ImportType.GCFabLCD1UnmeasuredSilterra, ImportType.GCFabSensor1Unmeasured,ImportType.GCLCDCPMeasured26,

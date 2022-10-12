@@ -1,5 +1,5 @@
 import EntityScanViewTable from '../EntityScanViewTable';
-import { Button, Tag } from 'antd';
+import { Button, Tag, Col, Input, Row} from 'antd';
 import { Notification } from '../../notice/Notice';
 import I18NUtils from '../../../api/utils/I18NUtils';
 import { i18NCode } from '../../../api/const/i18n';
@@ -33,13 +33,16 @@ export default class GcHNSampleCollectionStockOutMLotScanTable extends EntitySca
     createButtonGroup = () => {
         let buttons = [];
         buttons.push(this.createStockOut());
+        buttons.push(this.createShipByOrder());
         return buttons;
     }
 
     createTagGroup = () => {
         let tagList = [];
-        tagList.push(this.createStatistic());
-        tagList.push(this.createWaferNumber());
+        tagList.push(this.createInput());
+        tagList.push(this.createBBoxQty());
+        tagList.push(this.createPackageQty());
+        tagList.push(this.createPieceNumber());
         tagList.push(this.createTotalNumber());
         tagList.push(this.createErrorNumberStatistic());
         return tagList;
@@ -84,6 +87,58 @@ export default class GcHNSampleCollectionStockOutMLotScanTable extends EntitySca
         WltStockOutManagerRequest.sendHNSampleCollectionStockOutRequest(requestObj);
     }
 
+    shipByOrder = () => {
+        let self = this;
+        if (this.getErrorCount() > 0) {
+            Notification.showError(I18NUtils.getClientMessage(i18NCode.ErrorNumberMoreThanZero));
+            return;
+        }
+
+        let documentLine = self.props.orderTable.getSingleSelectedRow();
+        if (!documentLine) {
+            return;
+        }
+
+        let materialLots = this.state.data;
+        if (materialLots.length === 0 ) {
+            Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));
+            return;
+        }
+        let subCode = this.subCode.state.value;
+
+        self.setState({
+            loading: true
+        });
+        EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => self.setState({loading: false}));
+
+        let requestObj = {
+            documentLine : documentLine,
+            materialLots : materialLots,
+            subCode: subCode,
+            success: function(responseBody) {
+                if (self.props.resetData) {
+                    self.props.onSearch();
+                    self.props.resetData();
+                }
+                MessageUtils.showOperationSuccess();
+            }
+        }
+        WltStockOutManagerRequest.sendWltShipByOrderRequest(requestObj);
+    }
+
+    createInput = () => {
+        return  <Row gutter={8}>
+            <Col span={3} >
+                <span style={{marginLeft:"5px", fontSize:"19px"}}>
+                    {I18NUtils.getClientMessage(i18NCode.SubCode)}:
+                </span>
+            </Col>
+            <Col span={5}>
+                <Input ref={(subCode) => { this.subCode = subCode }} key="subCode" placeholder="二级代码"/>
+            </Col>
+        </Row>
+    }
+
     getErrorCount = () => {
         let materialLots = this.state.data;
         let count = 0;
@@ -97,34 +152,6 @@ export default class GcHNSampleCollectionStockOutMLotScanTable extends EntitySca
         return count;
     }
 
-    createTotalNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                count = count + data.currentQty;
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>
-    }
-
-    createWaferNumber = () => {
-        let materialLots = this.state.data;
-        let count = 0;
-        if(materialLots && materialLots.length > 0){
-            materialLots.forEach(data => {
-                if(data.currentSubQty){
-                    count = count + data.currentSubQty;
-                }
-            });
-        }
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}: {count}</Tag>
-    }
-
-    createStatistic = () => {
-        return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.BoxQty)}：{this.state.data.length}</Tag>
-    }
-
     createErrorNumberStatistic = () => {
         return <Tag color="#D2480A">{I18NUtils.getClientMessage(i18NCode.ErrorNumber)}：{this.getErrorCount()}</Tag>
     }
@@ -132,6 +159,12 @@ export default class GcHNSampleCollectionStockOutMLotScanTable extends EntitySca
     createStockOut = () => {
         return <Button key="stockOut" type="primary" style={styles.tableButton} loading={this.state.loading} icon="file-excel" onClick={this.stockOut}>
                         材料/其他出
+                    </Button>
+    }
+
+    createShipByOrder = () => {
+        return <Button key="shipByOrder" type="primary" style={styles.tableButton} loading={this.state.loading} icon="file-excel" onClick={this.shipByOrder}>
+                        依订单出货
                     </Button>
     }
 

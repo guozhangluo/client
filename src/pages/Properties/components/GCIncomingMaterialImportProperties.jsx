@@ -1,6 +1,5 @@
 import EntityScanProperties from "./entityProperties/EntityScanProperties";
 import GCIncomingMaterialImportTable from "../../../components/Table/gc/GCIncomingMaterialImportTable";
-import TableManagerRequest from "../../../api/table-manager/TableManagerRequest";
 
 export default class GCIncomingMaterialImportProperties  extends EntityScanProperties {
 
