@@ -10,6 +10,7 @@ const ActionType = {
     FTOutOrderIssue: "FTOutOrderIssue",
     SaleShip: "SaleShip",
     BSWSaleShip: "BSWSaleShip",
+    MobileFtIssue: "MobileFtIssue",
 }
 
 export default class FtMLotManagerRequestBody {
@@ -93,7 +94,20 @@ export default class FtMLotManagerRequestBody {
         return requestBody;
     }
 
-    
+    static buildMobileFTIssue(erpTime, materialLotUnitList, issueWithDoc) {
+        let materialLotActions = [];
+        materialLotUnitList.forEach(materialLotUnit => {
+            let materialLotAction = new MaterialLotAction();
+            materialLotAction.setMaterialLotId(materialLotUnit.unitId);
+            materialLotActions.push(materialLotAction);
+        });
+        let requestBody = new FtMLotManagerRequestBody(ActionType.MobileFtIssue);
+        requestBody.setMaterialLotActions(materialLotActions);
+        requestBody.erpTime = erpTime;
+        requestBody.setIssueWithDoc(issueWithDoc);
+        return requestBody;
+    }
+
     static buildUnitOutOrderIssue(materialLotUnitList) {
         let materialLotActions = [];
         materialLotUnitList.forEach(materialLotUnit => {

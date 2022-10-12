@@ -200,6 +200,9 @@ import GCTapeInventoryProperties from './pages/Properties/components/GCTapeInven
 import LotBoxLabelPrintProperties from './pages/Properties/components/lg/LotBoxLabelPrintProperties';
 import GcMobileFTMaterialReceiveProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTMaterialReceiveProperties';
 import HNWarehouseMaterialLotWeighProperties from './pages/Properties/components/HNWarehouseMaterialLotWeighProperties';
+import GcMobileFTMLotStockInTransferBoxProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTMLotStockInTransferBoxProperties';
+import GCMobileFTWaferIssueProperties from './pages/Properties/components/gc/wafer-issue/GCMobileFTWaferIssueProperties';
+import GcMobileFTRetestProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTRetestProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -1462,6 +1465,21 @@ const routerConfig = [
     path: buildPath('Mobile/FTMaterialReceive'),
     layout: BlankLayout,
     component: GcMobileFTMaterialReceiveProperties,
+  },
+  {
+    path: buildPath('Mobile/FTMLotStockInTransferBox'),
+    layout: BlankLayout,
+    component: GcMobileFTMLotStockInTransferBoxProperties,
+  },
+  {
+    path: buildPath('Mobile/FTWaferIssue'),
+    layout: BlankLayout,
+    component: GCMobileFTWaferIssueProperties,
+  },
+  {
+    path: buildPath('Mobile/FTRetest'),
+    layout: BlankLayout,
+    component: GcMobileFTRetestProperties,
   },
   {
     path: buildPath('Mobile/MobileTransferBoxAndStockIn'),

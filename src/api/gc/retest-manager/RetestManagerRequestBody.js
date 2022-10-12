@@ -3,7 +3,8 @@ import MaterialLotAction from "../../dto/mms/MaterialLotAction";
 const ActionType = {
     MobileRetest: "MobileRetest",
     FtRetest: "FtRetest",
-    ComRetest: "ComRetest"
+    ComRetest: "ComRetest",
+    MobileFtRetest: "MobileFtRetest"
 }
 
 export default class RetestManagerRequestBody {
@@ -37,6 +38,19 @@ export default class RetestManagerRequestBody {
             materialLotActions.push(materialLotAction)
         });
         return new RetestManagerRequestBody(documentLines, materialLotActions, ActionType.FtRetest);
+    }
+
+    static buildMobileFtRetest(erpTime, materialLots) {
+        let materialLotActions = [];
+        materialLots.forEach(materialLot => {
+            let materialLotAction = new MaterialLotAction();
+            materialLotAction.setMaterialLotId(materialLot.materialLotId);
+            materialLotActions.push(materialLotAction)
+        });
+        let body = new RetestManagerRequestBody(undefined, materialLotActions);
+        body.erpTime = erpTime;
+        body.actionType = ActionType.MobileFtRetest;
+        return body;
     }
 
     static buildMobileRetest(materialLotList, erpTime) {

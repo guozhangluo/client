@@ -30,6 +30,18 @@ export default class RetestManagerRequest {
         MessageUtils.sendRequest(requestObject);
     }
 
+    static sendMobileFtRetestRequest = (object) => {
+        let {erpTime, materialLots} = object;
+        let requestBody = RetestManagerRequestBody.buildMobileFtRetest(erpTime, materialLots);
+        let requestHeader = new RetestManagerRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.GCReTestUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
     static sendMobileRetestRequest = (object) => {
         let requestBody = RetestManagerRequestBody.buildMobileRetest(object.materialLots, object.erpTime);
         let requestHeader = new RetestManagerRequestHeader();
