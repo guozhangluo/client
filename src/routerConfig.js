@@ -819,6 +819,12 @@ const routerConfig = [
     layout: HeaderAsideFooterResponsiveLayout,
     component: MesFinishGoodProperties,
   },
+  //成品接收入库
+  {
+    path: buildPath('GC/MESFinishGoodManager'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: MesFinishGoodProperties,
+  },
   {
     path: buildPath('MMS/MESFinishGoodReceiveManager'),
     layout: HeaderAsideFooterResponsiveLayout,
