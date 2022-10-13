@@ -173,4 +173,15 @@ export default class MaterialLotUpdateRequest {
         }
         MessageUtils.sendExpRequest(requestObject, object.fileName);
     }
+
+    static sendUpdateShelfNumberRequest = (object) => {
+        let requestBody = MaterialLotUpdateRequestBody.buildUpdateShelfNumber(object.actionType, object.materialLotList);
+        let requestHeader = new MaterialLotUpdateRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.GCUpdateMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
 }

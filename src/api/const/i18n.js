@@ -104,6 +104,8 @@ const i18NCode = {
     BtnUnBind: "UnBind",
     BtnDelete: "Delete",
     BtnUpdate: "Update",
+    BtnBindNumber: "BindNumber",
+    BtnClearNumber: "ClearNumber",
     BtnMRB: "MRB",
     DataNotFound: "DataNotFound",
     Collapse: "Collapse",
@@ -1499,6 +1501,16 @@ const i18Messages = {
     SubCode: {
         Chinese: "二级代码",
         English: "SubCode",
+        Res: ""
+    },
+    BindNumber: {
+        Chinese: "绑定编号",
+        English: "BindNumber",
+        Res: ""
+    },
+    ClearNumber: {
+        Chinese: "清除编号",
+        English: "ClearNumber",
         Res: ""
     }
 }

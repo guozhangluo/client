@@ -122,4 +122,10 @@ export default class MaterialLotUpdateRequestBody {
         body.materialLotUnitList = materialLotUnitList;
         return body;
     }
+
+    static buildUpdateShelfNumber(actionType, materialLotList) {
+        let body = new MaterialLotUpdateRequestBody(actionType);
+        body.materialLotList = materialLotList;
+        return body;
+    }
 }

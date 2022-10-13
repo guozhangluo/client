@@ -203,6 +203,7 @@ import HNWarehouseMaterialLotWeighProperties from './pages/Properties/components
 import GcMobileFTMLotStockInTransferBoxProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTMLotStockInTransferBoxProperties';
 import GCMobileFTWaferIssueProperties from './pages/Properties/components/gc/wafer-issue/GCMobileFTWaferIssueProperties';
 import GcMobileFTRetestProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTRetestProperties';
+import GCMLotBindShelfNumberProperties from './pages/Properties/components/GCMLotBindShelfNumberProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -1278,6 +1279,11 @@ const routerConfig = [
     path: buildPath('Warehouse/GCMaterialLotRelease'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: GCMaterialLotReleaseProperties,
+  },
+  {
+    path: buildPath('GC/MLotBindShelfNumber'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: GCMLotBindShelfNumberProperties,
   },
   //PackManager
   {
