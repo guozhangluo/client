@@ -12,6 +12,7 @@ const ActionType = {
     MobileGetWafer: "MobileGetWafer",
     MobileIssue: "MobileIssue",
     QueryCOBReceiveMLot: "QueryCOBReceiveMLot",
+    MobileCogReceive : "MobileCogReceive",
 }
 export default class WaferManagerRequestBody {
 
@@ -139,6 +140,19 @@ export default class WaferManagerRequestBody {
             materialLotActions.push(materialLotAction)
         });
         let body = new WaferManagerRequestBody(ActionType.CogReceive, documentLines, materialLotActions);
+        body.setReceiveWithDoc(receiveWithDoc);
+        return body;
+    }
+
+    static buildMobileCogMLotReceive(erpTime, materialLots, receiveWithDoc) {
+        let materialLotActions = [];
+        materialLots.forEach(materialLot => {
+            let materialLotAction = new MaterialLotAction();
+            materialLotAction.setMaterialLotId(materialLot.materialLotId);
+            materialLotActions.push(materialLotAction)
+        });
+        let body = new WaferManagerRequestBody(ActionType.MobileCogReceive, undefined, materialLotActions);
+        body.erpTime = erpTime;
         body.setReceiveWithDoc(receiveWithDoc);
         return body;
     }

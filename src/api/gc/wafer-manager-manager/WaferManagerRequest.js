@@ -113,6 +113,18 @@ export default class WaferManagerRequest {
         MessageUtils.sendRequest(requestObject);
     }
 
+    static sendMoblieCogReceiveMLotRequest = (object) => {
+        let {erpTime, materialLots, receiveWithDoc} = object;
+        let requestBody = WaferManagerRequestBody.buildMobileCogMLotReceive(erpTime, materialLots, receiveWithDoc);
+        let requestHeader = new WaferManagerRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.GCWaferManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
     static sendWaferOutOrderIssueRequest = (object) => {
         let {materialLots} = object;
         let requestBody = WaferManagerRequestBody.buildOutOrderIssue(materialLots);

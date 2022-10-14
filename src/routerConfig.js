@@ -203,6 +203,7 @@ import HNWarehouseMaterialLotWeighProperties from './pages/Properties/components
 import GcMobileFTMLotStockInTransferBoxProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTMLotStockInTransferBoxProperties';
 import GCMobileFTWaferIssueProperties from './pages/Properties/components/gc/wafer-issue/GCMobileFTWaferIssueProperties';
 import GcMobileFTRetestProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTRetestProperties';
+import GcMobileCOGReceiveProperties from './pages/Properties/components/gc/wafer-issue/GcMobileCOGReceiveProperties';
 import GCMLotBindShelfNumberProperties from './pages/Properties/components/GCMLotBindShelfNumberProperties';
 
 /**
@@ -1492,6 +1493,11 @@ const routerConfig = [
     path: buildPath('Mobile/FTRetest'),
     layout: BlankLayout,
     component: GcMobileFTRetestProperties,
+  },
+  {
+    path: buildPath('Mobile/COGReceive'),
+    layout: BlankLayout,
+    component: GcMobileCOGReceiveProperties,
   },
   {
     path: buildPath('Mobile/MobileTransferBoxAndStockIn'),
