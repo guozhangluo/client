@@ -11,6 +11,7 @@ const ActionType = {
     SaleShip: "SaleShip",
     BSWSaleShip: "BSWSaleShip",
     MobileFtIssue: "MobileFtIssue",
+    MobileFTStockOut : "MobileFTStockOut",
 }
 
 export default class FtMLotManagerRequestBody {
@@ -130,6 +131,19 @@ export default class FtMLotManagerRequestBody {
         });
         body.setMaterialLotActions(materialLotActions);
         body.setDocumentLines(documentLines);
+        return body;
+    }
+
+    static buildMobileFTStockOut(erpTime, materialLots) {
+        let body = new FtMLotManagerRequestBody(ActionType.MobileFTStockOut);
+        let materialLotActions = [];
+        materialLots.forEach(materialLot => {
+            let materialLotAction = new MaterialLotAction();
+            materialLotAction.setMaterialLotId(materialLot.materialLotId);
+            materialLotActions.push(materialLotAction)
+        });
+        body.setMaterialLotActions(materialLotActions);
+        body.erpTime = erpTime;
         return body;
     }
 

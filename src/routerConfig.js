@@ -205,6 +205,7 @@ import GCMobileFTWaferIssueProperties from './pages/Properties/components/gc/waf
 import GcMobileFTRetestProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTRetestProperties';
 import GcMobileCOGReceiveProperties from './pages/Properties/components/gc/wafer-issue/GcMobileCOGReceiveProperties';
 import GCMLotBindShelfNumberProperties from './pages/Properties/components/GCMLotBindShelfNumberProperties';
+import GcMobileFTStockOutProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTStockOutProperties';
 
 /**
  * 构建url ?表示可选参数
@@ -1493,6 +1494,11 @@ const routerConfig = [
     path: buildPath('Mobile/FTRetest'),
     layout: BlankLayout,
     component: GcMobileFTRetestProperties,
+  },
+  {
+    path: buildPath('Mobile/FTStockOut'),
+    layout: BlankLayout,
+    component: GcMobileFTStockOutProperties,
   },
   {
     path: buildPath('Mobile/COGReceive'),
