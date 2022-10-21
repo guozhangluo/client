@@ -18,7 +18,29 @@ export default class LotStorageRequest {
     }
 
     static sendLotReceiveRequest = (object) => {
-        let requestBody = LotStorageRequestBody.buildReceiveStorageLot(object.mesStorageLots);
+        let requestBody = LotStorageRequestBody.buildReceiveStorageLot(object.mesStorageLots,object.storageId);
+        let requestHeader = new LotStorageRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGLotStorageReceiveUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendZSWQueryStoarageLotRequest = (object) => {
+        let requestBody = LotStorageRequestBody.buildZSWQueryStorageLotInfo(object.lotId, object.fosbId);
+        let requestHeader = new LotStorageRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGLotStorageReceiveUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendZSWLotReceiveRequest = (object) => {
+        let requestBody = LotStorageRequestBody.buildZSWReceiveStorageLot(object.mesStorageLots,object.storageId);
         let requestHeader = new LotStorageRequestHeader();
         let request = new Request(requestHeader, requestBody, UrlConstant.LGLotStorageReceiveUrl);
         let requestObject = {

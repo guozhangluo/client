@@ -1,10 +1,10 @@
-import TableManagerRequest from "../../../../api/table-manager/TableManagerRequest";
-import LotBoxLabelPrintTable from "../../../../components/Table/lgTable/LotBoxLabelPrintTable";
+import LotStockOutLabelPrintTable from "../../../../components/Table/lgTable/LotStockOutLabelPrintTable";
 import EntityScanProperties from "../entityProperties/EntityScanProperties";
+import MaterialLotRequest from "../../../../api/lg/material-lot-manager/MaterialLotRequest";
 
-export default class LotBoxLabelPrintProperties extends EntityScanProperties{
+export default class LotStockOutLabelPrintProperties extends EntityScanProperties{
 
-    static displayName = 'LotBoxLabelPrintProperties';
+    static displayName = 'LotStockOutLabelPrintProperties';
       
     resetData = () => {
       this.setState({
@@ -19,18 +19,25 @@ export default class LotBoxLabelPrintProperties extends EntityScanProperties{
 
     queryData = (whereClause) => {
       const self = this;
-      let {rowKey,tableData} = this.state;
+      let {tableData} = this.state;
+      let queryFields = this.form.state.queryFields;
+      let lotId = this.form.props.form.getFieldValue(queryFields[0].name);
+      if(lotId == null || lotId == undefined || lotId == ""){
+        Notification.showInfo(I18NUtils.getClientMessage(i18NCode.SearchFieldCannotEmpty))
+        self.setState({ 
+          tableData: tableData,
+          loading: false
+        });
+        return;
+      }
       let requestObject = {
-        tableRrn: this.state.tableRrn,
-        whereClause: whereClause,
+        lotId: lotId,
         success: function(responseBody) {
-          let queryDatas = responseBody.dataList;
-          if (queryDatas && queryDatas.length > 0) {
-            queryDatas.forEach(data => {
-              if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
-                tableData.unshift(data);
-              }
-            });
+          let materialLot = responseBody.materialLot;
+          if (materialLot) {
+            if (tableData.filter(d => d.lotId === materialLot.lotId).length === 0) {
+              tableData.unshift(materialLot);
+            }
             self.setState({ 
               tableData: tableData,
               loading: false
@@ -41,11 +48,11 @@ export default class LotBoxLabelPrintProperties extends EntityScanProperties{
           }
         }
       }
-      TableManagerRequest.sendGetDataByRrnRequest(requestObject);
+      MaterialLotRequest.sendBoxLabelPrintQueryRequest(requestObject);
     }
 
     buildTable = () => {
-        return <LotBoxLabelPrintTable pagination={false} 
+        return <LotStockOutLabelPrintTable pagination={false} 
                                     rowKey={this.state.rowKey} 
                                     selectedRowKeys={this.state.selectedRowKeys} 
                                     selectedRows={this.state.selectedRows} 

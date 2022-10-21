@@ -1,6 +1,8 @@
 const ActionType = {
     QueryLot : "QueryLot",
-    ReceiceLot : "ReceiceLot"
+    ReceiceLot : "ReceiceLot",
+    ZSWQueryLot : "ZSWQueryLot",
+    ZSWReceiceLot : "ZSWReceiceLot"
 }
 
 export default class LotStorageRequestBody {
@@ -18,9 +20,24 @@ export default class LotStorageRequestBody {
         return body;
     }
 
-    static buildReceiveStorageLot(mesStorageLots) {
+    static buildReceiveStorageLot(mesStorageLots, storageId) {
         let body = new LotStorageRequestBody(ActionType.ReceiceLot);
         body.mesStorageLots = mesStorageLots;
+        body.storageId = storageId;
+        return body;
+    }
+
+    static buildZSWQueryStorageLotInfo(lotId, fosbId) {
+        let body = new LotStorageRequestBody(ActionType.ZSWQueryLot);
+        body.lotId = lotId;
+        body.fosbId = fosbId;
+        return body;
+    }
+
+    static buildZSWReceiveStorageLot(mesStorageLots, storageId) {
+        let body = new LotStorageRequestBody(ActionType.ZSWReceiceLot);
+        body.mesStorageLots = mesStorageLots;
+        body.storageId = storageId;
         return body;
     }
 

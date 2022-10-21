@@ -255,6 +255,8 @@ const i18NCode = {
     TreasuryNote : "TreasuryNote",
     ThereAreDifferentCustomersInTheBox : "ThereAreDifferentCustomersInTheBox",
     SubCode: "SubCode",
+    StorageId : "Storage",
+    TheStorageIdIsError: "TheStorageIdIsError",
 }
 
 const i18Messages = {
@@ -1481,6 +1483,16 @@ const i18Messages = {
     ThereAreDifferentCustomersInTheBox:{
         Chinese: "箱中存在不同客户，请检验",
         English: "There are different customers in the box",
+        Res: ""
+    },
+    Storage: {
+        Chinese: "库位号",
+        English: "storage",
+        Res: ""
+    },
+    TheStorageIdIsError: {
+        Chinese: "库位号不正确",
+        English: "The StorageId Is Error",
         Res: ""
     },
     SelectPieceQty:{

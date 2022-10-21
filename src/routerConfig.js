@@ -205,8 +205,22 @@ import GCMobileFTWaferIssueProperties from './pages/Properties/components/gc/waf
 import GcMobileFTRetestProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTRetestProperties';
 import GcMobileCOGReceiveProperties from './pages/Properties/components/gc/wafer-issue/GcMobileCOGReceiveProperties';
 import GCMLotBindShelfNumberProperties from './pages/Properties/components/GCMLotBindShelfNumberProperties';
+import LgMaterialLotStockInProperties from './pages/Properties/components/lg/LgMaterialLotStockInProperties';
 import GcMobileFTStockOutProperties from './pages/Properties/components/gc/wafer-issue/GcMobileFTStockOutProperties';
-
+import LotStorageReceiveZSWProperties from './pages/Properties/components/lg/LotStorageReceiveZSWProperties';
+import LotOutSourceLabelPrintProperties from './pages/Properties/components/lg/LotOutSourceLabelPrintProperties';
+import LotStockOutLabelPrintProperties from './pages/Properties/components/lg/LotStockOutLabelPrintProperties';
+import LotNPWStockOutLabelPrintProperties from './pages/Properties/components/lg/LotNPWStockOutLabelPrintProperties';
+import LgReceiveMesStorageLotProperties from './pages/Properties/components/lg/LgReceiveMesStorageLotProperties';
+import LgMaterialLotShipProperties from './pages/Properties/components/lg/LgMaterialLotShipProperties';
+import LgMaterialLotIssueProperties from './pages/Properties/components/lg/LgMaterialLotIssueProperties';
+import LgWaferCheckProperties from './pages/Properties/components/lg/LgWaferCheckProperties';
+import LgLotPackCaseCheckProperties from './pages/Properties/components/lg/LgLotPackCaseCheckProperties';
+import LGCancelCheckProperties from './pages/Properties/components/lg/LGCancelCheckProperties';
+import LotRecordExpressNumberProperties from './pages/Properties/components/lg/LotRecordExpressNumberProperties';
+import LGLotShipJudgeProperties from './pages/Properties/components/lg/LGLotShipJudgeProperties';
+import LGLotWaferReceiveProperties from './pages/Properties/components/lg/LGLotWaferReceiveProperties';
+import LgLotBoxLabelPrintProperties from './pages/Properties/components/lg/LgLotBoxLabelPrintProperties';
 /**
  * 构建url ?表示可选参数
  * @param {*} url 
@@ -1630,6 +1644,91 @@ const routerConfig = [
     path: buildPath('LG/LotBoxLabelPrint'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: LotBoxLabelPrintProperties,
+  },
+  {
+    path: buildPath('LG/ZSWReceiveMesStorageLot'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotStorageReceiveZSWProperties,
+  },
+  {
+    path: buildPath('Mobile/LgMaterialLotStockIn'),
+    layout: BlankLayout,
+    component: LgMaterialLotStockInProperties,
+  },
+  {
+    path: buildPath('LG/GCLotOutsourceLabel'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotOutSourceLabelPrintProperties,
+  },
+  {
+    path: buildPath('LG/GCLotStockOutLabel'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotStockOutLabelPrintProperties,
+  },
+  {
+    path: buildPath('LG/GCLotNPWStockOutLabel'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotNPWStockOutLabelPrintProperties,
+  },
+  {
+    path: buildPath('Mobile/ReceiveMesStorageLot'),
+    layout: BlankLayout,
+    component: LgReceiveMesStorageLotProperties,
+  },
+  {
+    path: buildPath('Mobile/LGMaterialLotShip'),
+    layout: BlankLayout,
+    component: LgMaterialLotShipProperties,
+  },
+  {
+    path: buildPath('Mobile/LGMaterialLotIssue'),
+    layout: BlankLayout,
+    component: LgMaterialLotIssueProperties,
+  },
+  {
+    path: buildPath('Mobile/GCWaferCheck'),
+    layout: BlankLayout,
+    component: LgWaferCheckProperties,
+  },
+  {
+    path: buildPath('LG/ZswShippingConfigLabel'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: EntityProperties,
+  },
+  {
+    path: buildPath('LG/ShippingConfigLabel'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: EntityProperties,
+  },
+  {
+    path: buildPath('Mobile/LotPackCaseCheck'),
+    layout: BlankLayout,
+    component: LgLotPackCaseCheckProperties,
+  },
+  {
+    path: buildPath('Mobile/LGCancelLotJudge'),
+    layout: BlankLayout,
+    component: LGCancelCheckProperties,
+  },
+  {
+    path: buildPath('LG/RecordExpressNumber'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotRecordExpressNumberProperties,
+  },
+  {
+    path: buildPath('Mobile/LGLotShipJudge'),
+    layout: BlankLayout,
+    component: LGLotShipJudgeProperties,
+  },
+  {
+    path: buildPath('Mobile/PurchaseOutsoureReceive'),
+    layout: BlankLayout,
+    component: LGLotWaferReceiveProperties,
+  },
+  {
+    path: buildPath('Mobile/LGLotBoxLabelPrint'),
+    layout: BlankLayout,
+    component: LgLotBoxLabelPrintProperties,
   },
   {
     path: '*',

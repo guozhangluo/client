@@ -50,4 +50,104 @@ export default class MaterialLotRequest {
         }
         MessageUtils.sendRequest(requestObject);
     }
+
+    static sendOutSourceLotLabelQueryRequest = (object) => {
+        let requestBody = MaterialLotRequestBody.buildOutSourceLotLabelQuery(object.lotId);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendLotOutSourceLabelPrintRequest = (object) => {
+        let requestBody = MaterialLotRequestBody.buildLotOutSourceLabelPrint(object.materialLotList, object.printCount);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendBoxLabelPrintQueryRequest = (object) => {
+        let requestBody = MaterialLotRequestBody.buildBoxLabelPrintQuery(object.lotId);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendBoxLabelPrintRequest = (object) => {
+        let requestBody = MaterialLotRequestBody.buildBoxLabelPrint(object.materialLotList, object.printCount);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendNpwLabelPrintQueryRequest = (object) => {
+        let requestBody = MaterialLotRequestBody.buildNpwLabelPrintQuery(object.lotId);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendNpwLabelPrintRequest = (object) => {
+        let requestBody = MaterialLotRequestBody.buildNpwLabelPrint(object.materialLotList, object.printCount);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendMLotRecordExpress = (object) => {
+        let requestBody = MaterialLotRequestBody.buildManualRecordExpress(object.expressNumber, object.materialLotList, object.expressCompany);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+    
+    static sendCancelRecordExpress = (object) => {
+        let requestBody = MaterialLotRequestBody.buildCancelRecordExpress(object.materialLotList);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+    
+    static sendPrintObliqueLabelRequest = (object) => {
+        let requestBody = MaterialLotRequestBody.buildPrintObliqueLabel(object.materialLotList);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
 }

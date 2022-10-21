@@ -73,7 +73,7 @@ export default class LotImportTable extends EntityListTable {
         let count = 0;
         if(materialLots && materialLots.length > 0){
             materialLots.forEach(data => {
-                count = count + data.currentQty;
+                count = count + (data.currentQty == undefined ? 0 : data.currentQty) ;
             });
         }
         return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.TotalQty)}：{count}</Tag>

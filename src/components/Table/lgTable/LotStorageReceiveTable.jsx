@@ -8,9 +8,9 @@ import EventUtils from '../../../api/utils/EventUtils';
 import LotStorageRequest from '../../../api/lg/lot-storage-manager/LotStorageRequest';
 import FormItem from 'antd/lib/form/FormItem';
 
-export default class LotReceiveFGScanTable extends EntityScanViewTable {
+export default class LotStorageReceiveTable extends EntityScanViewTable {
 
-    static displayName = 'LotReceiveFGScanTable';
+    static displayName = 'LotStorageReceiveTable';
 
     getRowClassName = (record, index) => {
         if (record.errorFlag) {
@@ -39,6 +39,19 @@ export default class LotReceiveFGScanTable extends EntityScanViewTable {
         return tags;
     }
 
+    createStorageId = () => {
+        return  <FormItem>
+                    <Row gutter={4}>
+                        <Col span={2} >
+                            <span style={styles.span} >{I18NUtils.getClientMessage(i18NCode.StorageId)}:</span>
+                        </Col>
+                        <Col span={3}>
+                            <Input ref={(storageId) => { this.storageId = storageId }}  key="storage" placeholder="库位号"/>
+                        </Col>
+                    </Row>
+                </FormItem>
+    }
+
     createTotalPackageQty = () => {
         let materialLotUnits = this.state.data;
         let lotIdList = [];
@@ -54,19 +67,6 @@ export default class LotReceiveFGScanTable extends EntityScanViewTable {
 
     createStatistic = () => {
         return <Tag color="#2db7f5">{I18NUtils.getClientMessage(i18NCode.PieceQty)}：{this.state.data.length}</Tag>
-    }
-
-    createStorageId = () => {
-        return  <FormItem>
-                    <Row gutter={4}>
-                        <Col span={2} >
-                            <span style={styles.span} >{I18NUtils.getClientMessage(i18NCode.StorageId)}:</span>
-                        </Col>
-                        <Col span={3}>
-                            <Input ref={(storageId) => { this.storageId = storageId }}  key="storage" placeholder="库位号"/>
-                        </Col>
-                    </Row>
-                </FormItem>
     }
 
     receive = () => {
@@ -97,7 +97,7 @@ export default class LotReceiveFGScanTable extends EntityScanViewTable {
                 MessageUtils.showOperationSuccess();
             }
         }
-        LotStorageRequest.sendLotReceiveRequest(requestObject);
+        LotStorageRequest.sendZSWLotReceiveRequest(requestObject);
     }
     
     createDeleteAllButton = () => {
