@@ -42,8 +42,8 @@ export default class LgMaterialLotShipProperties extends MobileProperties{
 
     handleSubmit = () => {
         let self = this;
-        const {data} = this.state;
-        if (data.length === 0 ) {
+        const {tableData} = this.state;
+        if (tableData.length === 0 ) {
             return;
         }
 
@@ -53,10 +53,10 @@ export default class LgMaterialLotShipProperties extends MobileProperties{
         EventUtils.getEventEmitter().on(EventUtils.getEventNames().ButtonLoaded, () => self.setState({loading: false}));
 
         let requestObject = {
-            materialLotList: data,
+            materialLotList: tableData,
             success: function(responseBody) {
-                if (self.props.resetData) {
-                    self.props.resetData();
+                if (self.resetData) {
+                    self.resetData();
                 }
                 MessageUtils.showOperationSuccess();
             }

@@ -86,15 +86,15 @@ export default class LgWaferCheckProperties extends MobileProperties{
       }
 
     handleSubmit = () => {
-        const {data} = this.state;
+        const {tableData} = this.state;
         let self = this;
-        if (!data || data.length == 0) {
+        if (!tableData || tableData.length == 0) {
             Notification.showNotice(I18NUtils.getClientMessage(i18NCode.SelectAtLeastOneRow));
             return;
         }
-        let existMaterialLots = this.state.data.filter((d) => d.errorFlag === undefined || d.errorFlag === false);
-        let errorMaterialLots = this.state.data.filter((d) => d.errorFlag && d.errorFlag === true);
-        if (this.getErrorCount() > 0){
+        let existMaterialLots = this.state.tableData.filter((d) => d.errorFlag === undefined || d.errorFlag === false);
+        let errorMaterialLots = this.state.tableData.filter((d) => d.errorFlag && d.errorFlag === true);
+        if (this.orderTable.getErrorCount() > 0){
             Notification.showError(I18NUtils.getClientMessage(i18NCode.ErrorNumberMoreThanZero));
             return;
         }
@@ -102,8 +102,8 @@ export default class LgWaferCheckProperties extends MobileProperties{
             existMaterialLots: existMaterialLots,
             errorMaterialLots: errorMaterialLots,
             success: function() {
-                if (self.props.resetData) {
-                    self.props.resetData();
+                if (self.resetData) {
+                    self.resetData();
                 }
                 MessageUtils.showOperationSuccess();
             }
@@ -112,7 +112,7 @@ export default class LgWaferCheckProperties extends MobileProperties{
     }
 
     buildTable = () => {
-        return <LgWaferCheckTable 
+        return <LgWaferCheckTable ref={(orderTable) => { this.orderTable = orderTable }}
                                     pagination={false} 
                                     rowKey={this.state.rowKey} 
                                     selectedRowKeys={this.state.selectedRowKeys} 
