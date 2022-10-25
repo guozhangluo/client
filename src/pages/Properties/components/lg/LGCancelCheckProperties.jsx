@@ -56,7 +56,6 @@ export default class LGCancelCheckProperties extends MobileProperties{
   handleSubmit = () => {
     let self = this;
     const {tableData} = self.state;
-    debugger;
     let cancelReason = self.orderTable.cancelReason.state.value;
     if(tableData.length == 0){
         Notification.showNotice(I18NUtils.getClientMessage(i18NCode.AddAtLeastOneRow));

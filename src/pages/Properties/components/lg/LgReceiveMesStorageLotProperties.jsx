@@ -76,7 +76,6 @@ export default class LgReceiveMesStorageLotProperties extends MobileProperties{
     }
 
     onFiledEnter = (e, field) => {
-      debugger;
       let self = this;
       let queryFields = this.state.queryFields;
       if (queryFields && Array.isArray(queryFields)) {

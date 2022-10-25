@@ -52,7 +52,6 @@ export default class LotRecordExpressNumberTable extends EntityListCheckTable {
     }
 
     recordManualExpress = () => {
-        debugger;
         let self = this;
         let datas = this.getSelectedRows();
         if (datas.length === 0){
@@ -92,7 +91,6 @@ export default class LotRecordExpressNumberTable extends EntityListCheckTable {
     }
 
     cancelExpress = () => {
-        debugger;
         let self = this;
         let materialLotList = this.getSelectedRows();
         if (materialLotList.length === 0){

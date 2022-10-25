@@ -46,7 +46,6 @@ class UserLoginForm extends Component {
     }
 
     changePassword = (e) => {
-      debugger;
       let self = this;
       let username = self.username.state.value;
       if(username == null || username == "" || username == undefined){

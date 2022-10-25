@@ -1,4 +1,5 @@
 import { Form } from 'antd';
+import LotConfigRequest from '../../../api/lg/lg-config-manager/LotConfigRequest';
 import LgT7CodeForm from '../../Form/LgT7CodeForm';
 import EntityListTable from '../EntityListTable';
 
@@ -17,6 +18,17 @@ export default class LotT7CodeConfigTable extends EntityListTable {
         buttons.push(this.createExportDataAndTemplateButton());
         return buttons;
     }
+
+    handleDelete = (record) => {
+        const self = this;
+        let object = {
+            t7codeConfig: record,
+            success: function(responseBody) {
+                self.refreshDelete(record);
+            }
+        };
+        LotConfigRequest.sendDeleteT7CodeConfig(object);
+    } 
 
     createForm = () => {
         const WrappedAdvancedEntityForm = Form.create()(LgT7CodeForm);

@@ -19,4 +19,15 @@ export default class LotConfigRequest {
         }
         MessageUtils.sendRequest(requestObject);
     }
+
+    static sendDeleteT7CodeConfig = (object) => {
+        let requestBody = LotConfigRequestBody.buildDeleteT7CodeConfig(object.t7codeConfig);
+        let requestHeader = new LotConfigRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGLotT7CodeConfigUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
 }

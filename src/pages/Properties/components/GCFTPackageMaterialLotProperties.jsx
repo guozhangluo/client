@@ -10,7 +10,6 @@ export default class GCFTPackageMaterialLotProperties extends EntityScanProperti
     static displayName = 'GCFTPackageMaterialLotProperties';
       
     queryData = (whereClause) => {
-        debugger;
         const self = this;
         let requestObject = {
           tableRrn: this.state.tableRrn,

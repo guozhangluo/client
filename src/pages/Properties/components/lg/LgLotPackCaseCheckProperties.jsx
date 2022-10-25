@@ -144,7 +144,6 @@ export default class LgLotPackCaseCheckProperties extends MobileProperties{
     }
 
     judgeSuccess = () => {
-      debugger;
       this.setState({formVisible : false});
       if (this.resetData) {
           this.resetData();
@@ -153,7 +152,6 @@ export default class LgLotPackCaseCheckProperties extends MobileProperties{
     }
 
     judgePass = () => {
-      debugger;
       var self = this;
       const {tableData, selectedRows} = this.state;
       if (!tableData || tableData.length === 0) {

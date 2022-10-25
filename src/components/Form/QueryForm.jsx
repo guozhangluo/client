@@ -105,7 +105,6 @@ class QueryForm extends React.Component {
     }
 
     buildWhereClause = (formValues) => {
-        debugger;
         const queryFields = this.state.queryFields;
         let whereClause = new StringBuffer();
         let firstFlag = true;

@@ -7,7 +7,6 @@ export default class LgWaferCheckProperties extends MobileProperties{
     static displayName = 'LgWaferCheckProperties';
     
     constructor(props) {
-      debugger;
         super(props);
         this.state = {...this.state};
     }

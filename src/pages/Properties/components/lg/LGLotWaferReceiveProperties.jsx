@@ -50,7 +50,6 @@ export default class LGLotWaferReceiveProperties extends MobileProperties{
                 tableData.push(data);
               });
             } else {
-              debugger;
               data = new MaterialLot();
               let lotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
               data[rowKey] = lotId;

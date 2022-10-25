@@ -9,7 +9,6 @@ export default class LgMaterialLotShipProperties extends MobileProperties{
     static displayName = 'LgMaterialLotShipProperties';
     
     constructor(props) {
-      debugger;
         super(props);
         this.state = {...this.state};
     }

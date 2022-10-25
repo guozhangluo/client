@@ -1,6 +1,7 @@
 const ActionType = {
     Create : "Create",
-    Update : "Update"
+    Update : "Update",
+    Delete : "Delete",
 }
 
 export default class LotConfigRequestBody {
@@ -21,6 +22,11 @@ export default class LotConfigRequestBody {
             actionType = ActionType.Create;
         }
         let body = new LotConfigRequestBody(actionType, t7codeConfig);
+        return body;
+    }
+
+    static buildDeleteT7CodeConfig(t7codeConfig) {
+        let body = new LotConfigRequestBody(ActionType.Delete, t7codeConfig);
         return body;
     }
 

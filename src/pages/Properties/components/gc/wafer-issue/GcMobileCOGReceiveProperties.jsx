@@ -20,7 +20,6 @@ export default class GcMobileCOGReceiveProperties extends MobileProperties{
     }
 
     queryData = (whereClause) => {
-      debugger;
       const self = this;
       let materialLotId = self.form.props.form.getFieldValue(self.form.state.queryFields[0].name);
       let {rowKey,tableData} = this.state;
@@ -72,7 +71,6 @@ export default class GcMobileCOGReceiveProperties extends MobileProperties{
   }
 
     handleSubmit = () => {
-      debugger;
       let self = this;
       let erpTime = self.orderTable.erpTime.picker.state.showDate;
       if(moment.isMoment(erpTime)){
