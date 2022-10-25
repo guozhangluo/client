@@ -105,6 +105,7 @@ class QueryForm extends React.Component {
     }
 
     buildWhereClause = (formValues) => {
+        debugger;
         const queryFields = this.state.queryFields;
         let whereClause = new StringBuffer();
         let firstFlag = true;
@@ -118,7 +119,11 @@ class QueryForm extends React.Component {
                 if(fieldName && fieldName == "desc"){
                     //此处为客制化入库备注查询，后续优化下拉查询框再做优化
                     whereClause.append("reserved4");
-                } else {
+                } 
+                else if(fieldName && fieldName == "materialname1"){
+                    whereClause.append("materialName")
+                }
+                else {
                     whereClause.append(fieldName);
                 }
                 // 如果是个数组。则需要用>= 以及<=了 两位数当前肯定是个时间
@@ -146,7 +151,11 @@ class QueryForm extends React.Component {
                     fieldValue = fieldValue.toString();
                     if (queryField.queryLikeFlag) {
                         whereClause.append(SqlType.Like);
+                        if(fieldName == "materialname1"){
+                        fieldValue = '%' + fieldValue
+                        }else{
                         fieldValue = '%' + fieldValue + '%'
+                        }
                     } else {
                         if (fieldValue.indexOf('*') != -1) {
                             whereClause.append(SqlType.Like);

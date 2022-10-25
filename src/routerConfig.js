@@ -221,6 +221,7 @@ import LotRecordExpressNumberProperties from './pages/Properties/components/lg/L
 import LGLotShipJudgeProperties from './pages/Properties/components/lg/LGLotShipJudgeProperties';
 import LGLotWaferReceiveProperties from './pages/Properties/components/lg/LGLotWaferReceiveProperties';
 import LgLotBoxLabelPrintProperties from './pages/Properties/components/lg/LgLotBoxLabelPrintProperties';
+import LotT7CodeConfigProperties from './pages/Properties/components/lg/LotT7CodeConfigProperties';
 /**
  * 构建url ?表示可选参数
  * @param {*} url 
@@ -1699,6 +1700,11 @@ const routerConfig = [
     path: buildPath('LG/ShippingConfigLabel'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: EntityProperties,
+  },
+  {
+    path: buildPath('LG/LGT7CodeConfig'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotT7CodeConfigProperties,
   },
   {
     path: buildPath('Mobile/LotPackCaseCheck'),
