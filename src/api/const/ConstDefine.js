@@ -3,7 +3,7 @@ const ServerAddress = {
     NewbiestUrl : "http://127.0.0.1:8080",
     // NewbiestUrl : "http://10.181.160.18:10010",
     // NewbiestUrl : "http://192.168.1.161:10010",
-    // NewbiestUrl : "http://172.29.240.114:10010",
+    // NewbiestUrl : "http://172.23.86.117:10010",
     // NewbiestUrl : "http://10.181.160.31:10010",
     Envirment: "TEST"
 }
