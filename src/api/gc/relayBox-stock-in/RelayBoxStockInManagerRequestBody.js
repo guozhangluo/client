@@ -36,8 +36,8 @@ export default class RelayBoxStockInManagerRequestBody {
         return new RelayBoxStockInManagerRequestBody(ActionType.QueryBox, materialLotId, undefined, tableRrn);
     }
 
-    static buildQueryRelayBox(relayBoxId) {
-        return new RelayBoxStockInManagerRequestBody(ActionType.QueryRelayBox, undefined, relayBoxId);
+    static buildQueryRelayBox(relayBoxId, tableRrn) {
+        return new RelayBoxStockInManagerRequestBody(ActionType.QueryRelayBox, undefined, relayBoxId, tableRrn);
     }
     
 

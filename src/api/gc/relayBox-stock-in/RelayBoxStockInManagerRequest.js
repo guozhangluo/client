@@ -19,7 +19,7 @@ export default class RelayBoxStockInManagerRequest {
     }
 
     static sendQueryRelayBoxRequest = (object) => {
-        let reqreuestBody = RelayBoxStockInManagerRequestBody.buildQueryRelayBox(object.relayBoxId);
+        let reqreuestBody = RelayBoxStockInManagerRequestBody.buildQueryRelayBox(object.relayBoxId, object.tableRrn);
         let requestHeader = new RelayBoxStockInManagerRequestHeader();
         let request = new Request(requestHeader, reqreuestBody, UrlConstant.GCRelayBoxStockInUrl);
         let requestObject = {

@@ -42,6 +42,7 @@ export default class LotStockInProperties extends EntityScanProperties{
             } else {
                 let requestObject = {
                     relayBoxId: data,
+                    tableRrn: this.state.tableRrn,
                     success: function(responseBody) {
                         let materialLots = responseBody.materialLots;
                         if(materialLots && materialLots.length > 0){

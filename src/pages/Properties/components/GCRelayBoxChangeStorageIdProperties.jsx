@@ -26,6 +26,7 @@ export default class GCRelayBoxChangeStorageIdProperties extends EntityScanPrope
         if ((data.startsWith("MB") || data.startsWith("TB") || data.startsWith("CM") || data.startsWith("ZTB") || data.startsWith("ZCB")) && data.split(".").length == 1) {
             let requestObject = {
                 relayBoxId: data,
+                tableRrn: this.state.tableRrn,
                 success: function(responseBody) {
                     let materialLots = responseBody.materialLots;
                         if(materialLots && materialLots.length > 0){
