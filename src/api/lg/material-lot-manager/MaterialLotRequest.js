@@ -150,4 +150,15 @@ export default class MaterialLotRequest {
         MessageUtils.sendRequest(requestObject);
     }
 
+    static sendGetBoxLabelMLotListRequest = (object) => {
+        let requestBody = MaterialLotRequestBody.buildQueryBoxLabelMLotList(object.tableRrn, object.whereClause, object.tagFlag);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
 }

@@ -1,4 +1,4 @@
-import { Button, Col, Input, Row, Tag } from "antd";
+import { Button, Col, Input, Row, Tag, Switch} from "antd";
 import I18NUtils from '../../../api/utils/I18NUtils';
 import { i18NCode } from '../../../api/const/i18n';
 import MessageUtils from '../../../api/utils/MessageUtils';
@@ -7,10 +7,16 @@ import MaterialLotRequest from '../../../api/lg/material-lot-manager/MaterialLot
 import FormItem from "antd/lib/form/FormItem";
 import EntityListCheckTable from "../EntityListCheckTable";
 import { Notification } from "../../notice/Notice";
+import Icon from "@icedesign/icon";
 
 export default class LotBoxLabelPrintTable extends EntityListCheckTable {
 
     static displayName = 'LotBoxLabelPrintTable';
+
+    constructor(props) {
+        super(props);
+        this.state = {...this.state,...{checked:true},...{value: "tagFlag"}};
+    }
 
     createButtonGroup = () => {
         let buttons = [];
@@ -59,6 +65,17 @@ export default class LotBoxLabelPrintTable extends EntityListCheckTable {
         return  <FormItem>
                     <Row gutter={4}>
                         <Col span={2} >
+                            <span>{I18NUtils.getClientMessage(i18NCode.TagFlag)}:</span>
+                        </Col>
+                        <Col span={1}>
+                            <Switch ref={(checkedChildren) => { this.checkedChildren = checkedChildren }} 
+                                checkedChildren={<Icon type="tagFlag" />} 
+                                unCheckedChildren={<Icon type="close" />} 
+                                onChange={this.handleChange} 
+                                disabled={this.disabled}
+                                checked={this.state.checked}/>
+                        </Col>
+                        <Col span={2} >
                             <span>{I18NUtils.getClientMessage(i18NCode.PrintCount)}:</span>
                         </Col>
                         <Col span={3}>
@@ -67,6 +84,21 @@ export default class LotBoxLabelPrintTable extends EntityListCheckTable {
                     </Row>
                 </FormItem>
     }
+
+    handleChange = (checkedChildren) => {
+        if(checkedChildren){
+            this.setState({ 
+                value: "tagFlag",
+                checked: true
+            });
+        } else {
+            this.setState({ 
+                value: "",
+                checked: false
+            });
+        }
+    }
+
 
     print = () => {
         let self = this;
@@ -99,6 +131,10 @@ export default class LotBoxLabelPrintTable extends EntityListCheckTable {
         return <Button key="print" type="primary" style={styles.tableButton} icon="inbox" loading={this.state.loading} onClick={this.print}>
                         {I18NUtils.getClientMessage(i18NCode.BtnPrint)}
                     </Button>
+    }
+
+    buildOperationColumn = () =>{
+        
     }
 }
 

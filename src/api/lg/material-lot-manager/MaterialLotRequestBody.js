@@ -14,6 +14,7 @@ const ActionType = {
     RecordExpress: "RecordExpress",
     CancelRecordExpress: "CancelRecordExpress",
     PrintObliqueLabel: "PrintObliqueLabel",
+    QueryBoxLabelMLot: "QueryBoxLabelMLot"
 }
 
 export default class MaterialLotRequestBody {
@@ -110,4 +111,11 @@ export default class MaterialLotRequestBody {
         return body;
     }
 
+    static buildQueryBoxLabelMLotList(tableRrn, whereClause, tagFlag) {
+        let body = new MaterialLotRequestBody(ActionType.QueryBoxLabelMLot);
+        body.tableRrn = tableRrn;
+        body.whereClause = whereClause;
+        body.tagFlag = tagFlag;
+        return body;
+    }
 }

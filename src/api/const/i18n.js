@@ -257,6 +257,7 @@ const i18NCode = {
     SubCode: "SubCode",
     StorageId : "Storage",
     TheStorageIdIsError: "TheStorageIdIsError",
+    TagFlag: "TagFlag",
 }
 
 const i18Messages = {
@@ -1523,6 +1524,11 @@ const i18Messages = {
     ClearNumber: {
         Chinese: "清除编号",
         English: "ClearNumber",
+        Res: ""
+    },
+    TagFlag: {
+        Chinese: "标注",
+        English: "Tag",
         Res: ""
     }
 }

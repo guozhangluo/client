@@ -1,10 +1,8 @@
 import MobileProperties from "../mobile/MobileProperties";
 import TableManagerRequest from "../../../../api/table-manager/TableManagerRequest";
 import LgLotBoxLabelPrintTable from '../../../../components/Table/lgTable/LgLotBoxLabelPrintTable';
-
 import EventUtils from '../../../../api/utils/EventUtils';
 import MaterialLotRequest from '../../../../api/lg/material-lot-manager/MaterialLotRequest';
-import MaterialLot from "../../../../api/dto/mms/MaterialLot";
 import I18NUtils from "../../../../api/utils/I18NUtils";
 import { i18NCode } from "../../../../api/const/i18n";
 import { Notification } from "../../../../components/notice/Notice";

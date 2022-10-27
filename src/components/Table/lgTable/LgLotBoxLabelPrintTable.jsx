@@ -3,9 +3,7 @@ import EntityScanViewTable from '../EntityScanViewTable';
 import { Notification } from '../../notice/Notice';
 import I18NUtils from '../../../api/utils/I18NUtils';
 import { i18NCode } from '../../../api/const/i18n';
-import MessageUtils from '../../../api/utils/MessageUtils';
-import { Button, Col, Input, Row, Tag } from "antd";
-import EventUtils from '../../../api/utils/EventUtils';
+import {Col, Input, Row, Tag } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 
 /**

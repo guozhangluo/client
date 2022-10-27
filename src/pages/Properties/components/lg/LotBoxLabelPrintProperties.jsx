@@ -1,4 +1,4 @@
-import TableManagerRequest from "../../../../api/table-manager/TableManagerRequest";
+import MaterialLotRequest from "../../../../api/lg/material-lot-manager/MaterialLotRequest";
 import LotBoxLabelPrintTable from "../../../../components/Table/lgTable/LotBoxLabelPrintTable";
 import EntityScanProperties from "../entityProperties/EntityScanProperties";
 
@@ -19,33 +19,27 @@ export default class LotBoxLabelPrintProperties extends EntityScanProperties{
 
     queryData = (whereClause) => {
       const self = this;
-      let {rowKey,tableData} = this.state;
+      let tagFlag = this.printTable.state.value;
       let requestObject = {
         tableRrn: this.state.tableRrn,
         whereClause: whereClause,
+        tagFlag: tagFlag,
         success: function(responseBody) {
-          let queryDatas = responseBody.dataList;
-          if (queryDatas && queryDatas.length > 0) {
-            queryDatas.forEach(data => {
-              if (tableData.filter(d => d[rowKey] === data[rowKey]).length === 0) {
-                tableData.unshift(data);
-              }
-            });
-            self.setState({ 
-              tableData: tableData,
-              loading: false
-            });
-            self.form.resetFormFileds();
-          } else {
-            self.showDataNotFound();
-          }
+          let materialLots = responseBody.materialLots;
+          self.setState({
+            tableData: materialLots,
+            loading: false,
+            whereClause: whereClause
+          });
+          self.form.resetFormFileds();
         }
       }
-      TableManagerRequest.sendGetDataByRrnRequest(requestObject);
+      MaterialLotRequest.sendGetBoxLabelMLotListRequest(requestObject);
     }
 
     buildTable = () => {
         return <LotBoxLabelPrintTable pagination={false} 
+                                    ref={(printTable) => { this.printTable = printTable }} 
                                     rowKey={this.state.rowKey} 
                                     selectedRowKeys={this.state.selectedRowKeys} 
                                     selectedRows={this.state.selectedRows} 
