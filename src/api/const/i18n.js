@@ -100,6 +100,9 @@ const i18NCode = {
     BtnCancelExpress: "CancelExpress",
     BtnPrintObliqueLabel: "PrintObliqueLabel",
     BtnCancelWayBillOrder: "CancelWayBillOrder",
+    BtnActive: "Active",
+    BtnFrozen: "Frozen",
+    BtnSave: "Save",
 
     BtnUnBind: "UnBind",
     BtnDelete: "Delete",
@@ -1529,6 +1532,21 @@ const i18Messages = {
     TagFlag: {
         Chinese: "标注",
         English: "Tag",
+        Res: ""
+    },
+    Active: {
+        Chinese: "激活",
+        English: "Active",
+        Res: ""
+    },
+    Frozen: {
+        Chinese: "冻结",
+        English: "Frozen",
+        Res: ""
+    },
+    Save: {
+        Chinese: "添加",
+        English: "Save",
         Res: ""
     }
 }

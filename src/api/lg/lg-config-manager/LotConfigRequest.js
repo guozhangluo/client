@@ -30,4 +30,18 @@ export default class LotConfigRequest {
         }
         MessageUtils.sendRequest(requestObject);
     }
+
+    static sendSaveProductBomConfig = (object) => {
+        if (object.productBom.newFlag) {
+            object.productBom[DefaultRowKey] = undefined;
+        }
+        let requestBody = LotConfigRequestBody.buildSaveProductBomConfig(object.productBom);
+        let requestHeader = new LotConfigRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGLotT7CodeConfigUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
 }

@@ -30,4 +30,15 @@ export default class LotConfigRequestBody {
         return body;
     }
 
+    static buildSaveProductBomConfig(productBom) {
+        let actionType;
+        if (productBom.objectRrn) {
+            actionType = ActionType.Update;
+        } else {
+            actionType = ActionType.Create;
+        }
+        let body = new LotConfigRequestBody(actionType, productBom);
+        return body;
+    }
+
 }

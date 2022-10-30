@@ -222,6 +222,7 @@ import LGLotShipJudgeProperties from './pages/Properties/components/lg/LGLotShip
 import LGLotWaferReceiveProperties from './pages/Properties/components/lg/LGLotWaferReceiveProperties';
 import LgLotBoxLabelPrintProperties from './pages/Properties/components/lg/LgLotBoxLabelPrintProperties';
 import LotT7CodeConfigProperties from './pages/Properties/components/lg/LotT7CodeConfigProperties';
+import LotProductBomProperties from './pages/Properties/components/lg/LotProductBomProperties';
 /**
  * 构建url ?表示可选参数
  * @param {*} url 
@@ -1670,6 +1671,11 @@ const routerConfig = [
     path: buildPath('LG/GCLotNPWStockOutLabel'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: LotNPWStockOutLabelPrintProperties,
+  },
+  {
+    path: buildPath('LG/ProductBomConfig'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotProductBomProperties,
   },
   {
     path: buildPath('Mobile/ReceiveMesStorageLot'),
