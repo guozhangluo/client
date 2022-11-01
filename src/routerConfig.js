@@ -223,6 +223,7 @@ import LGLotWaferReceiveProperties from './pages/Properties/components/lg/LGLotW
 import LgLotBoxLabelPrintProperties from './pages/Properties/components/lg/LgLotBoxLabelPrintProperties';
 import LotT7CodeConfigProperties from './pages/Properties/components/lg/LotT7CodeConfigProperties';
 import LotProductBomProperties from './pages/Properties/components/lg/LotProductBomProperties';
+import LgPartsImportOrExportProperties from './pages/Properties/components/lg/LgPartsImportOrExportProperties';
 /**
  * 构建url ?表示可选参数
  * @param {*} url 
@@ -1674,6 +1675,16 @@ const routerConfig = [
   },
   {
     path: buildPath('LG/ProductBomConfig'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LotProductBomProperties,
+  },
+  {
+    path: buildPath('LGParts/ImportOrExport'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LgPartsImportOrExportProperties,
+  },
+  {
+    path: buildPath('LGParts/PartsRecord'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: LotProductBomProperties,
   },
