@@ -161,4 +161,25 @@ export default class MaterialLotRequest {
         MessageUtils.sendRequest(requestObject);
     }
 
+    static sendQueryLotWeightRequest = (object) => {
+        let requestBody = MaterialLotRequestBody.buildQueryLotWeight(object.lotId, object.tableRrn);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendLotWeightRequest = (object) => {
+        let requestBody = MaterialLotRequestBody.buildLotWeight(object.materialLotList);
+        let requestHeader = new MaterialLotRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGMaterialLotManagerUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
 }

@@ -1,4 +1,5 @@
 import MaterialLotAction from "../../dto/mms/MaterialLotAction";
+import WeightModel from "../../gc/weight-manager/WeightModel";
 
 const ActionType = {
     Ship : "Ship",
@@ -14,7 +15,9 @@ const ActionType = {
     RecordExpress: "RecordExpress",
     CancelRecordExpress: "CancelRecordExpress",
     PrintObliqueLabel: "PrintObliqueLabel",
-    QueryBoxLabelMLot: "QueryBoxLabelMLot"
+    QueryBoxLabelMLot: "QueryBoxLabelMLot",
+    QueryLotWeight: "QueryLotWeight",
+    LotWeight: "LotWeight"
 }
 
 export default class MaterialLotRequestBody {
@@ -116,6 +119,24 @@ export default class MaterialLotRequestBody {
         body.tableRrn = tableRrn;
         body.whereClause = whereClause;
         body.tagFlag = tagFlag;
+        return body;
+    }
+
+    static buildQueryLotWeight(lotId, tableRrn) {
+        let body = new MaterialLotRequestBody(ActionType.QueryLotWeight);
+        body.lotId = lotId;
+        body.tableRrn = tableRrn;
+        return body;
+    }
+
+    static buildLotWeight(materialLotList) {
+        let body = new MaterialLotRequestBody(ActionType.LotWeight);
+        let weightModels = [];
+        materialLotList.forEach(materialLot => {
+            let weightModel = new WeightModel(materialLot.materialLotId, null, materialLot.theoryWeight, null, null, null);
+            weightModels.push(weightModel);
+        });
+        body.weightModels = weightModels;
         return body;
     }
 }

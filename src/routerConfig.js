@@ -224,6 +224,7 @@ import LgLotBoxLabelPrintProperties from './pages/Properties/components/lg/LgLot
 import LotT7CodeConfigProperties from './pages/Properties/components/lg/LotT7CodeConfigProperties';
 import LotProductBomProperties from './pages/Properties/components/lg/LotProductBomProperties';
 import LgPartsImportOrExportProperties from './pages/Properties/components/lg/LgPartsImportOrExportProperties';
+import LGLotWeighProperties from './pages/Properties/components/lg/LGLotWeighProperties';
 /**
  * 构建url ?表示可选参数
  * @param {*} url 
@@ -1687,6 +1688,11 @@ const routerConfig = [
     path: buildPath('LGParts/PartsRecord'),
     layout: HeaderAsideFooterResponsiveLayout,
     component: LotProductBomProperties,
+  },
+  {
+    path: buildPath('LG/MaterialLotWeight'),
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: LGLotWeighProperties,
   },
   {
     path: buildPath('Mobile/ReceiveMesStorageLot'),
