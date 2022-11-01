@@ -37,11 +37,34 @@ export default class LotConfigRequest {
         }
         let requestBody = LotConfigRequestBody.buildSaveProductBomConfig(object.productBom);
         let requestHeader = new LotConfigRequestHeader();
-        let request = new Request(requestHeader, requestBody, UrlConstant.LGLotT7CodeConfigUrl);
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGProductBomUrl);
         let requestObject = {
             request: request,
             success: object.success
         }
         MessageUtils.sendRequest(requestObject);
     }
+
+    static sendActiveProductBom = (object) => {
+        let requestBody = LotConfigRequestBody.buildActiveProductBom(object.productBom);
+        let requestHeader = new LotConfigRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGProductBomUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+
+    static sendFrozenProductBom = (object) => {
+        let requestBody = LotConfigRequestBody.buildFrozenProductBom(object.productBom);
+        let requestHeader = new LotConfigRequestHeader();
+        let request = new Request(requestHeader, requestBody, UrlConstant.LGProductBomUrl);
+        let requestObject = {
+            request: request,
+            success: object.success
+        }
+        MessageUtils.sendRequest(requestObject);
+    }
+    
 }

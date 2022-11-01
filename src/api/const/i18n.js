@@ -261,6 +261,8 @@ const i18NCode = {
     StorageId : "Storage",
     TheStorageIdIsError: "TheStorageIdIsError",
     TagFlag: "TagFlag",
+    BomStatusCannotActive: "BomStatusCannotActive",
+    BomStatusCannotFrozen: "BomStatusCannotFrozen",
 }
 
 const i18Messages = {
@@ -1547,6 +1549,16 @@ const i18Messages = {
     Save: {
         Chinese: "添加",
         English: "Save",
+        Res: ""
+    },
+    BomStatusCannotActive: {
+        Chinese: "BOM状态不能激活！",
+        English: "BomStatusCannotActive",
+        Res: ""
+    },
+    BomStatusCannotFrozen: {
+        Chinese: "BOM状态不能冻结！",
+        English: "BomStatusCannotFrozen",
         Res: ""
     }
 }

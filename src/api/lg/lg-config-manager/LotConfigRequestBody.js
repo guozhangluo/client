@@ -2,6 +2,10 @@ const ActionType = {
     Create : "Create",
     Update : "Update",
     Delete : "Delete",
+    BomAdd : "BomAdd",
+    BomUpdate : "BomUpdate",
+    BomActive : "BomActive",
+    BomFrozen : "BomFrozen",
 }
 
 export default class LotConfigRequestBody {
@@ -33,11 +37,24 @@ export default class LotConfigRequestBody {
     static buildSaveProductBomConfig(productBom) {
         let actionType;
         if (productBom.objectRrn) {
-            actionType = ActionType.Update;
+            actionType = ActionType.BomUpdate;
         } else {
-            actionType = ActionType.Create;
+            actionType = ActionType.BomAdd;
         }
-        let body = new LotConfigRequestBody(actionType, productBom);
+        let body = new LotConfigRequestBody(actionType);
+        body.productBom = productBom;
+        return body;
+    }
+
+    static buildActiveProductBom(productBom) {
+        let body = new LotConfigRequestBody(ActionType.BomActive);
+        body.productBom = productBom;
+        return body;
+    }
+
+    static buildFrozenProductBom(productBom) {
+        let body = new LotConfigRequestBody(ActionType.BomFrozen);
+        body.productBom = productBom;
         return body;
     }
 
