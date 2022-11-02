@@ -2,6 +2,10 @@ import MobileProperties from "../mobile/MobileProperties";
 import MessageUtils from "../../../../api/utils/MessageUtils";
 import LgWaferCheckTable from "../../../../components/Table/lgTable/LgWaferCheckTable";
 import CheckInventoryManagerRequest from "../../../../api/gc/check-inventory-manager/CheckInventoryManagerRequest";
+import MaterialLot from "../../../../api/dto/mms/MaterialLot";
+import I18NUtils from "../../../../api/utils/I18NUtils";
+import { i18NCode } from "../../../../api/const/i18n";
+import { Notification } from "../../../../components/notice/Notice";
 export default class LgWaferCheckProperties extends MobileProperties{
 
     static displayName = 'LgWaferCheckProperties';
@@ -14,11 +18,7 @@ export default class LgWaferCheckProperties extends MobileProperties{
     queryData = (whereClause) => {
         const self = this;
         let {rowKey,tableData} = this.state;
-        let data = "";
-        let queryFields = this.form.state.queryFields;
-        if (queryFields.length === 1) {
-            data = this.form.props.form.getFieldValue(queryFields[0].name)
-        }
+        let data = this.form.props.form.getFieldValue(this.form.state.queryFields[0].name);
         let requestObject = {
           queryLotId: data,
           tableRrn: this.state.tableRrn,
@@ -79,9 +79,7 @@ export default class LgWaferCheckProperties extends MobileProperties{
         this.setState({ 
           loading: false
         });
-        this.allFieldBlur();
         self.form.resetFormFileds();
-        this.form.state.queryFields[0].node.focus();
         Notification.showInfo(I18NUtils.getClientMessage(i18NCode.DataAlreadyExists) + (data || ""));
       }
 
